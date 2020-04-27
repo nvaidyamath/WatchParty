@@ -93,6 +93,9 @@
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="iiB-Rl-7g7"/>
                                         </constraints>
                                         <state key="normal" title="Login"/>
+                                        <connections>
+                                            <action selector="loginPressed:" destination="36C-TT-1WO" eventType="touchUpInside" id="Dh6-Ek-NTQ"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Display" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wze-fV-rYL">
                                         <rect key="frame" x="0.0" y="180" width="334" height="96.5"/>
@@ -113,6 +116,12 @@
                         <viewLayoutGuide key="safeArea" id="PL0-1r-WOR"/>
                     </view>
                     <navigationItem key="navigationItem" id="RZl-Sb-gAs"/>
+                    <connections>
+                        <outlet property="emailField" destination="NMt-L9-lnF" id="iAQ-6d-iHl"/>
+                        <outlet property="errorDisplay" destination="wze-fV-rYL" id="pqc-or-sHB"/>
+                        <outlet property="loginButton" destination="3Px-65-t9V" id="z8N-9J-6ZW"/>
+                        <outlet property="passwordField" destination="hmS-Zc-X9s" id="x3B-Uu-Hmq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aVL-mx-xe7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -204,6 +213,9 @@
                                             <constraint firstAttribute="height" constant="40" id="uc4-D7-rBG"/>
                                         </constraints>
                                         <state key="normal" title="Sign Up"/>
+                                        <connections>
+                                            <action selector="SignUpPressed:" destination="xdB-zT-UeQ" eventType="touchUpInside" id="HkK-fm-HzB"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Display" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GLz-Cb-KmC">
                                         <rect key="frame" x="0.0" y="300" width="334" height="20.5"/>
@@ -223,6 +235,14 @@
                         <viewLayoutGuide key="safeArea" id="Eda-Gq-qRH"/>
                     </view>
                     <navigationItem key="navigationItem" id="ZDv-UF-sHr"/>
+                    <connections>
+                        <outlet property="emailField" destination="cmZ-Mx-lh7" id="TYa-4Z-e0h"/>
+                        <outlet property="errorDisplay" destination="GLz-Cb-KmC" id="gfr-oQ-ybI"/>
+                        <outlet property="firstNameField" destination="Ct2-HT-ABL" id="ekf-kY-rCc"/>
+                        <outlet property="lastNameField" destination="0yP-3o-n4o" id="0dG-wI-VxY"/>
+                        <outlet property="passwordField" destination="ICC-NV-A8h" id="BTj-8N-cxf"/>
+                        <outlet property="signUpButton" destination="p87-k3-vHx" id="myb-DS-Ctr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZrY-N6-b4L" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
