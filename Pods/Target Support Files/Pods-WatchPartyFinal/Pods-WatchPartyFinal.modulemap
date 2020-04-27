@@ -1,0 +1,6 @@
+framework module Pods_WatchPartyFinal {
+  umbrella header "Pods-WatchPartyFinal-umbrella.h"
+
+  export *
+  module * { export * }
+}
