@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
+import Firebase
 
 class SignUpViewController: UIViewController {
     @IBOutlet var firstNameField: UITextField!
@@ -21,8 +24,62 @@ class SignUpViewController: UIViewController {
         errorDisplay.alpha = 0;
     }
     
+    //Checks the fields to see if the data is valid.
+    func validateFields() -> String? {
+        
+        if firstNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || lastNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
+            emailField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
+            passwordField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+            
+            return "Please complete all fields."
+        }
+        
+        //Check if Password Secure
+        
+        return nil
+    }
 
     @IBAction func SignUpPressed(_ sender: Any) {
+        //Validate
+        let error = validateFields()
+        
+        if(error != nil){
+            errorDisplay.text = error!
+            errorDisplay.alpha = 1
+        }
+        else{
+            
+            let firstName = firstNameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            let lastName = lastNameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            let email = emailField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            let password = passwordField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            //Create
+            Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
+                
+                if err != nil{
+                    self.errorDisplay.text = "Error Creating User, please try again later"
+                    self.errorDisplay.alpha = 1
+                }
+                    
+                else{
+                    let db = Firestore.firestore()
+                    
+                    db.collection("users").addDocument(data: ["first_name":firstName, "last_name":lastName, "email":email, "user_id": result!.user.uid]) { (err) in
+                        
+                        if err != nil {
+                            self.errorDisplay.text = "User data was not able to be processed, please try again later"
+                            self.errorDisplay.alpha = 1
+                        }
+                    }
+                    //Go to Home Screen
+                    self.transitionToHome()
+                }
+            }
+        }
     }
-    
+    func transitionToHome() {
+        let homeVC = storyboard?.instantiateViewController(identifier: "homeScreen") as? HomeScreenViewController
+        view.window?.rootViewController = homeVC
+        view.window?.makeKeyAndVisible()
+    }
 }
