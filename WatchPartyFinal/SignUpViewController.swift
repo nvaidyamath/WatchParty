@@ -24,7 +24,7 @@ class SignUpViewController: UIViewController {
         errorDisplay.alpha = 0;
     }
     
-    //Checks the fields to see if the data is valid.
+    //Check the fields to see if the data is valid.
     func validateFields() -> String? {
         
         if firstNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || lastNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
@@ -34,12 +34,12 @@ class SignUpViewController: UIViewController {
             return "Please complete all fields."
         }
         
-        //Check if Password Secure
+        // TODO: Check if Password Secure
         
         return nil
     }
 
-    @IBAction func SignUpPressed(_ sender: Any) {
+    @IBAction func signUpPressed(_ sender: Any) {
         //Validate
         let error = validateFields()
         
@@ -77,6 +77,7 @@ class SignUpViewController: UIViewController {
             }
         }
     }
+    
     func transitionToHome() {
         let homeVC = storyboard?.instantiateViewController(identifier: "homeScreen") as? HomeScreenViewController
         view.window?.rootViewController = homeVC
