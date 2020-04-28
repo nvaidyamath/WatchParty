@@ -81,7 +81,7 @@ class SignUpViewController: UIViewController {
     }
     
     func directToPartyManagement() {
-        let partyManagementVC = storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementTableViewController
+        let partyManagementVC = storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
         view.window?.rootViewController = partyManagementVC
         view.window?.makeKeyAndVisible()
     }

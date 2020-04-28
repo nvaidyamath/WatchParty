@@ -1,5 +1,5 @@
 //
-//  PartyManagementTableViewController.swift
+//  PartySelectionTableViewController.swift
 //  WatchPartyFinal
 //
 //  Created by Zach on 4/28/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PartyManagementTableViewController: UITableViewController {
+class PartySelectionTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
