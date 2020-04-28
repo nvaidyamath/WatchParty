@@ -20,8 +20,17 @@ class SignUpViewController: UIViewController {
     @IBOutlet var errorDisplay: UILabel!
     
     override func viewDidLoad() {
+        initUI()
         super.viewDidLoad()
         errorDisplay.alpha = 0;
+    }
+    
+    func initUI(){
+        UIUtilities.styleTextField(firstNameField)
+        UIUtilities.styleTextField(lastNameField)
+        UIUtilities.styleTextField(emailField)
+        UIUtilities.styleTextField(passwordField)
+        UIUtilities.styleFilledButton(signUpButton)
     }
     
     //Check the fields to see if the data is valid.

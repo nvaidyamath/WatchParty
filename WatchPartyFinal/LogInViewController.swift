@@ -18,7 +18,14 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initUI()
         errorDisplay.alpha = 0;
+    }
+    
+    func initUI(){
+        UIUtilities.styleTextField(emailField)
+        UIUtilities.styleTextField(passwordField)
+        UIUtilities.styleHollowButton(loginButton)
     }
     
     func validateFields() -> String? {
