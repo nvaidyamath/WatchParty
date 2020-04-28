@@ -17,11 +17,8 @@ class PartyCreationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
-
     @IBAction func submitButtonPressed(_ sender: Any) {
         
         // TODO: Check duplicate party name
@@ -30,11 +27,30 @@ class PartyCreationViewController: UIViewController {
         let partyName = nameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let userID = Auth.auth().currentUser!.uid
         
-        let db = Firestore.firestore()
-        let currUser = db.collection("users").document(userID)
+        // Create instance of "Party" object
+        let members = [userID]
+        let bucketList = [String: Int]()
         
+        let db = Firestore.firestore()
+        var ref: DocumentReference? = nil
+        ref = db.collection("parties").addDocument(data: [
+            "name": partyName,
+            "members": members,
+            "bucketList": bucketList
+        ]) { err in
+            if let err = err {
+                print("Error adding document: \(err)")
+            } else {
+                print("Document added with ID: \(ref!.documentID)")
+            }
+        }
+        
+        // Associate party info with user info
+        let partyID = ref!.documentID
+        let currUser = db.collection("users").document(userID)
         currUser.updateData([
-            "parties": FieldValue.arrayUnion([partyName])
+            "partyNames": FieldValue.arrayUnion([partyName]),
+            "partyIDs": FieldValue.arrayUnion([partyID])
         ])
         
         self.directToPartyManagement()

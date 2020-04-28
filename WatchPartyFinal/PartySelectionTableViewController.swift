@@ -12,7 +12,8 @@ import Firebase
 
 class PartySelectionTableViewController: UITableViewController {
 
-    var parties = [String]()
+    var partyNames = [String]()
+    var partyIDs = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +35,8 @@ class PartySelectionTableViewController: UITableViewController {
         
         currUser.getDocument(source: .cache) { (document, error) in
             if let document = document {
-                self.parties = document.get("parties")! as! [String]
+                self.partyNames = document.get("partyNames")! as! [String]
+                self.partyIDs = document.get("partyIDs")! as! [String]
                 self.tableView.reloadData()
             } else {
                 print("Document does not exist in cache")
@@ -52,13 +54,13 @@ class PartySelectionTableViewController: UITableViewController {
     */
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.parties.count
+        return self.partyNames.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PartyCell", for: indexPath)
         
-        cell.textLabel?.text = self.parties[indexPath.row]
+        cell.textLabel?.text = self.partyNames[indexPath.row]
         return cell
     }
 

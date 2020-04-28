@@ -40,7 +40,6 @@ class SignUpViewController: UIViewController {
     }
 
     @IBAction func signUpPressed(_ sender: Any) {
-        //Validate
         let error = validateFields()
         
         if(error != nil){
@@ -53,7 +52,8 @@ class SignUpViewController: UIViewController {
             let lastName = lastNameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let email = emailField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let password = passwordField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            let parties = [String]()
+            let partyNames = [String]()
+            let partyIDs = [String]()
             
             //Register New User-=
             Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
@@ -69,7 +69,8 @@ class SignUpViewController: UIViewController {
                     db.collection("users").document(result!.user.uid).setData(["first_name":firstName,
                                                                                "last_name":lastName,
                                                                                "email":email,
-                                                                               "parties":parties]){ (err) in
+                                                                               "partyNames":partyNames,
+                                                                               "partyIDs":partyIDs]){ (err) in
                         if err != nil {
                             self.errorDisplay.text = "User data was not able to be processed, please try again later"
                             self.errorDisplay.alpha = 1
