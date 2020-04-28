@@ -306,11 +306,18 @@
                                 <rect key="frame" x="183" y="311" width="49" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Submit"/>
+                                <connections>
+                                    <action selector="submitButtonPressed:" destination="KLa-cI-YWt" eventType="touchUpInside" id="lxi-KS-VcX"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="eHl-mn-fkp"/>
                     </view>
+                    <connections>
+                        <outlet property="nameField" destination="Mbf-tq-zTK" id="VRt-1Y-W1j"/>
+                        <outlet property="submitButton" destination="w81-Ax-CbP" id="2eD-iO-eJ9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rGM-bb-2ys" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -319,13 +326,13 @@
         <!--Party Selection Table View Controller-->
         <scene sceneID="kFB-Jd-9WE">
             <objects>
-                <tableViewController id="bX5-nA-x8e" customClass="PartySelectionTableViewController" customModule="WatchPartyFinal" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="PartySelection" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bX5-nA-x8e" customClass="PartySelectionTableViewController" customModule="WatchPartyFinal" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="WRG-BT-ado">
                         <rect key="frame" x="0.0" y="0.0" width="363" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="A8J-oW-5HN">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PartyCell" id="A8J-oW-5HN">
                                 <rect key="frame" x="0.0" y="28" width="363" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="A8J-oW-5HN" id="2ae-9e-DAV">

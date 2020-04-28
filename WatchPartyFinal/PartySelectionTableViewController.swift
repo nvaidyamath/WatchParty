@@ -7,40 +7,60 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Firebase
 
 class PartySelectionTableViewController: UITableViewController {
 
+    var parties = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.retrievePartyList()
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    
+    func retrievePartyList(){
+        
+        let userID = Auth.auth().currentUser!.uid
+        let db = Firestore.firestore()
+        let currUser = db.collection("users").document(userID)
+        
+        currUser.getDocument(source: .cache) { (document, error) in
+            if let document = document {
+                self.parties = document.get("parties")! as! [String]
+                self.tableView.reloadData()
+            } else {
+                print("Document does not exist in cache")
+            }
+        }
+    }
 
     // MARK: - Table view data source
-
+    
+    /*
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
-    }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
+        return 1
     }
     */
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.parties.count
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PartyCell", for: indexPath)
+        
+        cell.textLabel?.text = self.parties[indexPath.row]
+        return cell
+    }
 
     /*
     // Override to support conditional editing of the table view.
