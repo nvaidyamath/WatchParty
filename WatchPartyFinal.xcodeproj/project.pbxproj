@@ -23,6 +23,7 @@
 		6A0657DE24578F680006D2C2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A0657DD24578F680006D2C2 /* GoogleService-Info.plist */; };
 		92FF58472457FB7300291CC6 /* PartyManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF58462457FB7300291CC6 /* PartyManagementViewController.swift */; };
 		92FF58492457FBDA00291CC6 /* PartySelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF58482457FBDA00291CC6 /* PartySelectionTableViewController.swift */; };
+		92FF584B2457FEB800291CC6 /* PartyCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF584A2457FEB800291CC6 /* PartyCreationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		6A0657DD24578F680006D2C2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		92FF58462457FB7300291CC6 /* PartyManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyManagementViewController.swift; sourceTree = "<group>"; };
 		92FF58482457FBDA00291CC6 /* PartySelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartySelectionTableViewController.swift; sourceTree = "<group>"; };
+		92FF584A2457FEB800291CC6 /* PartyCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyCreationViewController.swift; sourceTree = "<group>"; };
 		9B5E4481AE9CF8792B59567E /* Pods_WatchPartyFinal_WatchPartyFinalUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WatchPartyFinal_WatchPartyFinalUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A09066467220B0D13175AB9A /* Pods-WatchPartyFinalTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchPartyFinalTests.debug.xcconfig"; path = "Target Support Files/Pods-WatchPartyFinalTests/Pods-WatchPartyFinalTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A49ECDE4B0A02A4B301A378A /* Pods-WatchPartyFinal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchPartyFinal.release.xcconfig"; path = "Target Support Files/Pods-WatchPartyFinal/Pods-WatchPartyFinal.release.xcconfig"; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				6A0657D8245754460006D2C2 /* SignUpViewController.swift */,
 				92FF58462457FB7300291CC6 /* PartyManagementViewController.swift */,
 				92FF58482457FBDA00291CC6 /* PartySelectionTableViewController.swift */,
+				92FF584A2457FEB800291CC6 /* PartyCreationViewController.swift */,
 			);
 			path = WatchPartyFinal;
 			sourceTree = "<group>";
@@ -424,6 +427,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92FF584B2457FEB800291CC6 /* PartyCreationViewController.swift in Sources */,
 				408525EB2456318200D54AD4 /* ViewController.swift in Sources */,
 				408525E72456318200D54AD4 /* AppDelegate.swift in Sources */,
 				92FF58472457FB7300291CC6 /* PartyManagementViewController.swift in Sources */,
