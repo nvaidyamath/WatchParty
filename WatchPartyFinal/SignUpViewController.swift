@@ -53,7 +53,8 @@ class SignUpViewController: UIViewController {
             let lastName = lastNameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let email = emailField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let password = passwordField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            //Create
+            
+            //Register New User-=
             Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
                 
                 if err != nil{
@@ -71,16 +72,17 @@ class SignUpViewController: UIViewController {
                             self.errorDisplay.alpha = 1
                         }
                     }
-                    //Go to Home Screen
-                    self.transitionToHome()
+                    
+                    //Go to Party Management Screen
+                    self.directToPartyManagement()
                 }
             }
         }
     }
     
-    func transitionToHome() {
-        let homeVC = storyboard?.instantiateViewController(identifier: "homeScreen") as? HomeScreenViewController
-        view.window?.rootViewController = homeVC
+    func directToPartyManagement() {
+        let partyManagementVC = storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementTableViewController
+        view.window?.rootViewController = partyManagementVC
         view.window?.makeKeyAndVisible()
     }
 }

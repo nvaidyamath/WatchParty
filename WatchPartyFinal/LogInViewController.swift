@@ -54,14 +54,15 @@ class LogInViewController: UIViewController {
                     
                 else{
                     
-                    self.transitionToHome()
+                    self.directToPartyManagement()
                 }
             }
         }
     }
-    func transitionToHome() {
-        let homeVC = storyboard?.instantiateViewController(identifier: "homeScreen") as? HomeScreenViewController
-        view.window?.rootViewController = homeVC
+    
+    func directToPartyManagement() {
+        let partyManagementVC = storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementTableViewController
+        view.window?.rootViewController = partyManagementVC
         view.window?.makeKeyAndVisible()
     }
     
