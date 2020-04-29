@@ -23,6 +23,7 @@ class SwipeMoviesViewController: UIViewController {
     let userID = Auth.auth().currentUser!.uid
     var partyName = String();
     var partyID = String();
+    var partySize = Int();
     
     var currMovieIndx = 0{
         didSet{
@@ -86,6 +87,7 @@ class SwipeMoviesViewController: UIViewController {
             if let document = document {
                 self.cards = document.get("movieStack") as! [[String: String]]
                 self.currMovieIndx = (document.get("swipeProgress") as! [String: Int])[self.userID]!
+                self.partySize = ((document.get("members")) as! Array<Any>).count
             } else {
                 print("document does not exist")
             }
@@ -98,12 +100,29 @@ class SwipeMoviesViewController: UIViewController {
         movieObjectView.addGestureRecognizer(gesture)
         partyNameLabel.text = "Party Name: " + partyName;
         retrieveMovieStack()
+        
     }
    
     @IBAction func partiesButtonPressed(_ sender: Any) {
         let partyManagementVC = storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
         view.window?.rootViewController = partyManagementVC
         view.window?.makeKeyAndVisible()
+    }
+    func updateVotes()   {
+        self.db.collection("parties").document(self.partyID).updateData(["movieStack" : self.cards]){ (err) in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                } else {
+                    print("Document successfully updated")
+                    }
+                }
+            
+        }
+    
+    func checkMatch(num_votes: Int) -> Bool {
+        print("checking match")
+        print(num_votes==self.partySize)
+        return (num_votes==self.partySize);
     }
     
     @objc func wasDragged(gestureRecognizer: UIPanGestureRecognizer) {
@@ -124,12 +143,15 @@ class SwipeMoviesViewController: UIViewController {
         if gestureRecognizer.state == .ended {
             
             var swiped = false;
-            if movieObjectView.center.x < (view.bounds.width / 2 - 100){ // right swipe
+            var interested = false;
+            if movieObjectView.center.x > (view.bounds.width / 2 - 100){ // right swipe
                 swiped = true;
-                print("Not Interested")
-            }else if movieObjectView.center.x > (view.bounds.width / 2 + 100){ // left swipe
-                swiped = true;
+                interested = true;
                 print("Interested")
+                
+            }else if movieObjectView.center.x < (view.bounds.width / 2 + 100){ // left swipe
+                swiped = true;
+                print("not Interested")
             }
             
             // Return to original position
@@ -137,8 +159,18 @@ class SwipeMoviesViewController: UIViewController {
             scaledAndRotated = rotation.scaledBy(x: 1, y: 1)
             movieObjectView.transform = scaledAndRotated
             movieObjectView.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
-            
             // Update card if fully swiped
+            print("movies ",self.cards[currMovieIndx]["num_votes"])
+            print("size",self.partySize)
+            if (interested){
+                
+                var num_votes = Int(self.cards[currMovieIndx]["num_votes"]!)! + 1
+                updateVotes();
+                if (checkMatch(num_votes: num_votes)){
+                    self.sendMatchAlert()
+                    self.addToBucketList()
+                }
+                
             if(swiped){
                 if(self.currMovieIndx + 1 == cards.count){
                     let page = String((cards.count / 20) + 1)
@@ -147,8 +179,41 @@ class SwipeMoviesViewController: UIViewController {
                     self.currMovieIndx += 1
                 }
             }
+            
         }
     }
+    }
+    func addToBucketList(){
+        print(self.cards[self.currMovieIndx])
+        print("adding")
+        var array = [[String: String]]()
+        array.append(self.cards[self.currMovieIndx])
+        self.db.collection("parties").document(self.partyID).updateData(["bucketList" : FieldValue.arrayUnion(array)]){ (err) in
+            if let err = err {
+                print("Error updating document: \(err)")
+           } else {
+               print("Document successfully updated")
+           }
+       }
+    }
+    func sendMatchAlert(){
+        let alert = UIAlertController(title: "Match!", message: "All of your party voted for this movie!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK, Add to Bucket List", style: .default, handler: { action in
+              switch action.style{
+              case .default:
+                    print("default")
+
+              case .cancel:
+                    print("cancel")
+
+              case .destructive:
+                    print("destructive")
+
+
+        }}))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     
     func updateSwipeProgress(){
         db.collection("parties").document(self.partyID).updateData(["swipeProgress." + self.userID : self.currMovieIndx]){ (err) in

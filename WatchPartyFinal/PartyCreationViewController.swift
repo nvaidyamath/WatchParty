@@ -22,7 +22,9 @@ class PartyCreationViewController: UIViewController {
         didSet {
             DispatchQueue.main.async {
                 for movie in self.movies{
-                    self.stack.append(movie.asDict)
+                    var movieDict = movie.asDict;
+                    movieDict["num_votes"] = "0";
+                    self.stack.append(movieDict)
                 }
             }
         }
@@ -55,7 +57,7 @@ class PartyCreationViewController: UIViewController {
         
         // Create instance of "Party" object
         let members = [userID]
-        let bucketList = [String: Int]()
+        let bucketList = [String:String]()
         let swipeProgress = [userID : 0]
         
         let db = Firestore.firestore()
