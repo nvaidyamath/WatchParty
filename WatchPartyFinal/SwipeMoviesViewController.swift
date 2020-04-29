@@ -163,14 +163,13 @@ class SwipeMoviesViewController: UIViewController {
             print("movies ",self.cards[currMovieIndx]["num_votes"])
             print("size",self.partySize)
             if (interested){
-                
                 var num_votes = Int(self.cards[currMovieIndx]["num_votes"]!)! + 1
                 updateVotes();
                 if (checkMatch(num_votes: num_votes)){
                     self.sendMatchAlert()
                     self.addToBucketList()
                 }
-                
+            }
             if(swiped){
                 if(self.currMovieIndx + 1 == cards.count){
                     let page = String((cards.count / 20) + 1)
@@ -180,7 +179,6 @@ class SwipeMoviesViewController: UIViewController {
                 }
             }
             
-        }
     }
     }
     func addToBucketList(){
