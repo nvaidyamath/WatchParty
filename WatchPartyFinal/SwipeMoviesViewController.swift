@@ -70,37 +70,37 @@ class SwipeMoviesViewController: UIViewController {
     
     @objc func wasDragged(gestureRecognizer: UIPanGestureRecognizer) {
         
+        // Calculuate rotation and scaling
         let labelPoint = gestureRecognizer.translation(in: view)
         movieObjectView.center = CGPoint(x: view.bounds.width / 2 + labelPoint.x, y: view.bounds.height / 2 + labelPoint.y)
-
         let xFromCenter = view.bounds.width / 2 - movieObjectView.center.x
-
-        var rotation = CGAffineTransform(rotationAngle: xFromCenter / 200)
-
+        
+        var rotation = CGAffineTransform(rotationAngle: -(xFromCenter / 200))
         let scale = min(100 / abs(xFromCenter), 1)
-
         var scaledAndRotated = rotation.scaledBy(x: scale, y: scale)
-
+        
+        // Apply transformation
         movieObjectView.transform = scaledAndRotated
 
+        // Check state when gesture ended
         if gestureRecognizer.state == .ended {
             
             var swiped = false;
-            
             if movieObjectView.center.x < (view.bounds.width / 2 - 100){ // right swipe
                 swiped = true;
                 print("Not Interested")
-            }
-            else if movieObjectView.center.x > (view.bounds.width / 2 + 100){ // left swipe
+            }else if movieObjectView.center.x > (view.bounds.width / 2 + 100){ // left swipe
                 swiped = true;
                 print("Interested")
             }
-
+            
+            // Return to original position
             rotation = CGAffineTransform(rotationAngle: 0)
             scaledAndRotated = rotation.scaledBy(x: 1, y: 1)
             movieObjectView.transform = scaledAndRotated
             movieObjectView.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
             
+            // Update card if fully swiped
             if(swiped){
                 self.currMovieIndx += 1
                 updateMovieCard(indx: self.currMovieIndx)
