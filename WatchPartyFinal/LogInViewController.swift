@@ -68,7 +68,7 @@ class LogInViewController: UIViewController {
         }
     }
     func directToMovieSwipe() {
-        let movieSwipeVC = storyboard?.instantiateViewController(identifier: "InitialViewController") as? SwipeMoviesViewController
+        let movieSwipeVC = storyboard?.instantiateViewController(identifier: "MovieSwipe") as? SwipeMoviesViewController
         view.window?.rootViewController = movieSwipeVC
         view.window?.makeKeyAndVisible()
     }

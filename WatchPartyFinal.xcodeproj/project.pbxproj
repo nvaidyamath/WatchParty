@@ -135,10 +135,10 @@
 		408525E52456318200D54AD4 /* WatchPartyFinal */ = {
 			isa = PBXGroup;
 			children = (
-				6A6F16B62458BF3200601CC6 /* logInVideo.mp4 */,
 				6A6F16B024589BD400601CC6 /* UI Utilities */,
 				6A0657DD24578F680006D2C2 /* GoogleService-Info.plist */,
 				408525E62456318200D54AD4 /* AppDelegate.swift */,
+				6A6F16B62458BF3200601CC6 /* logInVideo.mp4 */,
 				408525E82456318200D54AD4 /* SceneDelegate.swift */,
 				408525EA2456318200D54AD4 /* ViewController.swift */,
 				40DC9F482458F881004ADCB7 /* The_Wolf_of_Wall_Street_(2013).png */,
