@@ -16,4 +16,10 @@ struct Movie:Decodable{
     var poster_path: String
     var title: String
     var overview: String
+    
+    var asDict: [String: String] {
+        return ["title": title,
+                "overview": overview,
+                "poster_path": poster_path]
+    }
 }

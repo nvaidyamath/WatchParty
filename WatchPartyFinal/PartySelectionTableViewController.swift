@@ -11,36 +11,25 @@ import FirebaseAuth
 import Firebase
 import FirebaseFirestore
 
+
 class PartySelectionTableViewController: UITableViewController {
     
     weak var delegate: SegueHandler?
 
     var partyNames = [String]()
     var partyIDs = [String]()
-    var userRef : DocumentReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.retrievePartyList()
-        let db = Firestore.firestore()
-        let currentUser = Auth.auth().currentUser
-        userRef = db.collection("users").document(currentUser!.uid)
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-    
     
     func retrievePartyList(){
         
         let userID = Auth.auth().currentUser!.uid
         let db = Firestore.firestore()
-        let currUser = db.collection("users").document(userID)
         
-        currUser.getDocument(source: .cache) { (document, error) in
+        db.collection("users").document(userID).getDocument(source: .cache) { (document, error) in
             if let document = document {
                 self.partyNames = document.get("partyNames")! as! [String]
                 self.partyIDs = document.get("partyIDs")! as! [String]

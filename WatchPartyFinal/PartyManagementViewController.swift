@@ -35,13 +35,12 @@ class PartyManagementViewController: UIViewController, SegueHandler {
     }
     
     @IBAction func logoutPressed(_ sender: Any) {
-        let firebaseAuth = Auth.auth()
         do {
-            try firebaseAuth.signOut()
+            try Auth.auth().signOut()
             // direct to initial sign-in/sign-up view
-            let initialVC = storyboard?.instantiateViewController(identifier: "InitialViewController") as? ViewController
-            view.window?.rootViewController = initialVC
-            view.window?.makeKeyAndVisible()
+            let initialVC = self.storyboard?.instantiateViewController(identifier: "InitialViewController") as? ViewController
+            self.view.window?.rootViewController = initialVC
+            self.view.window?.makeKeyAndVisible()
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)
         }

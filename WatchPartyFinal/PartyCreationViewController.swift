@@ -16,28 +16,56 @@ class PartyCreationViewController: UIViewController {
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    var stack = [[String: String]]()
+    
+    var movies = [Movie](){
+        didSet {
+            DispatchQueue.main.async {
+                for movie in self.movies{
+                    self.stack.append(movie.asDict)
+                }
+            }
+        }
+    };
+    
+    func fetchMovies(){
+        let movieRequest = MovieRequest(page: "1")
+        movieRequest.getMovies { (result) in
+            switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let movies):
+                    self.movies = movies
+            }
+        }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        fetchMovies()
+    }
+
     @IBAction func submitButtonPressed(_ sender: Any) {
         
-        // TODO: Check duplicate party name
         // TODO: Validate Party Name
         
+        // Get party name and current userID
         let partyName = nameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let userID = Auth.auth().currentUser!.uid
         
         // Create instance of "Party" object
         let members = [userID]
         let bucketList = [String: Int]()
+        let swipeProgress = [userID : 0]
         
         let db = Firestore.firestore()
         var ref: DocumentReference? = nil
         ref = db.collection("parties").addDocument(data: [
             "name": partyName,
             "members": members,
-            "bucketList": bucketList
+            "bucketList": bucketList,
+            "swipeProgress": swipeProgress,
+            "movieStack": self.stack
         ]) { err in
             if let err = err {
                 print("Error adding document: \(err)")
@@ -48,19 +76,15 @@ class PartyCreationViewController: UIViewController {
         
         // Associate party info with user info
         let partyID = ref!.documentID
-        let currUser = db.collection("users").document(userID)
-        currUser.updateData([
+        db.collection("users").document(userID).updateData([
             "partyNames": FieldValue.arrayUnion([partyName]),
             "partyIDs": FieldValue.arrayUnion([partyID])
         ])
         
-        self.directToPartyManagement()
-    }
-    
-    func directToPartyManagement() {
-        let partyManagementVC = storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
-        view.window?.rootViewController = partyManagementVC
-        view.window?.makeKeyAndVisible()
+        // Direct back to party management
+        let partyManagementVC = self.storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
+        self.view.window?.rootViewController = partyManagementVC
+        self.view.window?.makeKeyAndVisible()
     }
     
     /*

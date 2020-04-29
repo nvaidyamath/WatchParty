@@ -58,17 +58,12 @@ class LogInViewController: UIViewController {
                     self.errorDisplay.text = err!.localizedDescription
                     self.errorDisplay.alpha = 1
                 } else {
-                    self.directToPartyManagement()
+                    let partyManagementVC = self.storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
+                    self.view.window?.rootViewController = partyManagementVC
+                    self.view.window?.makeKeyAndVisible()
                 }
             }
         }
     }
-    
-    func directToPartyManagement() {
-        let partyManagementVC = storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
-        view.window?.rootViewController = partyManagementVC
-        view.window?.makeKeyAndVisible()
-    }
-    
 }
 

@@ -370,7 +370,7 @@
         <!--Movie Swipe View Controller-->
         <scene sceneID="l6s-Hj-eHm">
             <objects>
-                <viewController storyboardIdentifier="MovieSwipe" title="Movie Swipe View Controller" id="NP1-h1-KWY" customClass="SwipeMoviesViewController" customModule="WatchPartyFinal" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MovieSwipe" title="Movie Swipe View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="NP1-h1-KWY" customClass="SwipeMoviesViewController" customModule="WatchPartyFinal" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KuB-5a-jub">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -383,20 +383,6 @@
                                     <action selector="partiesButtonPressed:" destination="NP1-h1-KWY" eventType="touchUpInside" id="U7f-HR-jAh"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Party Name: placeholder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngC-HY-vdR">
-                                <rect key="frame" x="88" y="76" width="238" height="26"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Party ID: placeholder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fAz-Dl-CJw">
-                                <rect key="frame" x="88" y="100" width="238" height="26"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hnc-rL-cRc">
                                 <rect key="frame" x="29" y="155" width="357" height="533"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -430,9 +416,16 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button" image="tray.fill" catalog="system"/>
                                 <connections>
-                                    <segue destination="f2a-6n-LeH" kind="show" id="ule-dg-pxS"/>
+                                    <segue destination="f2a-6n-LeH" kind="show" identifier="SwipeToBucketList" id="ule-dg-pxS"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Party Name: placeholder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngC-HY-vdR">
+                                <rect key="frame" x="89" y="88" width="238" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <gestureRecognizers/>
@@ -446,7 +439,6 @@
                         <outlet property="movieObjectView" destination="hnc-rL-cRc" id="hic-bf-Br5"/>
                         <outlet property="moviePoster" destination="KVt-8m-iE1" id="BVO-Xc-27h"/>
                         <outlet property="movieTitle" destination="dLv-Vu-kls" id="Tgz-Gu-FZN"/>
-                        <outlet property="partyIdLabel" destination="fAz-Dl-CJw" id="SZu-7L-Dh7"/>
                         <outlet property="partyNameLabel" destination="ngC-HY-vdR" id="Jj5-Cn-Ig8"/>
                     </connections>
                 </viewController>
@@ -477,7 +469,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="NP1-h1-KWY" kind="show" id="9sk-bd-NY9"/>
+                                    <segue destination="NP1-h1-KWY" kind="show" identifier="BucketListToSwipe" id="of2-9q-7te"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Bucket List" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5tQ-a6-cyf">
@@ -528,7 +520,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="k09-sB-y6R"/>
+        <segue reference="of2-9q-7te"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="The_Wolf_of_Wall_Street_(2013).png" width="127.19999694824219" height="188.63999938964844"/>

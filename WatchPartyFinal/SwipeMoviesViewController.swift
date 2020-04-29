@@ -7,35 +7,62 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Firebase
+import FirebaseFirestore
 
-enum MovieError:Error {
-    case noDataAvailable
-    case canNotProcessData
-}
 
 class SwipeMoviesViewController: UIViewController {
 
     @IBOutlet var movieObjectView: UIView!
     @IBOutlet weak var partyNameLabel: UILabel!
-    @IBOutlet weak var partyIdLabel: UILabel!
     @IBOutlet weak var moviePoster: UIImageView!
     @IBOutlet weak var movieTitle: UILabel!
     
+    let db = Firestore.firestore()
+    let userID = Auth.auth().currentUser!.uid
     var partyName = String();
     var partyID = String();
-    var currMovieIndx = 0;
     
-    
-    var movies = [Movie](){
-        didSet {
-            DispatchQueue.main.async {
-                self.updateMovieCard(indx: 0)
+    var currMovieIndx = 0{
+        didSet{
+            DispatchQueue.main.async{
+                self.updateMovieCard(indx: self.currMovieIndx)
             }
         }
     };
     
-    func fetchMovies(){
-        let movieRequest = MovieRequest()
+    var cards = [[String: String]](){
+        didSet {
+            DispatchQueue.main.async{
+                self.updateMovieCard(indx: self.currMovieIndx)
+            }
+        }
+    }
+    
+    var movies = [Movie](){
+        didSet {
+            DispatchQueue.main.async{
+                var array = [[String: String]]()
+                for movie in self.movies{
+                    array.append(movie.asDict)
+                }
+                
+                self.db.collection("parties").document(self.partyID).updateData(["movieStack" : FieldValue.arrayUnion(array)]){ (err) in
+                    if let err = err {
+                        print("Error updating document: \(err)")
+                    } else {
+                        print("Document successfully updated")
+                    }
+                }
+                
+                self.cards += array
+            }
+        }
+    };
+    
+    func fetchMovies(page:String){
+        let movieRequest = MovieRequest(page: page)
         movieRequest.getMovies { (result) in
             switch result {
                 case .failure(let error):
@@ -47,10 +74,22 @@ class SwipeMoviesViewController: UIViewController {
     }
     
     func updateMovieCard(indx: Int){
-        let url = URL(string: "https://image.tmdb.org/t/p/w500" + self.movies[indx].poster_path)
+        let url = URL(string: "https://image.tmdb.org/t/p/w500" + self.cards[indx]["poster_path"]!)
         let data = try? Data(contentsOf: url!)
         self.moviePoster.image = UIImage(data: data!)
-        self.movieTitle.text = self.movies[indx].title
+        self.movieTitle.text = self.cards[indx]["title"]!
+    }
+    
+    func retrieveMovieStack(){
+        db.collection("parties").document(partyID).getDocument {
+            (document, error) in
+            if let document = document {
+                self.cards = document.get("movieStack") as! [[String: String]]
+                self.currMovieIndx = (document.get("swipeProgress") as! [String: Int])[self.userID]!
+            } else {
+                print("document does not exist")
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -58,8 +97,7 @@ class SwipeMoviesViewController: UIViewController {
         let gesture = UIPanGestureRecognizer(target: self, action: #selector(wasDragged(gestureRecognizer:)))
         movieObjectView.addGestureRecognizer(gesture)
         partyNameLabel.text = "Party Name: " + partyName;
-        partyIdLabel.text = "Party ID: " + partyID;
-        fetchMovies()
+        retrieveMovieStack()
     }
    
     @IBAction func partiesButtonPressed(_ sender: Any) {
@@ -102,22 +140,39 @@ class SwipeMoviesViewController: UIViewController {
             
             // Update card if fully swiped
             if(swiped){
-                self.currMovieIndx += 1
-                updateMovieCard(indx: self.currMovieIndx)
+                if(self.currMovieIndx + 1 == cards.count){
+                    let page = String((cards.count / 20) + 1)
+                    fetchMovies(page: page)
+                }else{
+                    self.currMovieIndx += 1
+                }
             }
         }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func updateSwipeProgress(){
+        db.collection("parties").document(self.partyID).updateData(["swipeProgress." + self.userID : self.currMovieIndx]){ (err) in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
     }
-    */
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.updateSwipeProgress()
+    }
+    
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SwipeToBucketList" {
+            let dvc = segue.destination as! BucketListViewController
+            dvc.partyName = self.partyName
+            dvc.partyID = self.partyID
+            
+            self.updateSwipeProgress()
+        }
+    }
 }
 

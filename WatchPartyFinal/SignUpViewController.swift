@@ -70,11 +70,8 @@ class SignUpViewController: UIViewController {
                 if err != nil{
                     self.errorDisplay.text = "Error Creating User, please try again later"
                     self.errorDisplay.alpha = 1
-                }
-                    
-                else{
+                }else{
                     let db = Firestore.firestore()
-                    
                     db.collection("users").document(result!.user.uid).setData(["first_name":firstName,
                                                                                "last_name":lastName,
                                                                                "email":email,
@@ -87,15 +84,11 @@ class SignUpViewController: UIViewController {
                     }
                     
                     //Go to Party Management Screen
-                    self.directToPartyManagement()
+                    let partyManagementVC = self.storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
+                    self.view.window?.rootViewController = partyManagementVC
+                    self.view.window?.makeKeyAndVisible()
                 }
             }
         }
-    }
-    
-    func directToPartyManagement() {
-        let partyManagementVC = storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
-        view.window?.rootViewController = partyManagementVC
-        view.window?.makeKeyAndVisible()
     }
 }

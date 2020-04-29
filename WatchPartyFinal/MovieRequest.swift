@@ -8,14 +8,19 @@
 
 import Foundation
 
+enum MovieError:Error {
+    case noDataAvailable
+    case canNotProcessData
+}
 
 struct MovieRequest {
     let resourceURL:URL
     let apiKey = "839c9fca2fc26a00a9aba5e884be79d6"
 
-    init(){
-        guard let resourceURL = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=839c9fca2fc26a00a9aba5e884be79d6&sort_by=popularity.desc&language=en-US?") else {fatalError()}
+    init(page: String){
+        guard let resourceURL = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=839c9fca2fc26a00a9aba5e884be79d6&sort_by=popularity.desc&language=en-US&page=\(page)") else {fatalError()}
         self.resourceURL = resourceURL
+        print("making request for page " + page)
     }
 
     func getMovies(completion: @escaping(Result<[Movie], MovieError>) -> Void){
