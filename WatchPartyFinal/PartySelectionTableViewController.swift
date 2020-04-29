@@ -29,7 +29,7 @@ class PartySelectionTableViewController: UITableViewController {
         let userID = Auth.auth().currentUser!.uid
         let db = Firestore.firestore()
         
-        db.collection("users").document(userID).getDocument(source: .cache) { (document, error) in
+        db.collection("users").document(userID).getDocument { (document, error) in
             if let document = document {
                 self.partyNames = document.get("partyNames")! as! [String]
                 self.partyIDs = document.get("partyIDs")! as! [String]

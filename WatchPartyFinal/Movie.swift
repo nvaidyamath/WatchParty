@@ -20,6 +20,7 @@ struct Movie:Decodable{
     var asDict: [String: String] {
         return ["title": title,
                 "overview": overview,
-                "poster_path": poster_path]
+                "poster_path": poster_path,
+                "num_votes": "0"]
     }
 }

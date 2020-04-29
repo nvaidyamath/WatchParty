@@ -22,9 +22,7 @@ class PartyCreationViewController: UIViewController {
         didSet {
             DispatchQueue.main.async {
                 for movie in self.movies{
-                    var movieDict = movie.asDict;
-                    movieDict["num_votes"] = "0";
-                    self.stack.append(movieDict)
+                    self.stack.append(movie.asDict)
                 }
             }
         }

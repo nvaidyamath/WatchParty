@@ -48,15 +48,13 @@ class SwipeMoviesViewController: UIViewController {
                 for movie in self.movies{
                     array.append(movie.asDict)
                 }
-                
                 self.db.collection("parties").document(self.partyID).updateData(["movieStack" : FieldValue.arrayUnion(array)]){ (err) in
                     if let err = err {
-                        print("Error updating document: \(err)")
+                        print("[UPDATE FAIL] Refuel movie stack: \(err)")
                     } else {
-                        print("Document successfully updated")
+                        print("[UPDATE SUCCESS] Refuel movie stack")
                     }
                 }
-                
                 self.cards += array
             }
         }
@@ -89,7 +87,7 @@ class SwipeMoviesViewController: UIViewController {
                 self.currMovieIndx = (document.get("swipeProgress") as! [String: Int])[self.userID]!
                 self.partySize = ((document.get("members")) as! Array<Any>).count
             } else {
-                print("document does not exist")
+                print("[ACCESS FAIL] Retrieve movie stack")
             }
         }
     }
@@ -108,16 +106,6 @@ class SwipeMoviesViewController: UIViewController {
         view.window?.rootViewController = partyManagementVC
         view.window?.makeKeyAndVisible()
     }
-    func updateVotes()   {
-        self.db.collection("parties").document(self.partyID).updateData(["movieStack" : self.cards]){ (err) in
-                if let err = err {
-                    print("Error updating document: \(err)")
-                } else {
-                    print("Document successfully updated")
-                    }
-                }
-            
-        }
     
     func checkMatch(num_votes: Int) -> Bool {
         print("checking match")
@@ -159,17 +147,18 @@ class SwipeMoviesViewController: UIViewController {
             scaledAndRotated = rotation.scaledBy(x: 1, y: 1)
             movieObjectView.transform = scaledAndRotated
             movieObjectView.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
-            // Update card if fully swiped
-            print("movies ",self.cards[currMovieIndx]["num_votes"])
-            print("size",self.partySize)
+            
+            // Right swipe
             if (interested){
-                var num_votes = Int(self.cards[currMovieIndx]["num_votes"]!)! + 1
-                updateVotes();
+                let num_votes = Int(self.cards[currMovieIndx]["num_votes"]!)! + 1
+                self.cards[currMovieIndx]["num_votes"] = String(num_votes)
                 if (checkMatch(num_votes: num_votes)){
                     self.sendMatchAlert()
                     self.addToBucketList()
                 }
             }
+            
+            // Update card if fully swiped
             if(swiped){
                 if(self.currMovieIndx + 1 == cards.count){
                     let page = String((cards.count / 20) + 1)
@@ -179,21 +168,21 @@ class SwipeMoviesViewController: UIViewController {
                 }
             }
             
+        }
     }
-    }
+    
     func addToBucketList(){
-        print(self.cards[self.currMovieIndx])
-        print("adding")
         var array = [[String: String]]()
         array.append(self.cards[self.currMovieIndx])
         self.db.collection("parties").document(self.partyID).updateData(["bucketList" : FieldValue.arrayUnion(array)]){ (err) in
             if let err = err {
-                print("Error updating document: \(err)")
-           } else {
-               print("Document successfully updated")
-           }
-       }
+                print("[UPDATE FAIL] Add to bucketlist - \(err)")
+            } else {
+                print("[UPDATE SUCCESS] Add to bucketlist")
+            }
+        }
     }
+    
     func sendMatchAlert(){
         let alert = UIAlertController(title: "Match!", message: "All of your party voted for this movie!", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK, Add to Bucket List", style: .default, handler: { action in
@@ -213,20 +202,21 @@ class SwipeMoviesViewController: UIViewController {
     }
     
     
-    func updateSwipeProgress(){
-        db.collection("parties").document(self.partyID).updateData(["swipeProgress." + self.userID : self.currMovieIndx]){ (err) in
+    func updateSwipeProgressAndVotes(){
+        db.collection("parties").document(self.partyID).updateData(["swipeProgress." + self.userID : self.currMovieIndx,
+                                                                    "movieStack" : self.cards]){ (err) in
             if let err = err {
-                print("Error updating document: \(err)")
+                print("[UPDATE FAIL] Update swipe progress and votes: \(err)")
             } else {
-                print("Document successfully updated")
+                print("[UPDATE SUCCESS] Update swipe progress and votes")
             }
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.updateSwipeProgress()
+        self.updateSwipeProgressAndVotes()
+        
     }
-    
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SwipeToBucketList" {
@@ -234,7 +224,7 @@ class SwipeMoviesViewController: UIViewController {
             dvc.partyName = self.partyName
             dvc.partyID = self.partyID
             
-            self.updateSwipeProgress()
+            self.updateSwipeProgressAndVotes()
         }
     }
 }
