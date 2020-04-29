@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -160,6 +160,11 @@
                                 <rect key="frame" x="272" y="153" width="69" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Join Party"/>
+                                <connections>
+                                    <segue destination="jf7-Cp-bHh" kind="popoverPresentation" popoverAnchorView="syE-gU-i8g" id="DQK-JM-haz">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eA8-6i-IyT">
                                 <rect key="frame" x="303" y="802" width="55" height="30"/>
@@ -277,6 +282,55 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZrY-N6-b4L" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1631.8840579710147" y="-393.08035714285711"/>
+        </scene>
+        <!--Party Join View Controller-->
+        <scene sceneID="XAl-rC-bDy">
+            <objects>
+                <viewController id="jf7-Cp-bHh" customClass="PartyJoinViewController" customModule="WatchPartyFinal" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jRp-Ib-2Yl" customClass="Party">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Join A Party" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fP0-yt-eJL">
+                                <rect key="frame" x="161" y="106" width="92" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Party ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3I9-MZ-fLO">
+                                <rect key="frame" x="106" y="169" width="203" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ew-tY-1IA">
+                                <rect key="frame" x="173" y="241" width="69" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Join Party"/>
+                                <connections>
+                                    <action selector="joinParty:" destination="jf7-Cp-bHh" eventType="touchUpInside" id="wrI-2G-lY9"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ERROR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Iw-m3-6GW">
+                                <rect key="frame" x="180" y="333" width="55" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Gr3-JA-Pfz"/>
+                    </view>
+                    <connections>
+                        <outlet property="errorMessage" destination="2Iw-m3-6GW" id="Foz-rM-usa"/>
+                        <outlet property="partyIdField" destination="3I9-MZ-fLO" id="0b5-ye-bxv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8ab-uD-J5N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2498.5507246376815" y="-688.39285714285711"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gYd-Ao-G4h">
@@ -519,12 +573,12 @@
             <point key="canvasLocation" x="5251" y="71"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="of2-9q-7te"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="The_Wolf_of_Wall_Street_(2013).png" width="127.19999694824219" height="188.63999938964844"/>
-        <image name="arrowshape.turn.up.left.2" catalog="system" width="128" height="87"/>
-        <image name="tray.fill" catalog="system" width="128" height="88"/>
+        <image name="arrowshape.turn.up.left.2" catalog="system" width="64" height="42"/>
+        <image name="tray.fill" catalog="system" width="64" height="44"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="k09-sB-y6R"/>
+    </inferredMetricsTieBreakers>
 </document>
