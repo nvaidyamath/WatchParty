@@ -43,7 +43,7 @@ class SignUpViewController: UIViewController {
             return "Please complete all fields."
         }
         
-        // TODO: Check if Password Secure
+        // TODO: Check if password is secure
         
         return nil
     }

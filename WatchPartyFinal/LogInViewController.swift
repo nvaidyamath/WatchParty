@@ -36,7 +36,7 @@ class LogInViewController: UIViewController {
             return "Please complete all fields."
         }
         
-        //Check if Password Secure
+        //TODO: Check if Password Secure
         
         return nil
     }
@@ -48,7 +48,7 @@ class LogInViewController: UIViewController {
         if(error != nil){
             errorDisplay.text = error!
             errorDisplay.alpha = 1
-        }        
+        }
         else{
             //Sign In
             let email = emailField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -57,20 +57,11 @@ class LogInViewController: UIViewController {
                 if err != nil{
                     self.errorDisplay.text = err!.localizedDescription
                     self.errorDisplay.alpha = 1
-                }
-                    
-                else{
-                    
+                } else {
                     self.directToPartyManagement()
-                    //self.directToMovieSwipe();
                 }
             }
         }
-    }
-    func directToMovieSwipe() {
-        let movieSwipeVC = storyboard?.instantiateViewController(identifier: "MovieSwipe") as? SwipeMoviesViewController
-        view.window?.rootViewController = movieSwipeVC
-        view.window?.makeKeyAndVisible()
     }
     
     func directToPartyManagement() {
@@ -80,3 +71,4 @@ class LogInViewController: UIViewController {
     }
     
 }
+

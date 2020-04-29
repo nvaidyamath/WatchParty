@@ -12,6 +12,8 @@ import Firebase
 import FirebaseFirestore
 
 class PartySelectionTableViewController: UITableViewController {
+    
+    weak var delegate: SegueHandler?
 
     var partyNames = [String]()
     var partyIDs = [String]()
@@ -19,7 +21,6 @@ class PartySelectionTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("entered")
         self.retrievePartyList()
         let db = Firestore.firestore()
         let currentUser = Auth.auth().currentUser
@@ -62,20 +63,18 @@ class PartySelectionTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.partyNames.count
     }
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       let cell = tableView.dequeueReusableCell(withIdentifier: "PartyCell", for: indexPath)
-        let partyManagementVC = PartyManagementViewController();
-        let cellVal = cell.textLabel!.text as! String;
-        self.userRef.setData([ "currentParty": cellVal], merge: true)
-        partyManagementVC.updateLabel(text: cellVal);
-    }
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PartyCell", for: indexPath)
-        
         cell.textLabel?.text = self.partyNames[indexPath.row]
-        print("tapped")
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.getPartyInfo(name: self.partyNames[indexPath.row], ID: self.partyIDs[indexPath.row])
+        delegate?.segueToNext(identifier: "SwipeSegue")
+    }
+    
 
     /*
     // Override to support conditional editing of the table view.
