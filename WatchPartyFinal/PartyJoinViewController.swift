@@ -35,6 +35,11 @@ class PartyJoinViewController: UIViewController {
                         "partyNames": FieldValue.arrayUnion([partyName]),
                         "partyIDs": FieldValue.arrayUnion([self.partyIdField.text!])
                     ])
+                    db.collection("parties").document(self.partyIdField.text!).updateData([
+                        "members": FieldValue.arrayUnion([userID]),
+                        "swipeProgress."+userID: 0
+                    ])
+                    
                     // Direct back to party management
                     let partyManagementVC = self.storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
                     self.view.window?.rootViewController = partyManagementVC
