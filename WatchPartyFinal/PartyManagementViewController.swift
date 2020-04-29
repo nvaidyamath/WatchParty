@@ -38,18 +38,15 @@ class PartyManagementViewController: UIViewController, SegueHandler {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
-            directToInitialScreen()
+            // direct to initial sign-in/sign-up view
+            let initialVC = storyboard?.instantiateViewController(identifier: "InitialViewController") as? ViewController
+            view.window?.rootViewController = initialVC
+            view.window?.makeKeyAndVisible()
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)
         }
     }
-
-    func directToInitialScreen() {
-        let initialVC = storyboard?.instantiateViewController(identifier: "InitialViewController") as? ViewController
-        view.window?.rootViewController = initialVC
-        view.window?.makeKeyAndVisible()
-    }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EmbeddedSelectionSegue" {
             let dvc = segue.destination as! PartySelectionTableViewController

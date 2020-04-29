@@ -429,6 +429,9 @@
                                 <rect key="frame" x="332" y="26" width="27" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button" image="tray.fill" catalog="system"/>
+                                <connections>
+                                    <segue destination="f2a-6n-LeH" kind="show" id="ule-dg-pxS"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -450,11 +453,86 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ehj-Hd-Sqn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="Cbc-Ud-k9H"/>
             </objects>
-            <point key="canvasLocation" x="3824.6376811594205" y="68.973214285714278"/>
+            <point key="canvasLocation" x="3809" y="69"/>
+        </scene>
+        <!--Bucket List View Controller-->
+        <scene sceneID="1VD-lO-jiT">
+            <objects>
+                <viewController id="f2a-6n-LeH" customClass="BucketListViewController" customModule="WatchPartyFinal" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7Md-i5-sTC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="At8-OT-LLX">
+                                <rect key="frame" x="46" y="138" width="322" height="503"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <segue destination="jyA-D1-dNN" kind="embed" id="axF-DR-P31"/>
+                                </connections>
+                            </containerView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OSk-Gq-TkS">
+                                <rect key="frame" x="71" y="682" width="258" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title=" Return to Swiping" image="arrowshape.turn.up.left.2" catalog="system">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="NP1-h1-KWY" kind="show" id="9sk-bd-NY9"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Bucket List" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5tQ-a6-cyf">
+                                <rect key="frame" x="156" y="64" width="103" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="yGr-Ct-cRn"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="txO-gh-6ud"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ygx-YC-bbL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4557.971014492754" y="70.982142857142847"/>
+        </scene>
+        <!--Ranking Table View Controller-->
+        <scene sceneID="eJ0-gr-xNu">
+            <objects>
+                <tableViewController id="jyA-D1-dNN" customClass="RankingTableViewController" customModule="WatchPartyFinal" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="GfJ-b2-ogh">
+                        <rect key="frame" x="0.0" y="0.0" width="322" height="503"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="c8S-6I-ty5">
+                                <rect key="frame" x="0.0" y="28" width="322" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="c8S-6I-ty5" id="EKH-1l-1aZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="322" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="jyA-D1-dNN" id="QWM-3P-kUQ"/>
+                            <outlet property="delegate" destination="jyA-D1-dNN" id="bmC-Az-qDJ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="s9G-FX-Evp"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="br3-oR-oIm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5251" y="71"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="k09-sB-y6R"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="The_Wolf_of_Wall_Street_(2013).png" width="127.19999694824219" height="188.63999938964844"/>
+        <image name="arrowshape.turn.up.left.2" catalog="system" width="128" height="87"/>
         <image name="tray.fill" catalog="system" width="128" height="88"/>
     </resources>
 </document>
