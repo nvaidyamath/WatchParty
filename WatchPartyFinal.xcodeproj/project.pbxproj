@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		15FC1AEAB9D82106B06A2B24 /* Pods_WatchPartyFinal_WatchPartyFinalUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5E4481AE9CF8792B59567E /* Pods_WatchPartyFinal_WatchPartyFinalUITests.framework */; };
 		247C471D21088492EF8E1360 /* Pods_WatchPartyFinal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C34732AB5D249C4B5D56D28 /* Pods_WatchPartyFinal.framework */; };
+		403EE0DD2458EA440066A834 /* SwipeMoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403EE0DC2458EA440066A834 /* SwipeMoviesViewController.swift */; };
 		408525E72456318200D54AD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408525E62456318200D54AD4 /* AppDelegate.swift */; };
 		408525E92456318200D54AD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408525E82456318200D54AD4 /* SceneDelegate.swift */; };
 		408525EB2456318200D54AD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408525EA2456318200D54AD4 /* ViewController.swift */; };
@@ -17,12 +18,12 @@
 		408525F32456318400D54AD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 408525F12456318400D54AD4 /* LaunchScreen.storyboard */; };
 		408525FE2456318400D54AD4 /* WatchPartyFinalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408525FD2456318400D54AD4 /* WatchPartyFinalTests.swift */; };
 		408526092456318400D54AD4 /* WatchPartyFinalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408526082456318400D54AD4 /* WatchPartyFinalUITests.swift */; };
+		40DC9F492458F881004ADCB7 /* The_Wolf_of_Wall_Street_(2013).png in Resources */ = {isa = PBXBuildFile; fileRef = 40DC9F482458F881004ADCB7 /* The_Wolf_of_Wall_Street_(2013).png */; };
 		58297763DF3109283C112129 /* Pods_WatchPartyFinalTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41D839AB014CC664939F2AF6 /* Pods_WatchPartyFinalTests.framework */; };
 		6A0657D72457542A0006D2C2 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0657D62457542A0006D2C2 /* LogInViewController.swift */; };
 		6A0657D9245754460006D2C2 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0657D8245754460006D2C2 /* SignUpViewController.swift */; };
 		6A0657DE24578F680006D2C2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A0657DD24578F680006D2C2 /* GoogleService-Info.plist */; };
 		6A6F16B224589C3800601CC6 /* UIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F16B124589C3800601CC6 /* UIUtilities.swift */; };
-		6A6F16B72458BF3200601CC6 /* logInVideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6A6F16B62458BF3200601CC6 /* logInVideo.mp4 */; };
 		92FF58472457FB7300291CC6 /* PartyManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF58462457FB7300291CC6 /* PartyManagementViewController.swift */; };
 		92FF58492457FBDA00291CC6 /* PartySelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF58482457FBDA00291CC6 /* PartySelectionTableViewController.swift */; };
 		92FF584B2457FEB800291CC6 /* PartyCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF584A2457FEB800291CC6 /* PartyCreationViewController.swift */; };
@@ -49,6 +50,7 @@
 		0EE9F89248E4FA29861E06B0 /* Pods-WatchPartyFinalTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchPartyFinalTests.release.xcconfig"; path = "Target Support Files/Pods-WatchPartyFinalTests/Pods-WatchPartyFinalTests.release.xcconfig"; sourceTree = "<group>"; };
 		286225293032398ABD911ACC /* Pods-WatchPartyFinal-WatchPartyFinalUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchPartyFinal-WatchPartyFinalUITests.release.xcconfig"; path = "Target Support Files/Pods-WatchPartyFinal-WatchPartyFinalUITests/Pods-WatchPartyFinal-WatchPartyFinalUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2C34732AB5D249C4B5D56D28 /* Pods_WatchPartyFinal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WatchPartyFinal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		403EE0DC2458EA440066A834 /* SwipeMoviesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeMoviesViewController.swift; sourceTree = "<group>"; };
 		408525E32456318200D54AD4 /* WatchPartyFinal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchPartyFinal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		408525E62456318200D54AD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		408525E82456318200D54AD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 		408526042456318400D54AD4 /* WatchPartyFinalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WatchPartyFinalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		408526082456318400D54AD4 /* WatchPartyFinalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchPartyFinalUITests.swift; sourceTree = "<group>"; };
 		4085260A2456318400D54AD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		40DC9F482458F881004ADCB7 /* The_Wolf_of_Wall_Street_(2013).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "The_Wolf_of_Wall_Street_(2013).png"; sourceTree = "<group>"; };
 		41D839AB014CC664939F2AF6 /* Pods_WatchPartyFinalTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WatchPartyFinalTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		43C7804B30F579594ABB8890 /* Pods-WatchPartyFinal-WatchPartyFinalUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchPartyFinal-WatchPartyFinalUITests.debug.xcconfig"; path = "Target Support Files/Pods-WatchPartyFinal-WatchPartyFinalUITests/Pods-WatchPartyFinal-WatchPartyFinalUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5B6C318C4A7E7E091D835B2E /* Pods-WatchPartyFinal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchPartyFinal.debug.xcconfig"; path = "Target Support Files/Pods-WatchPartyFinal/Pods-WatchPartyFinal.debug.xcconfig"; sourceTree = "<group>"; };
@@ -138,12 +141,14 @@
 				408525E62456318200D54AD4 /* AppDelegate.swift */,
 				408525E82456318200D54AD4 /* SceneDelegate.swift */,
 				408525EA2456318200D54AD4 /* ViewController.swift */,
+				40DC9F482458F881004ADCB7 /* The_Wolf_of_Wall_Street_(2013).png */,
 				408525EC2456318200D54AD4 /* Main.storyboard */,
 				408525EF2456318400D54AD4 /* Assets.xcassets */,
 				408525F12456318400D54AD4 /* LaunchScreen.storyboard */,
 				408525F42456318400D54AD4 /* Info.plist */,
 				6A0657D62457542A0006D2C2 /* LogInViewController.swift */,
 				6A0657D8245754460006D2C2 /* SignUpViewController.swift */,
+				403EE0DC2458EA440066A834 /* SwipeMoviesViewController.swift */,
 				92FF58462457FB7300291CC6 /* PartyManagementViewController.swift */,
 				92FF58482457FBDA00291CC6 /* PartySelectionTableViewController.swift */,
 				92FF584A2457FEB800291CC6 /* PartyCreationViewController.swift */,
@@ -311,8 +316,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				408525F32456318400D54AD4 /* LaunchScreen.storyboard in Resources */,
-				6A6F16B72458BF3200601CC6 /* logInVideo.mp4 in Resources */,
 				6A0657DE24578F680006D2C2 /* GoogleService-Info.plist in Resources */,
+				40DC9F492458F881004ADCB7 /* The_Wolf_of_Wall_Street_(2013).png in Resources */,
 				408525F02456318400D54AD4 /* Assets.xcassets in Resources */,
 				408525EE2456318200D54AD4 /* Main.storyboard in Resources */,
 			);
@@ -446,6 +451,7 @@
 				408525EB2456318200D54AD4 /* ViewController.swift in Sources */,
 				408525E72456318200D54AD4 /* AppDelegate.swift in Sources */,
 				92FF58472457FB7300291CC6 /* PartyManagementViewController.swift in Sources */,
+				403EE0DD2458EA440066A834 /* SwipeMoviesViewController.swift in Sources */,
 				6A0657D72457542A0006D2C2 /* LogInViewController.swift in Sources */,
 				408525E92456318200D54AD4 /* SceneDelegate.swift in Sources */,
 				92FF58492457FBDA00291CC6 /* PartySelectionTableViewController.swift in Sources */,
