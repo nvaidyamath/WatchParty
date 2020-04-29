@@ -7,12 +7,29 @@
 //
 
 import UIKit
-
+import FirebaseAuth
+import Firebase
 class PartyManagementViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    @IBAction func logOutButton(_ sender: Any) {
+         let firebaseAuth = Auth.auth()
+        do {
+          try firebaseAuth.signOut()
+          directToInitialScreen()
+        }
+        catch let signOutError as NSError {
+          print ("Error signing out: %@", signOutError)
+        }
+          
+    }
+    func directToInitialScreen() {
+        let initialVC = storyboard?.instantiateViewController(identifier: "InitialViewController") as? ViewController
+        view.window?.rootViewController = initialVC
+        view.window?.makeKeyAndVisible()
+    }
     // MARK: - Navigation
 
     /*

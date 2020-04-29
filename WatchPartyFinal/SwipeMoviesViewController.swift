@@ -18,8 +18,8 @@ class SwipeMoviesViewController: UIViewController {
              // Do any additional setup after loading the view.
         // Do any additional setup after loading the view.
     }
+   
     @objc func wasDragged(gestureRecognizer: UIPanGestureRecognizer) {
-               print("dragged")
               let labelPoint = gestureRecognizer.translation(in: view)
               movieObjectView.center = CGPoint(x: view.bounds.width / 2 + labelPoint.x, y: view.bounds.height / 2 + labelPoint.y)
               
@@ -37,8 +37,6 @@ class SwipeMoviesViewController: UIViewController {
 
                   if movieObjectView.center.x < (view.bounds.width / 2 - 100) {
                       print("Not Interested")
-                      
-                      
                   }
                   if movieObjectView.center.x > (view.bounds.width / 2 + 100) {
                       print("Interested")

@@ -61,10 +61,16 @@ class LogInViewController: UIViewController {
                     
                 else{
                     
-                    self.directToPartyManagement()
+                    //self.directToPartyManagement()
+                    self.directToMovieSwipe();
                 }
             }
         }
+    }
+    func directToMovieSwipe() {
+        let movieSwipeVC = storyboard?.instantiateViewController(identifier: "InitialViewController") as? SwipeMoviesViewController
+        view.window?.rootViewController = movieSwipeVC
+        view.window?.makeKeyAndVisible()
     }
     
     func directToPartyManagement() {
