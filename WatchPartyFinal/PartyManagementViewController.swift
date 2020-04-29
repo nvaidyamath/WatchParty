@@ -9,11 +9,35 @@
 import UIKit
 import FirebaseAuth
 import Firebase
+import FirebaseFirestore
 class PartyManagementViewController: UIViewController {
+    @IBOutlet var currentParty: UILabel!
+    var userRef : DocumentReference!
     override func viewDidLoad() {
         super.viewDidLoad()
+        getData();
+        userRef.getDocument(source: .cache) { (document, error) in
+          if let document = document {
+            let dataDescription = document.data()
+            if let data = dataDescription!["currentParty"]{
+                self.currentParty.text = data as! String
+            }
+            else {  //then must add current party field to user
+                self.userRef.setData([ "currentParty": "" ], merge: true)
+            }
+        }
+
+      }
+    }
+    func getData(){
+        let db = Firestore.firestore()
+        let currentUser = Auth.auth().currentUser
+        userRef = db.collection("users").document(currentUser!.uid)
+        
     }
     
+    func updateCurrentGroup(){
+    }
     @IBAction func logOutButton(_ sender: Any) {
          let firebaseAuth = Auth.auth()
         do {
@@ -23,9 +47,10 @@ class PartyManagementViewController: UIViewController {
         catch let signOutError as NSError {
           print ("Error signing out: %@", signOutError)
         }
-          
+        
     }
     func directToInitialScreen() {
+
         let initialVC = storyboard?.instantiateViewController(identifier: "InitialViewController") as? ViewController
         view.window?.rootViewController = initialVC
         view.window?.makeKeyAndVisible()

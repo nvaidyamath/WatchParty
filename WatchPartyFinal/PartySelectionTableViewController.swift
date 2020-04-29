@@ -18,6 +18,7 @@ class PartySelectionTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("entered")
         self.retrievePartyList()
         
         // Uncomment the following line to preserve selection between presentations

@@ -61,8 +61,8 @@ class LogInViewController: UIViewController {
                     
                 else{
                     
-                    //self.directToPartyManagement()
-                    self.directToMovieSwipe();
+                    self.directToPartyManagement()
+                    //self.directToMovieSwipe();
                 }
             }
         }

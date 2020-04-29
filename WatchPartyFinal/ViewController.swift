@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         if Auth.auth().currentUser != nil {
           // User is signed in.
             print("already signed in")
-            self.directToMovieSwipe();
+            self.directToPartyManagement();
 
         } else {
           // No user is signed in.
@@ -35,22 +35,18 @@ class ViewController: UIViewController {
         //testing to see if git pushes changes
         // Do any additional setup after loading the view.
         initUI()
-        if Auth.auth().currentUser != nil {
-          // User is signed in.
-            print("already signed in")
-            self.directToMovieSwipe();
 
-        } else {
-          // No user is signed in.
-          // ...
-            print("not signed in")
-        }
     
     }
     func directToMovieSwipe() {
        let movieSwipeVC = storyboard?.instantiateViewController(identifier: "MovieSwipe") as? SwipeMoviesViewController
        view.window?.rootViewController = movieSwipeVC
        view.window?.makeKeyAndVisible()
+    }
+    func directToPartyManagement() {
+        let partyManagementVC = storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
+        view.window?.rootViewController = partyManagementVC
+        view.window?.makeKeyAndVisible()
     }
 
     override func viewWillLayoutSubviews() {
