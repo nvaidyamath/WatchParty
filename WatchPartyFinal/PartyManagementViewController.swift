@@ -11,15 +11,22 @@ import FirebaseAuth
 import Firebase
 import FirebaseFirestore
 class PartyManagementViewController: UIViewController {
+    
     @IBOutlet var currentParty: UILabel!
     var userRef : DocumentReference!
     override func viewDidLoad() {
         super.viewDidLoad()
+         self.currentParty.text = "Party: No Party Selected"
         getData();
         userRef.getDocument(source: .cache) { (document, error) in
           if let document = document {
             let dataDescription = document.data()
             if let data = dataDescription!["currentParty"]{
+                print("data",data)
+                if ((data as! String).count==0){
+                    print("here")
+                    self.currentParty.text = "Party: No Party Selected"
+                }
                 self.currentParty.text = data as! String
             }
             else {  //then must add current party field to user
@@ -28,6 +35,9 @@ class PartyManagementViewController: UIViewController {
         }
 
       }
+    }
+    func updateLabel(text: String){
+        self.currentParty.text = text;
     }
     func getData(){
         let db = Firestore.firestore()
