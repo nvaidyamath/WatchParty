@@ -204,13 +204,16 @@ class SwipeMoviesViewController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SwipeToBucketList" {
+        if (segue.identifier == "SwipeToBucketList") {
             let dvc = segue.destination as! BucketListViewController
             dvc.partyName = self.partyName
             dvc.partyID = self.partyID
-            
-            self.updateSwipeProgressAndVotes()
+        } else if (segue.identifier == "SwipeToMemberList"){
+            let dvc = segue.destination as! MemberViewController
+            dvc.partyName = self.partyName
+            dvc.partyID = self.partyID
         }
+        self.updateSwipeProgressAndVotes()
     }
 }
 

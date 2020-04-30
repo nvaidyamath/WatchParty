@@ -33,6 +33,8 @@
 		92FF5857245981C000291CC6 /* BucketListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF5856245981C000291CC6 /* BucketListViewController.swift */; };
 		92FF5859245982F500291CC6 /* RankingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF5858245982F500291CC6 /* RankingTableViewController.swift */; };
 		92FF585D245A6B8C00291CC6 /* MovieRankTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF585C245A6B8C00291CC6 /* MovieRankTableViewCell.swift */; };
+		92FF5861245A96D200291CC6 /* MemberTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF5860245A96D200291CC6 /* MemberTableViewController.swift */; };
+		92FF5863245A9EF900291CC6 /* MemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF5862245A9EF900291CC6 /* MemberViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +91,8 @@
 		92FF5856245981C000291CC6 /* BucketListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListViewController.swift; sourceTree = "<group>"; };
 		92FF5858245982F500291CC6 /* RankingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingTableViewController.swift; sourceTree = "<group>"; };
 		92FF585C245A6B8C00291CC6 /* MovieRankTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRankTableViewCell.swift; sourceTree = "<group>"; };
+		92FF5860245A96D200291CC6 /* MemberTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberTableViewController.swift; sourceTree = "<group>"; };
+		92FF5862245A9EF900291CC6 /* MemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberViewController.swift; sourceTree = "<group>"; };
 		9B5E4481AE9CF8792B59567E /* Pods_WatchPartyFinal_WatchPartyFinalUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WatchPartyFinal_WatchPartyFinalUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A09066467220B0D13175AB9A /* Pods-WatchPartyFinalTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchPartyFinalTests.debug.xcconfig"; path = "Target Support Files/Pods-WatchPartyFinalTests/Pods-WatchPartyFinalTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A49ECDE4B0A02A4B301A378A /* Pods-WatchPartyFinal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchPartyFinal.release.xcconfig"; path = "Target Support Files/Pods-WatchPartyFinal/Pods-WatchPartyFinal.release.xcconfig"; sourceTree = "<group>"; };
@@ -158,18 +162,12 @@
 				408525EF2456318400D54AD4 /* Assets.xcassets */,
 				408525F12456318400D54AD4 /* LaunchScreen.storyboard */,
 				408525F42456318400D54AD4 /* Info.plist */,
-				6A0657D62457542A0006D2C2 /* LogInViewController.swift */,
-				6A0657D8245754460006D2C2 /* SignUpViewController.swift */,
-				92FF58462457FB7300291CC6 /* PartyManagementViewController.swift */,
-				92FF58482457FBDA00291CC6 /* PartySelectionTableViewController.swift */,
-				6A2D18FD245A2B2100690362 /* PartyJoinViewController.swift */,
-				92FF584A2457FEB800291CC6 /* PartyCreationViewController.swift */,
+				92FF5864245A9F5400291CC6 /* AuthenticationViews */,
+				92FF5867245A9FDE00291CC6 /* PartyViews */,
 				403EE0DC2458EA440066A834 /* SwipeMoviesViewController.swift */,
-				92FF585224595D1400291CC6 /* Movie.swift */,
-				92FF584E24595BD900291CC6 /* MovieRequest.swift */,
-				92FF5856245981C000291CC6 /* BucketListViewController.swift */,
-				92FF5858245982F500291CC6 /* RankingTableViewController.swift */,
-				92FF585C245A6B8C00291CC6 /* MovieRankTableViewCell.swift */,
+				92FF5866245A9FBC00291CC6 /* BucketListViews */,
+				92FF5865245A9F8B00291CC6 /* MemberViews */,
+				92FF5868245A9FFE00291CC6 /* MovieAPI */,
 			);
 			path = WatchPartyFinal;
 			sourceTree = "<group>";
@@ -208,6 +206,54 @@
 				41D839AB014CC664939F2AF6 /* Pods_WatchPartyFinalTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		92FF5864245A9F5400291CC6 /* AuthenticationViews */ = {
+			isa = PBXGroup;
+			children = (
+				6A0657D62457542A0006D2C2 /* LogInViewController.swift */,
+				6A0657D8245754460006D2C2 /* SignUpViewController.swift */,
+			);
+			path = AuthenticationViews;
+			sourceTree = "<group>";
+		};
+		92FF5865245A9F8B00291CC6 /* MemberViews */ = {
+			isa = PBXGroup;
+			children = (
+				92FF5862245A9EF900291CC6 /* MemberViewController.swift */,
+				92FF5860245A96D200291CC6 /* MemberTableViewController.swift */,
+			);
+			path = MemberViews;
+			sourceTree = "<group>";
+		};
+		92FF5866245A9FBC00291CC6 /* BucketListViews */ = {
+			isa = PBXGroup;
+			children = (
+				92FF5856245981C000291CC6 /* BucketListViewController.swift */,
+				92FF5858245982F500291CC6 /* RankingTableViewController.swift */,
+				92FF585C245A6B8C00291CC6 /* MovieRankTableViewCell.swift */,
+			);
+			path = BucketListViews;
+			sourceTree = "<group>";
+		};
+		92FF5867245A9FDE00291CC6 /* PartyViews */ = {
+			isa = PBXGroup;
+			children = (
+				92FF58462457FB7300291CC6 /* PartyManagementViewController.swift */,
+				92FF58482457FBDA00291CC6 /* PartySelectionTableViewController.swift */,
+				6A2D18FD245A2B2100690362 /* PartyJoinViewController.swift */,
+				92FF584A2457FEB800291CC6 /* PartyCreationViewController.swift */,
+			);
+			path = PartyViews;
+			sourceTree = "<group>";
+		};
+		92FF5868245A9FFE00291CC6 /* MovieAPI */ = {
+			isa = PBXGroup;
+			children = (
+				92FF585224595D1400291CC6 /* Movie.swift */,
+				92FF584E24595BD900291CC6 /* MovieRequest.swift */,
+			);
+			path = MovieAPI;
 			sourceTree = "<group>";
 		};
 		A3925D4C82550D69FBF000F6 /* Pods */ = {
@@ -468,6 +514,8 @@
 				92FF584B2457FEB800291CC6 /* PartyCreationViewController.swift in Sources */,
 				408525EB2456318200D54AD4 /* ViewController.swift in Sources */,
 				92FF5859245982F500291CC6 /* RankingTableViewController.swift in Sources */,
+				92FF5863245A9EF900291CC6 /* MemberViewController.swift in Sources */,
+				92FF5861245A96D200291CC6 /* MemberTableViewController.swift in Sources */,
 				92FF585324595D1400291CC6 /* Movie.swift in Sources */,
 				92FF584F24595BD900291CC6 /* MovieRequest.swift in Sources */,
 				92FF5857245981C000291CC6 /* BucketListViewController.swift in Sources */,
