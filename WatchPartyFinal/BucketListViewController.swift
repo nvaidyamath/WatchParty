@@ -22,6 +22,9 @@ class BucketListViewController: UIViewController {
             let dvc = segue.destination as! SwipeMoviesViewController
             dvc.partyName = self.partyName
             dvc.partyID = self.partyID
+        } else if (segue.identifier == "EmbeddedRankingSegue"){
+            let dvc = segue.destination as! RankingTableViewController
+            dvc.partyID = self.partyID
         }
     }
 

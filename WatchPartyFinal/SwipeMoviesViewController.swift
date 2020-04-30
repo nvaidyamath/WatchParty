@@ -33,7 +33,7 @@ class SwipeMoviesViewController: UIViewController {
         }
     };
     
-    var cards = [[String: String]](){
+    var movieStack = [[String: String]](){
         didSet {
             DispatchQueue.main.async{
                 self.updateMovieCard(indx: self.currMovieIndx)
@@ -41,11 +41,11 @@ class SwipeMoviesViewController: UIViewController {
         }
     }
     
-    var movies = [Movie](){
+    var newMovies = [Movie](){
         didSet {
             DispatchQueue.main.async{
                 var array = [[String: String]]()
-                for movie in self.movies{
+                for movie in self.newMovies{
                     array.append(movie.asDict)
                 }
                 self.db.collection("parties").document(self.partyID).updateData(["movieStack" : FieldValue.arrayUnion(array)]){ (err) in
@@ -55,35 +55,35 @@ class SwipeMoviesViewController: UIViewController {
                         print("[UPDATE SUCCESS] Refuel movie stack")
                     }
                 }
-                self.cards += array
+                self.movieStack += array
             }
         }
     };
     
-    func fetchMovies(page:String){
+    func fetchNewMovies(page:String){
         let movieRequest = MovieRequest(page: page)
         movieRequest.getMovies { (result) in
             switch result {
                 case .failure(let error):
                     print(error)
                 case .success(let movies):
-                    self.movies = movies
+                    self.newMovies = movies
             }
         }
     }
     
     func updateMovieCard(indx: Int){
-        let url = URL(string: "https://image.tmdb.org/t/p/w500" + self.cards[indx]["poster_path"]!)
+        let url = URL(string: "https://image.tmdb.org/t/p/w500" + self.movieStack[indx]["poster_path"]!)
         let data = try? Data(contentsOf: url!)
         self.moviePoster.image = UIImage(data: data!)
-        self.movieTitle.text = self.cards[indx]["title"]!
+        self.movieTitle.text = self.movieStack[indx]["title"]!
     }
     
     func retrieveMovieStack(){
         db.collection("parties").document(partyID).getDocument {
             (document, error) in
             if let document = document {
-                self.cards = document.get("movieStack") as! [[String: String]]
+                self.movieStack = document.get("movieStack") as! [[String: String]]
                 self.currMovieIndx = (document.get("swipeProgress") as! [String: Int])[self.userID]!
                 self.partySize = ((document.get("members")) as! Array<Any>).count
             } else {
@@ -135,11 +135,8 @@ class SwipeMoviesViewController: UIViewController {
             if movieObjectView.center.x > (view.bounds.width / 2 - 100){ // right swipe
                 swiped = true;
                 interested = true;
-                print("Interested")
-                
             }else if movieObjectView.center.x < (view.bounds.width / 2 + 100){ // left swipe
                 swiped = true;
-                print("not Interested")
             }
             
             // Return to original position
@@ -150,8 +147,8 @@ class SwipeMoviesViewController: UIViewController {
             
             // Right swipe
             if (interested){
-                let num_votes = Int(self.cards[currMovieIndx]["num_votes"]!)! + 1
-                self.cards[currMovieIndx]["num_votes"] = String(num_votes)
+                let num_votes = Int(self.movieStack[currMovieIndx]["num_votes"]!)! + 1
+                self.movieStack[currMovieIndx]["num_votes"] = String(num_votes)
                 if (checkMatch(num_votes: num_votes)){
                     self.sendMatchAlert()
                     self.addToBucketList()
@@ -160,9 +157,9 @@ class SwipeMoviesViewController: UIViewController {
             
             // Update card if fully swiped
             if(swiped){
-                if(self.currMovieIndx + 1 == cards.count){
-                    let page = String((cards.count / 20) + 1)
-                    fetchMovies(page: page)
+                if(self.currMovieIndx + 1 == self.movieStack.count){
+                    let page = String((self.movieStack.count / 20) + 1)
+                    fetchNewMovies(page: page)
                 }else{
                     self.currMovieIndx += 1
                 }
@@ -173,7 +170,7 @@ class SwipeMoviesViewController: UIViewController {
     
     func addToBucketList(){
         var array = [[String: String]]()
-        array.append(self.cards[self.currMovieIndx])
+        array.append(self.movieStack[self.currMovieIndx])
         self.db.collection("parties").document(self.partyID).updateData(["bucketList" : FieldValue.arrayUnion(array)]){ (err) in
             if let err = err {
                 print("[UPDATE FAIL] Add to bucketlist - \(err)")
@@ -184,27 +181,15 @@ class SwipeMoviesViewController: UIViewController {
     }
     
     func sendMatchAlert(){
-        let alert = UIAlertController(title: "Match!", message: "All of your party voted for this movie!", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK, Add to Bucket List", style: .default, handler: { action in
-              switch action.style{
-              case .default:
-                    print("default")
-
-              case .cancel:
-                    print("cancel")
-
-              case .destructive:
-                    print("destructive")
-
-
-        }}))
+        let alert = UIAlertController(title: "Match!", message: "Everyone voted for this movie!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok, add to bucket list!", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
     
     func updateSwipeProgressAndVotes(){
         db.collection("parties").document(self.partyID).updateData(["swipeProgress." + self.userID : self.currMovieIndx,
-                                                                    "movieStack" : self.cards]){ (err) in
+                                                                    "movieStack" : self.movieStack]){ (err) in
             if let err = err {
                 print("[UPDATE FAIL] Update swipe progress and votes: \(err)")
             } else {

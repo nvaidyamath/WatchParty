@@ -16,8 +16,14 @@ class PartySelectionTableViewController: UITableViewController {
     
     weak var delegate: SegueHandler?
 
-    var partyNames = [String]()
     var partyIDs = [String]()
+    var partyNames = [String](){
+        didSet{
+            DispatchQueue.main.async{
+                self.tableView.reloadData()
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +39,6 @@ class PartySelectionTableViewController: UITableViewController {
             if let document = document {
                 self.partyNames = document.get("partyNames")! as! [String]
                 self.partyIDs = document.get("partyIDs")! as! [String]
-                self.tableView.reloadData()
             } else {
                 print("Document does not exist in cache")
             }
