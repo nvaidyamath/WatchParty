@@ -158,7 +158,7 @@ class SwipeMoviesViewController: UIViewController {
             // Update card if fully swiped
             if(swiped){
                 addSeenMember()
-                reorderStack();
+                //reorderStack();
                 if(self.currMovieIndx + 1 == self.movieStack.count){
                     let page = String((self.movieStack.count / 20) + 1)
                     fetchNewMovies(page: page)
@@ -172,7 +172,7 @@ class SwipeMoviesViewController: UIViewController {
 //    func reorderStack(){
 //           print("reordering")
 //           print(self.movieStack)
-//           
+//
 //       }
     func addSeenMember(){
         print("adding")
