@@ -47,6 +47,7 @@ class SwipeMoviesViewController: UIViewController {
                 for movie in self.newMovies{
                     array.append(movie.asDict)
                 }
+                
                 self.db.collection("parties").document(self.partyID).updateData(["movieStack" : FieldValue.arrayUnion(array)]){ (err) in
                     if let err = err {
                         print("[UPDATE FAIL] Refuel movie stack: \(err)")
@@ -70,7 +71,7 @@ class SwipeMoviesViewController: UIViewController {
             }
         }
     }
-    
+   
     func updateMovieCard(indx: Int){
         let url = URL(string: "https://image.tmdb.org/t/p/w500" + self.movieStack[indx]["poster_path"]!)
         let data = try? Data(contentsOf: url!)
@@ -161,7 +162,7 @@ class SwipeMoviesViewController: UIViewController {
             // Update card if fully swiped
             if(swiped){
                 addSeenMember()
-                //reorderStack();
+                reorderStack();
                 if(self.currMovieIndx + 1 == self.movieStack.count){
                     let page = String((self.movieStack.count / 20) + 1)
                     fetchNewMovies(page: page)
@@ -172,11 +173,12 @@ class SwipeMoviesViewController: UIViewController {
             
         }
     }
-//    func reorderStack(){
-//           print("reordering")
-//           print(self.movieStack)
-//
-//       }
+    func reorderStack(){
+           print("reordering")
+        print(self.seenBy)
+           print(self.movieStack)
+
+       }
     func addSeenMember(){
         print("adding")
         let titleVal = self.movieStack[currMovieIndx]["title"];
@@ -222,9 +224,19 @@ class SwipeMoviesViewController: UIViewController {
    
     
     override func viewWillDisappear(_ animated: Bool) {
+        self.sortByVotes() //resorts the values
         self.updateSwipeProgressAndVotes()
         
     }
+    func sortByVotes(){
+           self.movieStack.sort { (lhs, rhs) -> Bool in
+               if let leftValue = lhs["num_votes"], let leftInt = Int(leftValue), let rightValue = rhs["num_votes"], let rightInt = Int(rightValue) {
+                   return leftInt > rightInt
+               } else {
+                   return false
+               }
+           }
+       }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "SwipeToBucketList") {
