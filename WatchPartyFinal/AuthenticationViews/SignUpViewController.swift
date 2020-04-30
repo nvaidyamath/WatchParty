@@ -72,14 +72,16 @@ class SignUpViewController: UIViewController {
                     self.errorDisplay.alpha = 1
                 }else{
                     let db = Firestore.firestore()
-                    db.collection("users").document(result!.user.uid).setData(["first_name":firstName,
-                                                                               "last_name":lastName,
-                                                                               "email":email,
-                                                                               "partyNames":partyNames,
-                                                                               "partyIDs":partyIDs]){ (err) in
-                        if err != nil {
-                            self.errorDisplay.text = "User data was not able to be processed, please try again later"
-                            self.errorDisplay.alpha = 1
+                    db.collection("users").document(result!.user.uid).setData([
+                        "first_name":firstName,
+                        "last_name":lastName,
+                        "email":email,
+                        "partyNames":partyNames,
+                        "partyIDs":partyIDs]){
+                            (err) in
+                            if err != nil {
+                                self.errorDisplay.text = "User data was not able to be processed, please try again later"
+                                self.errorDisplay.alpha = 1
                         }
                     }
                     

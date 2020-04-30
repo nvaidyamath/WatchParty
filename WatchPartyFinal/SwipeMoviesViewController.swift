@@ -11,7 +11,6 @@ import FirebaseAuth
 import Firebase
 import FirebaseFirestore
 
-
 class SwipeMoviesViewController: UIViewController {
 
     @IBOutlet var movieObjectView: UIView!
@@ -26,13 +25,13 @@ class SwipeMoviesViewController: UIViewController {
     var partySize = Int();
     var seenBy = [String:[String]]();
     var currMovieIndx = 0{
+    
         didSet{
             DispatchQueue.main.async{
                 self.updateMovieCard(indx: self.currMovieIndx)
             }
         }
     };
-    
     var movieStack = [[String: String]](){
         didSet {
             DispatchQueue.main.async{
@@ -77,9 +76,11 @@ class SwipeMoviesViewController: UIViewController {
         let data = try? Data(contentsOf: url!)
         self.moviePoster.image = UIImage(data: data!)
         self.movieTitle.text = self.movieStack[indx]["title"]!
+        self.removeSpinner()
     }
     
     func retrieveMovieStack(){
+        self.showSpinner(onView: self.view)
         db.collection("parties").document(partyID).getDocument {
             (document, error) in
             if let document = document {
@@ -99,6 +100,8 @@ class SwipeMoviesViewController: UIViewController {
         movieObjectView.addGestureRecognizer(gesture)
         partyNameLabel.text = "Party Name: " + partyName;
         retrieveMovieStack()
+        //removeSpinner()
+
         
     }
    
@@ -231,7 +234,7 @@ class SwipeMoviesViewController: UIViewController {
         } else if (segue.identifier == "SwipeToMemberList"){
             let dvc = segue.destination as! MemberViewController
             dvc.partyName = self.partyName
-            dvc.partyID = self.partyID
+            dvc.partyID = self.partyID            
         }
         self.updateSwipeProgressAndVotes()
     }

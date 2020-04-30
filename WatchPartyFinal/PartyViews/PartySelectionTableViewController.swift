@@ -15,7 +15,7 @@ import FirebaseFirestore
 class PartySelectionTableViewController: UITableViewController {
     
     weak var delegate: SegueHandler?
-
+    var vSpinner : UIView?
     var partyIDs = [String]()
     var partyNames = [String](){
         didSet{
@@ -29,6 +29,7 @@ class PartySelectionTableViewController: UITableViewController {
         super.viewDidLoad()
         self.retrievePartyList()
     }
+    
     
     func retrievePartyList(){
         
@@ -53,7 +54,6 @@ class PartySelectionTableViewController: UITableViewController {
         return 1
     }
     */
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.partyNames.count
     }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -139,53 +139,87 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c61-4B-xdc">
-                                <rect key="frame" x="26" y="215" width="363" height="548"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c61-4B-xdc">
+                                <rect key="frame" x="26" y="197" width="363" height="548"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="548" id="cbs-X7-J8B"/>
+                                    <constraint firstAttribute="width" constant="363" id="z0d-Ws-iht"/>
+                                </constraints>
                                 <connections>
                                     <segue destination="bX5-nA-x8e" kind="embed" identifier="EmbeddedSelectionSegue" id="Rcd-cM-Zpy"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eQi-pK-18T">
-                                <rect key="frame" x="59" y="153" width="86" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Create Party"/>
-                                <connections>
-                                    <segue destination="KLa-cI-YWt" kind="popoverPresentation" popoverAnchorView="eQi-pK-18T" id="IA1-Rt-rRA">
-                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                    </segue>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="syE-gU-i8g">
-                                <rect key="frame" x="272" y="153" width="69" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Join Party"/>
-                                <connections>
-                                    <segue destination="jf7-Cp-bHh" kind="popoverPresentation" popoverAnchorView="syE-gU-i8g" id="DQK-JM-haz">
-                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                    </segue>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eA8-6i-IyT">
-                                <rect key="frame" x="303" y="802" width="55" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eA8-6i-IyT">
+                                <rect key="frame" x="303" y="784" width="55" height="48"/>
                                 <state key="normal" title="Log Out"/>
                                 <connections>
                                     <action selector="logoutPressed:" destination="CEI-wK-hqf" eventType="touchUpInside" id="Jum-JP-itC"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Party Management Screen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yPF-Mc-f34">
-                                <rect key="frame" x="106" y="93" width="203" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Party Management Screen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yPF-Mc-f34">
+                                <rect key="frame" x="106" y="93" width="203" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="90" translatesAutoresizingMaskIntoConstraints="NO" id="DnQ-Iz-Uts">
+                                <rect key="frame" x="66" y="133" width="282" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eQi-pK-18T">
+                                        <rect key="frame" x="0.0" y="0.0" width="107" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="85" id="bJt-BF-wCK"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <state key="normal" title="Create Party"/>
+                                        <connections>
+                                            <segue destination="KLa-cI-YWt" kind="popoverPresentation" popoverAnchorView="eQi-pK-18T" id="IA1-Rt-rRA">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="syE-gU-i8g">
+                                        <rect key="frame" x="197" y="0.0" width="85" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="85" id="wxY-24-V1K"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <state key="normal" title="Join Party"/>
+                                        <connections>
+                                            <segue destination="jf7-Cp-bHh" kind="popoverPresentation" popoverAnchorView="syE-gU-i8g" id="DQK-JM-haz">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <rect key="contentStretch" x="0.0" y="0.0" width="1" height="0.20000000000000001"/>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="ezA-4K-Xwv" firstAttribute="trailing" secondItem="eA8-6i-IyT" secondAttribute="trailing" constant="56" id="00D-5k-Her"/>
+                            <constraint firstItem="eA8-6i-IyT" firstAttribute="leading" secondItem="ezA-4K-Xwv" secondAttribute="leading" constant="303" id="51L-w5-v5z"/>
+                            <constraint firstItem="ezA-4K-Xwv" firstAttribute="trailing" secondItem="DnQ-Iz-Uts" secondAttribute="trailing" constant="65" id="C9C-OQ-UyL"/>
+                            <constraint firstItem="c61-4B-xdc" firstAttribute="top" secondItem="DnQ-Iz-Uts" secondAttribute="bottom" constant="63" id="L0O-za-j69"/>
+                            <constraint firstItem="DnQ-Iz-Uts" firstAttribute="top" secondItem="yPF-Mc-f34" secondAttribute="bottom" constant="26.5" id="Qt9-Ia-HxT"/>
+                            <constraint firstItem="ezA-4K-Xwv" firstAttribute="trailing" secondItem="DnQ-Iz-Uts" secondAttribute="trailing" constant="66" id="QuF-hy-IIT"/>
+                            <constraint firstItem="ezA-4K-Xwv" firstAttribute="trailing" secondItem="c61-4B-xdc" secondAttribute="trailing" constant="25" id="c03-gy-73B"/>
+                            <constraint firstItem="yPF-Mc-f34" firstAttribute="leading" secondItem="ezA-4K-Xwv" secondAttribute="leading" constant="106" id="hyN-Bm-Cws"/>
+                            <constraint firstItem="eA8-6i-IyT" firstAttribute="top" secondItem="c61-4B-xdc" secondAttribute="bottom" constant="39" id="kUU-UZ-Dd7"/>
+                            <constraint firstItem="c61-4B-xdc" firstAttribute="leading" secondItem="ezA-4K-Xwv" secondAttribute="leading" constant="26" id="m1w-G0-tP2"/>
+                            <constraint firstItem="yPF-Mc-f34" firstAttribute="top" secondItem="ezA-4K-Xwv" secondAttribute="top" constant="49" id="m3H-Oh-g1D"/>
+                            <constraint firstItem="ezA-4K-Xwv" firstAttribute="trailing" secondItem="yPF-Mc-f34" secondAttribute="trailing" constant="105" id="pQf-fX-6m6"/>
+                            <constraint firstItem="DnQ-Iz-Uts" firstAttribute="leading" secondItem="ezA-4K-Xwv" secondAttribute="leading" constant="66" id="r4p-JG-UJR"/>
+                            <constraint firstItem="ezA-4K-Xwv" firstAttribute="bottom" secondItem="eA8-6i-IyT" secondAttribute="bottom" constant="30" id="sao-Io-BaY"/>
+                            <constraint firstItem="c61-4B-xdc" firstAttribute="top" secondItem="DnQ-Iz-Uts" secondAttribute="bottom" constant="45" id="wfd-ZQ-aWs"/>
+                            <constraint firstItem="eA8-6i-IyT" firstAttribute="top" secondItem="c61-4B-xdc" secondAttribute="bottom" constant="39" id="xxf-oq-jUZ"/>
+                            <constraint firstItem="DnQ-Iz-Uts" firstAttribute="top" secondItem="yPF-Mc-f34" secondAttribute="bottom" constant="8.5" id="yYm-j2-yhx"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="ezA-4K-Xwv"/>
                     </view>
                     <connections>
+                        <outlet property="createButton" destination="eQi-pK-18T" id="YH1-Tl-QGk"/>
+                        <outlet property="joinButton" destination="syE-gU-i8g" id="hDI-lz-ILb"/>
                         <segue destination="NP1-h1-KWY" kind="show" identifier="SwipeSegue" id="k09-sB-y6R"/>
                     </connections>
                 </viewController>
@@ -312,8 +346,8 @@
                                     <action selector="joinParty:" destination="jf7-Cp-bHh" eventType="touchUpInside" id="wrI-2G-lY9"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ERROR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Iw-m3-6GW">
-                                <rect key="frame" x="180" y="333" width="55" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ERROR" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Iw-m3-6GW">
+                                <rect key="frame" x="106" y="333" width="203" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -372,11 +406,22 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w81-Ax-CbP">
-                                <rect key="frame" x="183" y="311" width="49" height="30"/>
+                                <rect key="frame" x="109" y="314" width="49" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
                                     <action selector="submitButtonPressed:" destination="KLa-cI-YWt" eventType="touchUpInside" id="lxi-KS-VcX"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F5h-l7-dDZ">
+                                <rect key="frame" x="264" y="314" width="48" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancel:" destination="KLa-cI-YWt" eventType="touchUpInside" id="Kxo-A8-lu1"/>
+                                    <action selector="submitButtonPressed:" destination="KLa-cI-YWt" eventType="touchUpInside" id="Up5-ul-S5W"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -432,7 +477,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y6g-fd-aRC">
                                 <rect key="frame" x="116" y="696" width="183" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Return to Parties Selectino"/>
+                                <state key="normal" title="Return to Parties Selection"/>
                                 <connections>
                                     <action selector="partiesButtonPressed:" destination="NP1-h1-KWY" eventType="touchUpInside" id="U7f-HR-jAh"/>
                                 </connections>
@@ -681,14 +726,14 @@
             <point key="canvasLocation" x="5288" y="396"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="yda-8G-xCE"/>
-    </inferredMetricsTieBreakers>
     <resources>
-        <image name="1.circle" catalog="system" width="128" height="121"/>
+        <image name="1.circle" catalog="system" width="64" height="60"/>
         <image name="The_Wolf_of_Wall_Street_(2013).png" width="127.19999694824219" height="188.63999938964844"/>
-        <image name="arrowshape.turn.up.left.2" catalog="system" width="128" height="87"/>
-        <image name="person.2.fill" catalog="system" width="128" height="80"/>
-        <image name="tray.fill" catalog="system" width="128" height="88"/>
+        <image name="arrowshape.turn.up.left.2" catalog="system" width="64" height="42"/>
+        <image name="person.2.fill" catalog="system" width="64" height="40"/>
+        <image name="tray.fill" catalog="system" width="64" height="44"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="of2-9q-7te"/>
+    </inferredMetricsTieBreakers>
 </document>

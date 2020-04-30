@@ -87,6 +87,9 @@ class PartyCreationViewController: UIViewController {
         self.view.window?.rootViewController = partyManagementVC
         self.view.window?.makeKeyAndVisible()
     }
+    @IBAction func cancel(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     
     /*
     // MARK: - Navigation

@@ -11,12 +11,15 @@ import FirebaseAuth
 import Firebase
 import FirebaseFirestore
 
+
 protocol SegueHandler: class {
     func segueToNext(identifier: String)
     func getPartyInfo(name: String, ID: String)
 }
 
 class PartyManagementViewController: UIViewController, SegueHandler {
+    @IBOutlet var createButton: UIButton!
+    @IBOutlet var joinButton: UIButton!
     
     var selectedPartyName = String()
     var selectedPartyID = String()
@@ -32,6 +35,8 @@ class PartyManagementViewController: UIViewController, SegueHandler {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIUtilities.styleFilledButtonParty(createButton)
+        UIUtilities.styleFilledButtonParty(joinButton)
     }
     
     @IBAction func logoutPressed(_ sender: Any) {
@@ -54,6 +59,7 @@ class PartyManagementViewController: UIViewController, SegueHandler {
             let dvc = segue.destination as! SwipeMoviesViewController
             dvc.partyName = self.selectedPartyName
             dvc.partyID = self.selectedPartyID
+            //removeSpinner()
         }
     }
 }
