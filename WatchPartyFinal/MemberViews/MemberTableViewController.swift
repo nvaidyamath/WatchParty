@@ -62,7 +62,9 @@ class MemberTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemberCell", for: indexPath)
         
         let userID = self.members[indexPath.row]
-        let userName = self.userDB[userID]!
+        guard let userName = self.userDB[userID] else {
+            return cell
+        }
         cell.textLabel?.text = userName[0] + " " + userName[1]
         return cell
     }
