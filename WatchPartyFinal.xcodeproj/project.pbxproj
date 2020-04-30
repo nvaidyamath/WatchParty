@@ -25,6 +25,12 @@
 		6A0657DE24578F680006D2C2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A0657DD24578F680006D2C2 /* GoogleService-Info.plist */; };
 		6A0D2A04245B388700EAB3B4 /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0D2A03245B388700EAB3B4 /* Spinner.swift */; };
 		6A2D18FE245A2B2100690362 /* PartyJoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2D18FD245A2B2100690362 /* PartyJoinViewController.swift */; };
+		6A5C1692245B8E8E00B315DD /* thumbs up.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A5C1691245B8E8D00B315DD /* thumbs up.png */; };
+		6A5C1693245B8E8E00B315DD /* thumbs up.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A5C1691245B8E8D00B315DD /* thumbs up.png */; };
+		6A5C1694245B8E8E00B315DD /* thumbs up.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A5C1691245B8E8D00B315DD /* thumbs up.png */; };
+		6A5C1696245B8EA500B315DD /* thumbs down.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A5C1695245B8EA400B315DD /* thumbs down.png */; };
+		6A5C1697245B8EA500B315DD /* thumbs down.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A5C1695245B8EA400B315DD /* thumbs down.png */; };
+		6A5C1698245B8EA500B315DD /* thumbs down.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A5C1695245B8EA400B315DD /* thumbs down.png */; };
 		6A6F16B224589C3800601CC6 /* UIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F16B124589C3800601CC6 /* UIUtilities.swift */; };
 		92FF58472457FB7300291CC6 /* PartyManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF58462457FB7300291CC6 /* PartyManagementViewController.swift */; };
 		92FF58492457FBDA00291CC6 /* PartySelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF58482457FBDA00291CC6 /* PartySelectionTableViewController.swift */; };
@@ -83,6 +89,8 @@
 		6A0657DD24578F680006D2C2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6A0D2A03245B388700EAB3B4 /* Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
 		6A2D18FD245A2B2100690362 /* PartyJoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyJoinViewController.swift; sourceTree = "<group>"; };
+		6A5C1691245B8E8D00B315DD /* thumbs up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbs up.png"; sourceTree = "<group>"; };
+		6A5C1695245B8EA400B315DD /* thumbs down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbs down.png"; sourceTree = "<group>"; };
 		6A6F16B124589C3800601CC6 /* UIUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
 		6A6F16B62458BF3200601CC6 /* logInVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = logInVideo.mp4; path = ../../../../../../../Downloads/logInVideo.mp4; sourceTree = "<group>"; };
 		92FF58462457FB7300291CC6 /* PartyManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyManagementViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +203,8 @@
 		6A6F16B024589BD400601CC6 /* UI Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				6A5C1695245B8EA400B315DD /* thumbs down.png */,
+				6A5C1691245B8E8D00B315DD /* thumbs up.png */,
 				6A6F16B124589C3800601CC6 /* UIUtilities.swift */,
 				6A0D2A03245B388700EAB3B4 /* Spinner.swift */,
 			);
@@ -382,7 +392,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A5C1692245B8E8E00B315DD /* thumbs up.png in Resources */,
 				408525F32456318400D54AD4 /* LaunchScreen.storyboard in Resources */,
+				6A5C1696245B8EA500B315DD /* thumbs down.png in Resources */,
 				6A0657DE24578F680006D2C2 /* GoogleService-Info.plist in Resources */,
 				40DC9F492458F881004ADCB7 /* The_Wolf_of_Wall_Street_(2013).png in Resources */,
 				408525F02456318400D54AD4 /* Assets.xcassets in Resources */,
@@ -394,6 +406,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A5C1693245B8E8E00B315DD /* thumbs up.png in Resources */,
+				6A5C1697245B8EA500B315DD /* thumbs down.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,6 +415,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A5C1694245B8E8E00B315DD /* thumbs up.png in Resources */,
+				6A5C1698245B8EA500B315DD /* thumbs down.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -220,7 +220,7 @@
                     <connections>
                         <outlet property="createButton" destination="eQi-pK-18T" id="YH1-Tl-QGk"/>
                         <outlet property="joinButton" destination="syE-gU-i8g" id="hDI-lz-ILb"/>
-                        <segue destination="NP1-h1-KWY" kind="show" identifier="SwipeSegue" id="k09-sB-y6R"/>
+                        <segue destination="NP1-h1-KWY" kind="showDetail" identifier="SwipeSegue" id="k09-sB-y6R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eG5-kv-XeH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -474,67 +474,73 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y6g-fd-aRC">
-                                <rect key="frame" x="116" y="696" width="183" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Return to Parties Selection"/>
-                                <connections>
-                                    <action selector="partiesButtonPressed:" destination="NP1-h1-KWY" eventType="touchUpInside" id="U7f-HR-jAh"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hnc-rL-cRc">
-                                <rect key="frame" x="29" y="155" width="357" height="533"/>
+                            <view contentMode="scaleAspectFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hnc-rL-cRc">
+                                <rect key="frame" x="0.0" y="44" width="414" height="722"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="The_Wolf_of_Wall_Street_(2013).png" translatesAutoresizingMaskIntoConstraints="NO" id="KVt-8m-iE1">
-                                        <rect key="frame" x="16" y="0.0" width="325" height="457"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="The_Wolf_of_Wall_Street_(2013).png" translatesAutoresizingMaskIntoConstraints="NO" id="KVt-8m-iE1">
+                                        <rect key="frame" x="8" y="0.0" width="398" height="692"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Movie Title" textAlignment="center" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLv-Vu-kls">
-                                        <rect key="frame" x="26" y="465" width="305" height="56"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="thumbs up.png" translatesAutoresizingMaskIntoConstraints="NO" id="aTq-Ti-kZR">
+                                        <rect key="frame" x="8" y="0.0" width="398" height="692"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLv-Vu-kls">
+                                        <rect key="frame" x="20" y="711" width="374" height="27"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Movie Title">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <font key="NSFont" size="20" name="AmericanTypewriter"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <bool key="isElement" value="YES"/>
                                 </accessibility>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Movie Swiping " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eoR-GV-PXQ">
-                                <rect key="frame" x="142" y="31" width="132" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Party Name: placeholder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngC-HY-vdR">
-                                <rect key="frame" x="89" y="88" width="238" height="26"/>
+                                <rect key="frame" x="88" y="10" width="238" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y6g-fd-aRC">
+                                <rect key="frame" x="20" y="772" width="35" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Return to Parties Selection" image="arrowshape.turn.up.left.2.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="partiesButtonPressed:" destination="NP1-h1-KWY" eventType="touchUpInside" id="U7f-HR-jAh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mKk-SY-XXs">
+                                <rect key="frame" x="367" y="768" width="27" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="tray.fill" catalog="system">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="f2a-6n-LeH" kind="show" identifier="SwipeToBucketList" id="ule-dg-pxS"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sKE-Cn-Tiy">
-                                <rect key="frame" x="57" y="36" width="28" height="30"/>
+                                <rect key="frame" x="331" y="768" width="28" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button" image="person.2.fill" catalog="system"/>
                                 <connections>
                                     <segue destination="vOh-lI-MJc" kind="show" identifier="SwipeToMemberList" id="9Du-9o-FGF"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mKk-SY-XXs">
-                                <rect key="frame" x="321" y="34" width="27" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="tray.fill" catalog="system"/>
-                                <connections>
-                                    <segue destination="f2a-6n-LeH" kind="show" identifier="SwipeToBucketList" id="ule-dg-pxS"/>
-                                </connections>
-                            </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <viewLayoutGuide key="safeArea" id="zGO-yk-750"/>
                         <connections>
@@ -547,6 +553,7 @@
                         <outlet property="moviePoster" destination="KVt-8m-iE1" id="BVO-Xc-27h"/>
                         <outlet property="movieTitle" destination="dLv-Vu-kls" id="Tgz-Gu-FZN"/>
                         <outlet property="partyNameLabel" destination="ngC-HY-vdR" id="Jj5-Cn-Ig8"/>
+                        <outlet property="thumbsImageView" destination="aTq-Ti-kZR" id="QYq-iz-ICY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ehj-Hd-Sqn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -583,7 +590,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="NP1-h1-KWY" kind="show" identifier="MemberToSwipe" id="yda-8G-xCE"/>
+                                    <segue destination="NP1-h1-KWY" kind="showDetail" identifier="MemberToSwipe" id="yda-8G-xCE"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -594,7 +601,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A4q-aj-Oqb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4580" y="396"/>
+            <point key="canvasLocation" x="4630" y="395"/>
         </scene>
         <!--Bucket List View Controller-->
         <scene sceneID="1VD-lO-jiT">
@@ -625,7 +632,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="NP1-h1-KWY" kind="show" identifier="BucketListToSwipe" id="of2-9q-7te"/>
+                                    <segue destination="NP1-h1-KWY" kind="showDetail" identifier="BucketListToSwipe" id="of2-9q-7te"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -730,10 +737,12 @@
         <image name="1.circle" catalog="system" width="64" height="60"/>
         <image name="The_Wolf_of_Wall_Street_(2013).png" width="127.19999694824219" height="188.63999938964844"/>
         <image name="arrowshape.turn.up.left.2" catalog="system" width="64" height="42"/>
+        <image name="arrowshape.turn.up.left.2.fill" catalog="system" width="64" height="42"/>
         <image name="person.2.fill" catalog="system" width="64" height="40"/>
+        <image name="thumbs up.png" width="200" height="200"/>
         <image name="tray.fill" catalog="system" width="64" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="of2-9q-7te"/>
+        <segue reference="k09-sB-y6R"/>
     </inferredMetricsTieBreakers>
 </document>

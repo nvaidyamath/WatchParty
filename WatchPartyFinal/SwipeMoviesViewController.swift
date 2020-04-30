@@ -13,6 +13,7 @@ import FirebaseFirestore
 
 class SwipeMoviesViewController: UIViewController {
 
+    @IBOutlet var thumbsImageView: UIImageView!
     @IBOutlet var movieObjectView: UIView!
     @IBOutlet weak var partyNameLabel: UILabel!
     @IBOutlet weak var moviePoster: UIImageView!
@@ -101,8 +102,11 @@ class SwipeMoviesViewController: UIViewController {
         movieObjectView.addGestureRecognizer(gesture)
         partyNameLabel.text = "Party Name: " + partyName;
         retrieveMovieStack()
-        //removeSpinner()
-
+        moviePoster.layer.cornerRadius = 15.0
+        moviePoster.clipsToBounds = true
+//        self.presentingViewController!.modalPresentationStyle = .fullScreen //or .overFullScreen for transparency
+//        self.present(self.presentingViewController!, animated: true, completion: nil)
+        
         
     }
    
@@ -131,17 +135,29 @@ class SwipeMoviesViewController: UIViewController {
         
         // Apply transformation
         movieObjectView.transform = scaledAndRotated
+        if xFromCenter < 0{
+            thumbsImageView.image = UIImage(named: "thumbs up.png")?.withRenderingMode(.alwaysTemplate)
+            thumbsImageView.tintColor = UIColor.green
+        }
+        else{
+            thumbsImageView.image = UIImage(named: "thumbs down.png")?.withRenderingMode(.alwaysTemplate)
+            thumbsImageView.tintColor = UIColor.red
+        }
+        thumbsImageView.alpha = abs(xFromCenter) / view.center.x
         // Check state when gesture ended
         if gestureRecognizer.state == .ended {
-            
+            thumbsImageView.alpha = 0
             var swiped = false;
             var interested = false;
+            
             if movieObjectView.center.x > (view.bounds.width / 2 - 100){ // right swipe
                 swiped = true;
                 interested = true;
             }else if movieObjectView.center.x < (view.bounds.width / 2 + 100){ // left swipe
+
                 swiped = true;
             }
+
             
             // Return to original position
             rotation = CGAffineTransform(rotationAngle: 0)
