@@ -212,6 +212,7 @@ class SwipeMoviesViewController: UIViewController {
     
     
     func updateSwipeProgressAndVotes(){
+        print("sorted", self.movieStack)
         db.collection("parties").document(self.partyID).updateData(["swipeProgress." + self.userID : self.currMovieIndx,
                                                                     "movieStack" : self.movieStack,"seenBy": self.seenBy]){ (err) in
             if let err = err {
@@ -229,6 +230,8 @@ class SwipeMoviesViewController: UIViewController {
         
     }
     func sortByVotes(){
+        print("sortbyvotes called")
+        print("notsorted",self.movieStack)
            self.movieStack.sort { (lhs, rhs) -> Bool in
                if let leftValue = lhs["num_votes"], let leftInt = Int(leftValue), let rightValue = rhs["num_votes"], let rightInt = Int(rightValue) {
                    return leftInt > rightInt
@@ -236,6 +239,7 @@ class SwipeMoviesViewController: UIViewController {
                    return false
                }
            }
+            print("sorted", self.movieStack)
        }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -248,6 +252,7 @@ class SwipeMoviesViewController: UIViewController {
             dvc.partyName = self.partyName
             dvc.partyID = self.partyID            
         }
+        self.sortByVotes() //resorts the values
         self.updateSwipeProgressAndVotes()
     }
 }
