@@ -57,7 +57,7 @@ class PartyCreationViewController: UIViewController {
         let members = [userID]
         let bucketList = [String:String]()
         let swipeProgress = [userID : 0]
-        
+        let seenBy = [String:[String]]();
         let db = Firestore.firestore()
         var ref: DocumentReference? = nil
         ref = db.collection("parties").addDocument(data: [
@@ -65,6 +65,7 @@ class PartyCreationViewController: UIViewController {
             "members": members,
             "bucketList": bucketList,
             "swipeProgress": swipeProgress,
+            "seenBy": seenBy,
             "movieStack": self.stack
         ]) { err in
             if let err = err {

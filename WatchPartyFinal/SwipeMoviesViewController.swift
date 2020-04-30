@@ -24,7 +24,7 @@ class SwipeMoviesViewController: UIViewController {
     var partyName = String();
     var partyID = String();
     var partySize = Int();
-    
+    var seenBy = [String:[String]]();
     var currMovieIndx = 0{
         didSet{
             DispatchQueue.main.async{
@@ -86,6 +86,7 @@ class SwipeMoviesViewController: UIViewController {
                 self.movieStack = document.get("movieStack") as! [[String: String]]
                 self.currMovieIndx = (document.get("swipeProgress") as! [String: Int])[self.userID]!
                 self.partySize = ((document.get("members")) as! Array<Any>).count
+                self.seenBy = document.get("seenBy") as! [String:[String]]
             } else {
                 print("[ACCESS FAIL] Retrieve movie stack")
             }
@@ -126,7 +127,6 @@ class SwipeMoviesViewController: UIViewController {
         
         // Apply transformation
         movieObjectView.transform = scaledAndRotated
-
         // Check state when gesture ended
         if gestureRecognizer.state == .ended {
             
@@ -157,6 +157,8 @@ class SwipeMoviesViewController: UIViewController {
             
             // Update card if fully swiped
             if(swiped){
+                addSeenMember()
+                reorderStack();
                 if(self.currMovieIndx + 1 == self.movieStack.count){
                     let page = String((self.movieStack.count / 20) + 1)
                     fetchNewMovies(page: page)
@@ -167,7 +169,24 @@ class SwipeMoviesViewController: UIViewController {
             
         }
     }
+//    func reorderStack(){
+//           print("reordering")
+//           print(self.movieStack)
+//           
+//       }
+    func addSeenMember(){
+        print("adding")
+        let titleVal = self.movieStack[currMovieIndx]["title"];
+        if ((self.seenBy[titleVal!]) != nil){
+            self.seenBy[titleVal!]! += [Auth.auth().currentUser!.uid]
+        
+        }
+        else {
+            self.seenBy[titleVal!] = [Auth.auth().currentUser!.uid]
+        }
+        print(self.seenBy)
     
+    }
     func addToBucketList(){
         var array = [[String: String]]()
         array.append(self.movieStack[self.currMovieIndx])
@@ -189,7 +208,7 @@ class SwipeMoviesViewController: UIViewController {
     
     func updateSwipeProgressAndVotes(){
         db.collection("parties").document(self.partyID).updateData(["swipeProgress." + self.userID : self.currMovieIndx,
-                                                                    "movieStack" : self.movieStack]){ (err) in
+                                                                    "movieStack" : self.movieStack,"seenBy": self.seenBy]){ (err) in
             if let err = err {
                 print("[UPDATE FAIL] Update swipe progress and votes: \(err)")
             } else {
@@ -197,6 +216,7 @@ class SwipeMoviesViewController: UIViewController {
             }
         }
     }
+   
     
     override func viewWillDisappear(_ animated: Bool) {
         self.updateSwipeProgressAndVotes()
