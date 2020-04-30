@@ -16,6 +16,7 @@ class MemberTableViewController: UITableViewController {
 
     var partyID = String()
     var partyName = String()
+    var userDB = [String: [String]]()
 
     var members = [String](){
         didSet{
@@ -32,6 +33,18 @@ class MemberTableViewController: UITableViewController {
     
     func retrieveMembers(){
         let db = Firestore.firestore()
+        db.collection("users").getDocuments { (snapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in snapshot!.documents {
+                    let userID = document.documentID
+                    let firstName = document.get("first_name") as! String
+                    let lastName = document.get("last_name") as! String
+                    self.userDB[userID] = [firstName, lastName]
+                }
+            }
+        }
         db.collection("parties").document(self.partyID).getDocument { (document, error) in
             if let document = document {
                 self.members = document.get("members") as! [String]
@@ -47,7 +60,10 @@ class MemberTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemberCell", for: indexPath)
-        cell.textLabel?.text = self.members[indexPath.row]
+        
+        let userID = self.members[indexPath.row]
+        let userName = self.userDB[userID]!
+        cell.textLabel?.text = userName[0] + " " + userName[1]
         return cell
     }
     
