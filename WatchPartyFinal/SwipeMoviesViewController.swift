@@ -32,7 +32,6 @@ class SwipeMoviesViewController: UIViewController {
     var partySize = Int();
     var seenBy = [String:[String]]();
     var currMovieIndx = 0{
-    
         didSet{
             DispatchQueue.main.async{
                 self.updateMovieCard(indx: self.currMovieIndx)
@@ -46,7 +45,6 @@ class SwipeMoviesViewController: UIViewController {
             }
         }
     }
-    
     var newMovies = [Movie](){
         didSet {
             DispatchQueue.main.async{
@@ -103,10 +101,16 @@ class SwipeMoviesViewController: UIViewController {
     }
     
     func createDescriptionCard(){
-        descView.frame =  CGRect(x: movieObjectView.frame.origin.x, y: movieObjectView.frame.origin.y, width: movieObjectView.frame.width, height: movieObjectView.frame.height)
-        descView.backgroundColor = UIColor.clear
+        descView.frame =  CGRect(x: movieObjectView.frame.origin.x,
+                                 y: movieObjectView.frame.origin.y,
+                                 width: movieObjectView.frame.width,
+                                 height: movieObjectView.frame.height)
+        descView.backgroundColor = UIColor.red
         
-        descButton.frame = CGRect(x: flipperButton.frame.origin.x, y: flipperButton.frame.origin.y, width: flipperButton.frame.width, height: flipperButton.frame.height)
+        descButton.frame = CGRect(x: flipperButton.frame.origin.x,
+                                  y: flipperButton.frame.origin.y,
+                                  width: flipperButton.frame.width,
+                                  height: flipperButton.frame.height)
         flipperButton.setTitle("", for: .normal)
         descButton.addTarget(self, action: #selector(timeToFlip), for: .touchUpInside)
         descView.addSubview(descButton)
@@ -121,8 +125,6 @@ class SwipeMoviesViewController: UIViewController {
         retrieveMovieStack()
         moviePoster.layer.cornerRadius = 15.0
         moviePoster.clipsToBounds = true
-        
-        
     }
    
     @IBAction func partiesButtonPressed(_ sender: Any) {
@@ -130,25 +132,19 @@ class SwipeMoviesViewController: UIViewController {
         view.window?.rootViewController = partyManagementVC
         view.window?.makeKeyAndVisible()
     }
-    
-    func checkMatch(num_votes: Int) -> Bool {
-        print("checking match")
-        print(num_votes==self.partySize)
-        return (num_votes==self.partySize);
-    }
 
     @IBAction func timeToFlip(_ sender: Any) {
         if isDesc{
             isDesc = false
             UIView.transition(from: descView, to: movieObjectView, duration: 0.4, options: .transitionFlipFromLeft, completion: nil)
-            print("FLIPPING BACKKK")
-        }
-        else{
+        } else{
             isDesc = true
             flipperButton.isEnabled = true
             UIView.transition(from: movieObjectView, to: descView, duration: 0.4, options: .transitionFlipFromLeft, completion: nil)
         }
     }
+    
+    
     @objc func wasDragged(gestureRecognizer: UIPanGestureRecognizer) {
         
         // Calculuate rotation and scaling
@@ -171,70 +167,57 @@ class SwipeMoviesViewController: UIViewController {
             thumbsImageView.tintColor = UIColor.red
         }
         thumbsImageView.alpha = abs(xFromCenter) / view.center.x
+        
         // Check state when gesture ended
         if gestureRecognizer.state == .ended {
             thumbsImageView.alpha = 0
-            var swiped = false;
-            var interested = false;
+            var swiped = 0;
             
-            if movieObjectView.center.x > (view.bounds.width / 2 - 100){ // right swipe
-                swiped = true;
-                interested = true;
-            }else if movieObjectView.center.x < (view.bounds.width / 2 + 100){ // left swipe
-
-                swiped = true;
-            }
-
-            
-            // Return to original position
-            rotation = CGAffineTransform(rotationAngle: 0)
-            scaledAndRotated = rotation.scaledBy(x: 1, y: 1)
-            movieObjectView.transform = scaledAndRotated
-            movieObjectView.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
-            
-            // Right swipe
-            if (interested){
-                let num_votes = Int(self.movieStack[currMovieIndx]["num_votes"]!)! + 1
-                self.movieStack[currMovieIndx]["num_votes"] = String(num_votes)
-                if (checkMatch(num_votes: num_votes)){
-                    self.sendMatchAlert()
-                    self.addToBucketList()
-                }
+            if movieObjectView.center.x > (view.bounds.width * 0.75){ // right swipe
+                swiped = 1
+            }else if movieObjectView.center.x < (view.bounds.width * 0.25){ // left swipe
+                swiped = -1
             }
             
             // Update card if fully swiped
-            if(swiped){
+            if(swiped != 0){
                 addSeenMember()
-                reorderStack();
                 if(self.currMovieIndx + 1 == self.movieStack.count){
                     let page = String((self.movieStack.count / 20) + 1)
                     fetchNewMovies(page: page)
                 }else{
                     self.currMovieIndx += 1
                 }
+                // If it is a right swipe
+                if (swiped == 1){
+                    let num_votes = Int(self.movieStack[currMovieIndx]["num_votes"]!)! + 1
+                    self.movieStack[currMovieIndx]["num_votes"] = String(num_votes)
+                    if (num_votes == self.partySize){
+                        self.sendMatchAlert()
+                        self.addToBucketList()
+                    }
+                }
             }
-            
+            // Return card to original position
+            rotation = CGAffineTransform(rotationAngle: 0)
+            scaledAndRotated = rotation.scaledBy(x: 1, y: 1)
+            movieObjectView.transform = scaledAndRotated
+            movieObjectView.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
         }
     }
-    func reorderStack(){
-           print("reordering")
-        print(self.seenBy)
-           print(self.movieStack)
+    
 
-       }
     func addSeenMember(){
-        print("adding")
         let titleVal = self.movieStack[currMovieIndx]["title"];
         if ((self.seenBy[titleVal!]) != nil){
             self.seenBy[titleVal!]! += [Auth.auth().currentUser!.uid]
-        
         }
         else {
             self.seenBy[titleVal!] = [Auth.auth().currentUser!.uid]
         }
-        print(self.seenBy)
-    
     }
+    
+    
     func addToBucketList(){
         var array = [[String: String]]()
         array.append(self.movieStack[self.currMovieIndx])
@@ -247,6 +230,7 @@ class SwipeMoviesViewController: UIViewController {
         }
     }
     
+    
     func sendMatchAlert(){
         let alert = UIAlertController(title: "Match!", message: "Everyone voted for this movie!", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok, add to bucket list!", style: .default, handler: nil))
@@ -254,10 +238,21 @@ class SwipeMoviesViewController: UIViewController {
     }
     
     
-    func updateSwipeProgressAndVotes(){
-        print("sorted", self.movieStack)
-        db.collection("parties").document(self.partyID).updateData(["swipeProgress." + self.userID : self.currMovieIndx,
-                                                                    "movieStack" : self.movieStack,"seenBy": self.seenBy]){ (err) in
+    func sortStackByVotes(){
+        self.movieStack.sort { (lhs, rhs) -> Bool in
+            if let leftValue = lhs["num_votes"], let leftInt = Int(leftValue), let rightValue = rhs["num_votes"], let rightInt = Int(rightValue) {
+                return leftInt > rightInt
+            } else {
+                return false
+            }
+        }
+    }
+    
+    func updateSwipeProgressAndMovieStack(){
+        self.sortStackByVotes()
+        db.collection("parties").document(self.partyID).updateData([
+            "swipeProgress." + self.userID : self.currMovieIndx,
+            "movieStack" : self.movieStack,"seenBy": self.seenBy]){ (err) in
             if let err = err {
                 print("[UPDATE FAIL] Update swipe progress and votes: \(err)")
             } else {
@@ -265,26 +260,13 @@ class SwipeMoviesViewController: UIViewController {
             }
         }
     }
-   
+    
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.sortByVotes() //resorts the values
-        self.updateSwipeProgressAndVotes()
-        
+        self.updateSwipeProgressAndMovieStack()
     }
-    func sortByVotes(){
-        print("sortbyvotes called")
-        print("notsorted",self.movieStack)
-           self.movieStack.sort { (lhs, rhs) -> Bool in
-               if let leftValue = lhs["num_votes"], let leftInt = Int(leftValue), let rightValue = rhs["num_votes"], let rightInt = Int(rightValue) {
-                   return leftInt > rightInt
-               } else {
-                   return false
-               }
-           }
-            print("sorted", self.movieStack)
-       }
 
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "SwipeToBucketList") {
             let dvc = segue.destination as! BucketListViewController
@@ -295,8 +277,7 @@ class SwipeMoviesViewController: UIViewController {
             dvc.partyName = self.partyName
             dvc.partyID = self.partyID            
         }
-        self.sortByVotes() //resorts the values
-        self.updateSwipeProgressAndVotes()
+        self.updateSwipeProgressAndMovieStack()
     }
 }
 
