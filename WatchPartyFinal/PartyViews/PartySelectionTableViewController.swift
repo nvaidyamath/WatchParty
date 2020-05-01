@@ -32,7 +32,6 @@ class PartySelectionTableViewController: UITableViewController {
     
     func forceLogOut(){
         do {
-            try Auth.auth().signOut()
             // direct to initial sign-in/sign-up view
             let initialVC = self.storyboard?.instantiateViewController(identifier: "InitialViewController") as? ViewController
             self.view.window?.rootViewController = initialVC
@@ -54,7 +53,7 @@ class PartySelectionTableViewController: UITableViewController {
                 print("userID inside", userID)
                 if (document.get("partyNames")==nil || document.get("partyIDs")==nil){
                     self.forceLogOut();  //helps deal with cache error (when database is deleted, and user is still logged in)
-                    
+                    return
                 }
                 self.partyNames = document.get("partyNames")! as! [String]
                 self.partyIDs = document.get("partyIDs")! as! [String]

@@ -43,7 +43,27 @@ class PartyCreationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchMovies()
+        submitButton.isEnabled = false; //disabled untill user enters a name
+
     }
+
+    @IBAction func valueDidEndText(_ sender: Any) {
+        let partyName = nameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        if (partyName.count==0){
+            submitButton.isEnabled = false;
+        }
+        else {
+            submitButton.isEnabled = true;
+        }
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let partyName = nameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+    
+        view.endEditing(true)
+        super.touchesBegan(touches, with: event)
+    }
+
+    
 
     @IBAction func submitButtonPressed(_ sender: Any) {
         
@@ -52,7 +72,7 @@ class PartyCreationViewController: UIViewController {
         // Get party name and current userID
         let partyName = nameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let userID = Auth.auth().currentUser!.uid
-        
+       
         // Create instance of "Party" object
         let members = [userID]
         let bucketList = [String:String]()
