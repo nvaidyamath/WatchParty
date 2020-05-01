@@ -77,6 +77,7 @@ class SignUpViewController: UIViewController {
                         "last_name":lastName,
                         "email":email,
                         "partyNames":partyNames,
+                        "userName": firstName + " " + lastName,
                         "partyIDs":partyIDs]){
                             (err) in
                             if err != nil {

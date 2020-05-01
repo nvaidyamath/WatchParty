@@ -33,7 +33,7 @@ class PartyJoinViewController: UIViewController {
                     let partyName = document.get("name")!
                     db.collection("users").document(userID).updateData([
                         "partyNames": FieldValue.arrayUnion([partyName]),
-                        "partyIDs": FieldValue.arrayUnion([self.partyIdField.text!])
+                        "partyIDs": FieldValue.arrayUnion([self.partyIdField.text!]),
                     ])
                     db.collection("parties").document(self.partyIdField.text!).updateData([
                         "members": FieldValue.arrayUnion([userID])

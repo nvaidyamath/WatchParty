@@ -20,10 +20,19 @@ class SwipeMoviesViewController: UIViewController {
 
     let descView = UIView()
     let descButton = UIButton()
+    let titleLabel = UILabel()
+    let descLabel = UILabel()
+    let votesLabel = UILabel()
+    @IBOutlet var titleLabelPos: UILabel!
+    @IBOutlet var descLabelPos: UILabel!
+    @IBOutlet var votesLabelPos: UILabel!
+    
+    let thumbUpDownPoster = UIImageView()
+    let thumbUpDownDesc = UIImageView()
+    
     let posterView = UIView()
     
     let poster = UIImageView()
-    let thumbUpDown = UIImageView()
     let flipButton = UIButton()
     var superLikeButton = UIButton()
     var isDesc = false
@@ -39,6 +48,7 @@ class SwipeMoviesViewController: UIViewController {
         didSet{
             DispatchQueue.main.async{
                 self.updateMovieCard(indx: self.currMovieIndx)
+                self.updateDescriptionCard(indx: self.currMovieIndx)
             }
         }
     };
@@ -46,12 +56,14 @@ class SwipeMoviesViewController: UIViewController {
         didSet {
             DispatchQueue.main.async{
                 self.updateMovieCard(indx: self.currMovieIndx)
+                self.updateDescriptionCard(indx: self.currMovieIndx)
             }
         }
     }
     var newMovies = [Movie](){
         didSet {
             DispatchQueue.main.async{
+                self.createDescriptionSide()
                 var array = [[String: String]]()
                 for movie in self.newMovies{
                     array.append(movie.asDict)
@@ -82,6 +94,7 @@ class SwipeMoviesViewController: UIViewController {
     }
     func checkIfSuperLiked()-> Bool{
         if ((self.members.contains(self.movieStack[currMovieIndx]["num_votes"]!))) {
+            //self.movieStack[currMovieIndx]["num_votes"] = Auth.auth().currentUser?.displayName
             return true;
         }
         return false;
@@ -96,7 +109,7 @@ class SwipeMoviesViewController: UIViewController {
         
     }
    func checkIfSeen(movieTitle:String) -> Bool {
-      var seenArray = self.seenBy[movieTitle];
+      let seenArray = self.seenBy[movieTitle];
       if (seenArray == nil){
           return false;
       }
@@ -137,27 +150,31 @@ class SwipeMoviesViewController: UIViewController {
         poster.layer.cornerRadius = 15.0
         poster.clipsToBounds = true
         
-        thumbUpDown.frame = movieCardView.bounds
-        thumbUpDown.image = UIImage(named: "thumb up.png")
-    
-        flipButton.frame = movieCardView.frame
+        thumbUpDownPoster.frame = movieCardView.bounds
+        thumbUpDownPoster.image = UIImage(named: "thumb up.png")
+        
+        flipButton.frame = poster.frame
         flipButton.addTarget(self, action: #selector(timeToFlip), for: .touchUpInside)
         
         posterView.frame = movieCardView.bounds
-        posterView.addSubview(poster)
-        posterView.addSubview(thumbUpDown)
+        
         posterView.addSubview(flipButton)
+        posterView.addSubview(poster)
+        posterView.addSubview(thumbUpDownPoster)
+
     
         superLikeButton = UIButton(frame: CGRect(x: 290, y: 470, width: 75, height: 75))
-        var customBackgroundColor = UIColor(red: 68.0/255.0, green:64.0/255.0, blue: 74.0/255.0, alpha: 1.0)
+        let customBackgroundColor = UIColor(red: 68.0/255.0, green:64.0/255.0, blue: 74.0/255.0, alpha: 1.0)
         superLikeButton.backgroundColor = customBackgroundColor
         superLikeButton.layer.cornerRadius = superLikeButton.frame.width/2
         let heartIcon = UIImage(named: "superlikeheart.png") as UIImage?
         superLikeButton.setImage(heartIcon, for: .normal)
         superLikeButton.addTarget(self, action: #selector(superLikeRequested), for: .touchUpInside)
         posterView.addSubview(superLikeButton)
-        let gesture = UIPanGestureRecognizer(target: self, action: #selector(wasDragged(gestureRecognizer:)))
-        posterView.addGestureRecognizer(gesture)
+        let gestureFront = UIPanGestureRecognizer(target: self, action: #selector(wasDraggedFront(gestureRecognizer:)))
+        let gestureBack = UIPanGestureRecognizer(target: self, action: #selector(wasDraggedBack(gestureRecognizer:)))
+        posterView.addGestureRecognizer(gestureFront)
+        descView.addGestureRecognizer(gestureBack)
         
         self.movieCardView.addSubview(posterView)
     }
@@ -168,14 +185,13 @@ class SwipeMoviesViewController: UIViewController {
         }
         else{
             let currentTimeStamp = NSDate().timeIntervalSince1970
-            var timePassed = currentTimeStamp - superLikes[uid]!;
+            let timePassed = currentTimeStamp - superLikes[uid]!;
             if (timePassed>=86400){     //user has waited 24 hours, now can superlike
                 return true
             }
             else {
                 return false
             }
-            return false
         }
     }
     func sendNoSuperLikeAvailableAlert(){
@@ -195,29 +211,75 @@ class SwipeMoviesViewController: UIViewController {
             sendNoSuperLikeAvailableAlert()
         }
     }
+    func updateDescriptionCard(indx: Int){
+        
+        thumbUpDownDesc.frame = movieCardView.bounds
+        thumbUpDownDesc.image = UIImage(named: "thumb up.png")
+        
+        //Create Movie Name
+        let titleVal = self.movieStack[indx]["title"]
+        titleLabel.frame = titleLabelPos.bounds
+        titleLabel.frame.origin.x = titleLabelPos.frame.origin.x
+        titleLabel.frame.origin.y = titleLabelPos.frame.origin.y
+        titleLabel.font = titleLabelPos.font.withSize(60)
+        titleLabel.text = titleVal
+        titleLabel.numberOfLines = 0
+        titleLabel.lineBreakMode = .byWordWrapping
+
+        //Create Description
+        let descVal = self.movieStack[indx]["overview"]
+        descLabel.frame = descLabelPos.bounds
+        descLabel.frame.origin.x = descLabelPos.frame.origin.x
+        descLabel.frame.origin.y = descLabelPos.frame.origin.y
+        descLabel.font = descLabelPos.font.withSize(15)
+        descLabel.numberOfLines = 0
+        descLabel.lineBreakMode = .byWordWrapping
+        descLabel.text = descVal
+        
+        //Create Movie Votes
+        let votesVal = "Number of Votes: "+self.movieStack[indx]["num_votes"]!
+        votesLabel.frame = votesLabelPos.bounds
+        votesLabel.frame.origin.x = votesLabelPos.frame.origin.x
+        votesLabel.frame.origin.y = votesLabelPos.frame.origin.y
+        votesLabel.font = votesLabelPos.font.withSize(15)
+        votesLabel.text = votesVal
+        votesLabel.numberOfLines = 0
+        votesLabel.lineBreakMode = .byWordWrapping
+        
+        //Set All
+        descView.addSubview(titleLabel)
+        descView.addSubview(descLabel)
+        descView.addSubview(votesLabel)
+        descView.addSubview(thumbUpDownDesc)
+    }
+    
     func createDescriptionSide(){
         
         self.descView.isHidden = false;
-
-        descButton.frame = movieCardView.frame
-        descButton.addTarget(self, action: #selector(timeToFlip), for: .touchUpInside)
         
-        descView.addSubview(descButton)
         descView.layer.cornerRadius = 15.0
         descView.clipsToBounds = true
         descView.backgroundColor = UIColor.orange
         descView.frame = movieCardView.bounds
+        descButton.frame = descView.frame
+        descButton.addTarget(self, action: #selector(timeToFlip), for: .touchUpInside)
         
+        descView.addSubview(descButton)
         self.movieCardView.addSubview(descView)
+        
+        //Fetch Title
+        
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        retrieveMovieStack()
         createDescriptionSide()
+        descView.isHidden = true
         createPosterSide()
         
         partyNameLabel.text = partyName;
-        retrieveMovieStack()
     }
    
     @IBAction func partiesButtonPressed(_ sender: Any) {
@@ -238,9 +300,56 @@ class SwipeMoviesViewController: UIViewController {
             UIView.transition(from: posterView, to: descView, duration: 0.4, options: .transitionFlipFromLeft, completion: nil)
         }
     }
+    @objc func wasDraggedBack(gestureRecognizer: UIPanGestureRecognizer) {
+        
+        // Calculuate rotation and scaling
+        let labelPoint = gestureRecognizer.translation(in: view)
+        descView.center = CGPoint(x: movieCardView.bounds.width / 2 + labelPoint.x, y: movieCardView.bounds.height / 2 + labelPoint.y)
+        let xFromCenter = view.bounds.width / 2 - descView.center.x
+        
+        var rotation = CGAffineTransform(rotationAngle: -(xFromCenter / 200))
+        let scale = min(100 / abs(xFromCenter), 1)
+        var scaledAndRotated = rotation.scaledBy(x: scale, y: scale)
+        
+        // Apply transformation
+        descView.transform = scaledAndRotated
+        if xFromCenter < 0{
+            thumbUpDownDesc.image = UIImage(named: "thumbs_up.png")?.withRenderingMode(.alwaysTemplate)
+            thumbUpDownDesc.tintColor = UIColor.green
+        }
+        else{
+            thumbUpDownDesc.image = UIImage(named: "thumbs_down.png")?.withRenderingMode(.alwaysTemplate)
+            thumbUpDownDesc.tintColor = UIColor.red
+        }
+        thumbUpDownDesc.alpha = abs(xFromCenter) / view.center.x
+        
+        // Check state when gesture ended
+        if gestureRecognizer.state == .ended {
+            thumbUpDownDesc.alpha = 0
+            var swiped = 0;
+            
+            if descView.center.x > (view.bounds.width * 0.75){ // right swipe
+                swiped = 1
+            }else if descView.center.x < (view.bounds.width * 0.25){ // left swipe
+                swiped = -1
+            }
+            
+            // Update card if fully swiped
+            handleSwipe(swiped: swiped, superLiked: false);
+            
+            isDesc = false
+            UIView.transition(from: descView, to: posterView, duration: 0.4, completion: nil)
+            self.descView.isHidden = true;
+            
+            // Return card to original position
+            rotation = CGAffineTransform(rotationAngle: 0)
+            scaledAndRotated = rotation.scaledBy(x: 1, y: 1)
+            descView.transform = scaledAndRotated
+            descView.center = CGPoint(x: self.movieCardView.bounds.width / 2, y: self.movieCardView.bounds.height / 2)
+        }
+    }
     
-    
-    @objc func wasDragged(gestureRecognizer: UIPanGestureRecognizer) {
+    @objc func wasDraggedFront(gestureRecognizer: UIPanGestureRecognizer) {
         
         // Calculuate rotation and scaling
         let labelPoint = gestureRecognizer.translation(in: view)
@@ -254,18 +363,18 @@ class SwipeMoviesViewController: UIViewController {
         // Apply transformation
         posterView.transform = scaledAndRotated
         if xFromCenter < 0{
-            thumbUpDown.image = UIImage(named: "thumbs_up.png")?.withRenderingMode(.alwaysTemplate)
-            thumbUpDown.tintColor = UIColor.green
+            thumbUpDownPoster.image = UIImage(named: "thumbs_up.png")?.withRenderingMode(.alwaysTemplate)
+            thumbUpDownPoster.tintColor = UIColor.green
         }
         else{
-            thumbUpDown.image = UIImage(named: "thumbs_down.png")?.withRenderingMode(.alwaysTemplate)
-            thumbUpDown.tintColor = UIColor.red
+            thumbUpDownPoster.image = UIImage(named: "thumbs_down.png")?.withRenderingMode(.alwaysTemplate)
+            thumbUpDownPoster.tintColor = UIColor.red
         }
-        thumbUpDown.alpha = abs(xFromCenter) / view.center.x
+        thumbUpDownPoster.alpha = abs(xFromCenter) / view.center.x
         
         // Check state when gesture ended
         if gestureRecognizer.state == .ended {
-            thumbUpDown.alpha = 0
+            thumbUpDownPoster.alpha = 0
             var swiped = 0;
             
             if posterView.center.x > (view.bounds.width * 0.75){ // right swipe
