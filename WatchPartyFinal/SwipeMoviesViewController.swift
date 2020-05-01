@@ -18,7 +18,13 @@ class SwipeMoviesViewController: UIViewController {
     @IBOutlet weak var partyNameLabel: UILabel!
     @IBOutlet weak var moviePoster: UIImageView!
     @IBOutlet weak var movieTitle: UILabel!
+    @IBOutlet var desriptionView: UIView!
+    @IBOutlet var flipperButton: UIButton!
     
+
+    let descView = UIView()
+    let descButton = UIButton()
+    var isDesc = false
     let db = Firestore.firestore()
     let userID = Auth.auth().currentUser!.uid
     var partyName = String();
@@ -96,16 +102,25 @@ class SwipeMoviesViewController: UIViewController {
         }
     }
     
+    func createDescriptionCard(){
+        descView.frame =  CGRect(x: movieObjectView.frame.origin.x, y: movieObjectView.frame.origin.y, width: movieObjectView.frame.width, height: movieObjectView.frame.height)
+        descView.backgroundColor = UIColor.clear
+        
+        descButton.frame = CGRect(x: flipperButton.frame.origin.x, y: flipperButton.frame.origin.y, width: flipperButton.frame.width, height: flipperButton.frame.height)
+        flipperButton.setTitle("", for: .normal)
+        descButton.addTarget(self, action: #selector(timeToFlip), for: .touchUpInside)
+        descView.addSubview(descButton)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        createDescriptionCard()
         let gesture = UIPanGestureRecognizer(target: self, action: #selector(wasDragged(gestureRecognizer:)))
         movieObjectView.addGestureRecognizer(gesture)
         partyNameLabel.text = "Party Name: " + partyName;
         retrieveMovieStack()
         moviePoster.layer.cornerRadius = 15.0
         moviePoster.clipsToBounds = true
-//        self.presentingViewController!.modalPresentationStyle = .fullScreen //or .overFullScreen for transparency
-//        self.present(self.presentingViewController!, animated: true, completion: nil)
         
         
     }
@@ -121,7 +136,19 @@ class SwipeMoviesViewController: UIViewController {
         print(num_votes==self.partySize)
         return (num_votes==self.partySize);
     }
-    
+
+    @IBAction func timeToFlip(_ sender: Any) {
+        if isDesc{
+            isDesc = false
+            UIView.transition(from: descView, to: movieObjectView, duration: 0.4, options: .transitionFlipFromLeft, completion: nil)
+            print("FLIPPING BACKKK")
+        }
+        else{
+            isDesc = true
+            flipperButton.isEnabled = true
+            UIView.transition(from: movieObjectView, to: descView, duration: 0.4, options: .transitionFlipFromLeft, completion: nil)
+        }
+    }
     @objc func wasDragged(gestureRecognizer: UIPanGestureRecognizer) {
         
         // Calculuate rotation and scaling
