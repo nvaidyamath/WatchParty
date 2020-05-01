@@ -16,14 +16,20 @@ class RankingTableViewController: UITableViewController {
     var partyID = String()
     var partySize = Int()
     var movieRanking = [[String: String]]()
+    var members = [String]();
+    var memberUIDMap = [String:String]();
+    let group = DispatchGroup()
     var movieStack = [[String: String]](){
         didSet{
             DispatchQueue.main.async{
                 self.rankMoviesInStack()
                 self.tableView.reloadData()
+                
+                
             }
         }
     }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +42,7 @@ class RankingTableViewController: UITableViewController {
             if let document = document {
                 self.movieStack = document.get("movieStack")! as! [[String: String]]
                 self.partySize = ((document.get("members")) as! [String]).count
+                self.members = ((document.get("members")) as! [String])
             } else {
                 print("Document does not exist!")
             }
@@ -44,9 +51,15 @@ class RankingTableViewController: UITableViewController {
     
     func rankMoviesInStack(){
         for movie in movieStack{
+            if ((self.members.contains(movie["num_votes"]!))) {
+                
+                self.movieRanking.append(movie)
+                continue
+            }
             if(Int(movie["num_votes"]!)! > Int(0.5 * Double(partySize))){
                 self.movieRanking.append(movie)
             }
+            
         }
     }
 
@@ -55,7 +68,26 @@ class RankingTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.movieRanking.count
     }
-
+    func fillUIDNameMap(){
+        for uid in self.members {
+            print(uid)
+            memberUIDMap[uid] = getMemberName(uid: uid)
+        }
+    }
+    func getMemberName(uid: String)-> String{
+         let db = Firestore.firestore()
+        var name = String();
+        db.collection("users").document(uid).getDocument { (document, error) in
+            if let document = document {
+                let name = document.get("first_name") as! String
+                print("nameeee",name)
+            } else {
+                print("Document does not exist!")
+            }
+        }
+        return name;
+            
+    }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MovieRankTableViewCell", for: indexPath) as? MovieRankTableViewCell  else {
@@ -69,7 +101,20 @@ class RankingTableViewController: UITableViewController {
         cell.moviePoster.image = UIImage(data: data!)
         cell.movieTitle.text = movie["title"]!
         cell.movieVotes.text = "Votes: " + movie["num_votes"]!
+        if ((self.members.contains(movie["num_votes"]!))) {
+            let heartImage = NSTextAttachment()
+            let fullString = NSMutableAttributedString(string: "")
+            heartImage.image = UIImage(named: "superlikeheart.png")
+            heartImage.bounds = CGRect(x: 0, y: 0, width: 30, height: 30)
+            let heartImageString = NSAttributedString(attachment: heartImage)
+            fullString.append(heartImageString)
+            fullString.append(NSMutableAttributedString(string: ""+movie["num_votes"]!))
+            //let superLikedName = memberUIDMap[movie["num_votes"] as! String]
         
+
+            cell.movieVotes.attributedText = fullString;
+        }
+
         if(indexPath.row == 0){
             cell.movieRank.image = UIImage(systemName: "rosette")?.withTintColor(.systemYellow, renderingMode: .alwaysOriginal)
         } else if (indexPath.row == 1){

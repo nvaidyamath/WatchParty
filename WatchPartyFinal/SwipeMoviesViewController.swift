@@ -25,14 +25,16 @@ class SwipeMoviesViewController: UIViewController {
     let poster = UIImageView()
     let thumbUpDown = UIImageView()
     let flipButton = UIButton()
-    
+    var superLikeButton = UIButton()
     var isDesc = false
     let db = Firestore.firestore()
     let userID = Auth.auth().currentUser!.uid
     var partyName = String();
     var partyID = String();
     var partySize = Int();
+    var members = [String]()
     var seenBy = [String:[String]]();
+    var superLikes = [String:Double]();
     var currMovieIndx = 0{
         didSet{
             DispatchQueue.main.async{
@@ -78,13 +80,20 @@ class SwipeMoviesViewController: UIViewController {
             }
         }
     }
-    func findNextMovieNotSeen(){
+    func checkIfSuperLiked()-> Bool{
+        if ((self.members.contains(self.movieStack[currMovieIndx]["num_votes"]!))) {
+            return true;
+        }
+        return false;
+    }
+    func findNextMovieNotSeenOrSuperliked(){
         print("finding next movie")
           var nextMovieTitle = self.movieStack[currMovieIndx]["title"]
         print(nextMovieTitle,"currmovieindx",currMovieIndx)
-          while (checkIfSeen(movieTitle: nextMovieTitle!)){
+          while (checkIfSeen(movieTitle: nextMovieTitle!) && checkIfSuperLiked()){
             print(nextMovieTitle,"currmovieindx",currMovieIndx)
             currMovieIndx+=1;
+            
             nextMovieTitle = self.movieStack[currMovieIndx]["title"]
           }
       }
@@ -117,9 +126,9 @@ class SwipeMoviesViewController: UIViewController {
                 self.movieStack = document.get("movieStack") as! [[String: String]]
                 self.partySize = ((document.get("members")) as! Array<Any>).count
                 self.seenBy = document.get("seenBy") as! [String:[String]]
-                self.seenBy = document.get("seenBy") as! [String:[String]]
+                self.superLikes = document.get("superLikes") as! [String:Double]
                 self.currMovieIndx = 0;
-                self.findNextMovieNotSeen();
+                self.findNextMovieNotSeenOrSuperliked();
             } else {
                 print("[ACCESS FAIL] Retrieve movie stack")
             }
@@ -142,12 +151,55 @@ class SwipeMoviesViewController: UIViewController {
         posterView.addSubview(poster)
         posterView.addSubview(thumbUpDown)
         posterView.addSubview(flipButton)
+    
+        superLikeButton = UIButton(frame: CGRect(x: 290, y: 470, width: 75, height: 75))
+        var customBackgroundColor = UIColor(red: 68.0/255.0, green:64.0/255.0, blue: 74.0/255.0, alpha: 1.0)
+        superLikeButton.backgroundColor = customBackgroundColor
+        superLikeButton.layer.cornerRadius = superLikeButton.frame.width/2
+        //let heartIcon = UIImage(named: "heart.png") as UIImage?
+        let heartIcon = UIImage(named: "superlikeheart.png") as UIImage?
+        superLikeButton.setImage(heartIcon, for: .normal)
+        superLikeButton.addTarget(self, action: #selector(superLikeRequested), for: .touchUpInside)
+        posterView.addSubview(superLikeButton)
         let gesture = UIPanGestureRecognizer(target: self, action: #selector(wasDragged(gestureRecognizer:)))
         posterView.addGestureRecognizer(gesture)
         
         self.movieCardView.addSubview(posterView)
     }
-    
+    func checkCanSuperlike() -> Bool{
+        let uid = Auth.auth().currentUser!.uid
+        if superLikes[uid] == nil {
+            return true
+        }
+        else{
+            let currentTimeStamp = NSDate().timeIntervalSince1970
+            var timePassed = currentTimeStamp - superLikes[uid]!;
+            if (timePassed>=86400){     //user has waited 24 hours, now can superlike
+                return true
+            }
+            else {
+                return false
+            }
+            return false
+        }
+    }
+    func sendNoSuperLikeAvailableAlert(){
+        let alert = UIAlertController(title: "No SuperLike!", message: "Must Wait!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    @objc func superLikeRequested(sender: UIButton!) {
+        let timeStamp = NSDate().timeIntervalSince1970
+        if (checkCanSuperlike()){
+            let currentTimeStamp = NSDate().timeIntervalSince1970
+            let uid = Auth.auth().currentUser!.uid
+            superLikes[uid] = currentTimeStamp;
+            handleSwipe(swiped: 1,superLiked: true);  //treat as a swipe
+        }
+        else {
+            sendNoSuperLikeAvailableAlert()
+        }
+    }
     func createDescriptionSide(){
         
         self.descView.isHidden = false;
@@ -228,31 +280,7 @@ class SwipeMoviesViewController: UIViewController {
             }
             
             // Update card if fully swiped
-            if(swiped != 0){
-                addSeenMember()
-                var refuelNeeded = false;
-                if(self.currMovieIndx + 1 == self.movieStack.count){
-                    print("movie count",self.movieStack.count)
-                    let page = String((self.movieStack.count / 20) + 1)
-                     refuelNeeded = true;
-                    fetchNewMovies(page: page)
-                }
-                // If it is a right swipe
-                if (swiped == 1){
-                    let num_votes = Int(self.movieStack[currMovieIndx]["num_votes"]!)! + 1
-                    self.movieStack[currMovieIndx]["num_votes"] = String(num_votes)
-                    if (num_votes == self.partySize){
-                        self.sendMatchAlert()
-                        self.addToBucketList()
-                    }
-                }
-                if !(refuelNeeded){
-                    self.currMovieIndx += 1
-                    findNextMovieNotSeen();
-                }
-               
-                
-            }
+            handleSwipe(swiped: swiped, superLiked: false);
             
             // Return card to original position
             rotation = CGAffineTransform(rotationAngle: 0)
@@ -262,7 +290,40 @@ class SwipeMoviesViewController: UIViewController {
         }
     }
     
-
+    func handleSwipe(swiped:Int, superLiked: Bool){
+        if(swiped != 0){
+           addSeenMember()
+           var refuelNeeded = false;
+           if(self.currMovieIndx + 1 == self.movieStack.count){
+               print("movie count",self.movieStack.count)
+               let page = String((self.movieStack.count / 20) + 1)
+                refuelNeeded = true;
+               fetchNewMovies(page: page)
+           }
+           // If it is a right swipe
+           if (swiped == 1){
+            if (superLiked == false){
+                let num_votes = Int(self.movieStack[currMovieIndx]["num_votes"]!)! + 1
+                self.movieStack[currMovieIndx]["num_votes"] = String(num_votes)
+                if (num_votes == self.partySize){
+                    self.sendMatchAlert()
+                    self.addToBucketList()
+                }
+            }
+            else {
+                self.movieStack[currMovieIndx]["num_votes"] = (Auth.auth().currentUser?.uid)   //superliked, just set value to user who superliked
+                self.sendSuperLikeAlert()
+                self.addToBucketList()
+            }
+           }
+           if !(refuelNeeded){
+               self.currMovieIndx += 1
+               findNextMovieNotSeenOrSuperliked();
+           }
+          
+           
+       }
+    }
     func addSeenMember(){
         let titleVal = self.movieStack[currMovieIndx]["title"];
         if ((self.seenBy[titleVal!]) != nil){
@@ -292,6 +353,11 @@ class SwipeMoviesViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Ok, add to bucket list!", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    func sendSuperLikeAlert(){
+        let alert = UIAlertController(title: "SuperLiked!", message: "You have superliked this movie!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok, add to bucket list!", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
     
     
     func sortStackByVotes(){
@@ -307,7 +373,7 @@ class SwipeMoviesViewController: UIViewController {
     func updateMovieStack(){
         self.sortStackByVotes()
         db.collection("parties").document(self.partyID).updateData([
-            "movieStack" : self.movieStack,"seenBy": self.seenBy]){ (err) in
+            "movieStack" : self.movieStack,"superLikes":self.superLikes,"seenBy": self.seenBy]){ (err) in
             if let err = err {
                 print("[UPDATE FAIL] Update swipe progress and votes: \(err)")
             } else {

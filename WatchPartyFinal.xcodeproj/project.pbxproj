@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		15FC1AEAB9D82106B06A2B24 /* Pods_WatchPartyFinal_WatchPartyFinalUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5E4481AE9CF8792B59567E /* Pods_WatchPartyFinal_WatchPartyFinalUITests.framework */; };
 		247C471D21088492EF8E1360 /* Pods_WatchPartyFinal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C34732AB5D249C4B5D56D28 /* Pods_WatchPartyFinal.framework */; };
+		40392CCE245C3DDE0002D054 /* superlikeheart.png in Resources */ = {isa = PBXBuildFile; fileRef = 40392CCD245C3DDE0002D054 /* superlikeheart.png */; };
 		403EE0DD2458EA440066A834 /* SwipeMoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403EE0DC2458EA440066A834 /* SwipeMoviesViewController.swift */; };
 		408525E72456318200D54AD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408525E62456318200D54AD4 /* AppDelegate.swift */; };
 		408525E92456318200D54AD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408525E82456318200D54AD4 /* SceneDelegate.swift */; };
@@ -64,6 +65,7 @@
 		0EE9F89248E4FA29861E06B0 /* Pods-WatchPartyFinalTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchPartyFinalTests.release.xcconfig"; path = "Target Support Files/Pods-WatchPartyFinalTests/Pods-WatchPartyFinalTests.release.xcconfig"; sourceTree = "<group>"; };
 		286225293032398ABD911ACC /* Pods-WatchPartyFinal-WatchPartyFinalUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchPartyFinal-WatchPartyFinalUITests.release.xcconfig"; path = "Target Support Files/Pods-WatchPartyFinal-WatchPartyFinalUITests/Pods-WatchPartyFinal-WatchPartyFinalUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2C34732AB5D249C4B5D56D28 /* Pods_WatchPartyFinal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WatchPartyFinal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		40392CCD245C3DDE0002D054 /* superlikeheart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = superlikeheart.png; sourceTree = "<group>"; };
 		403EE0DC2458EA440066A834 /* SwipeMoviesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeMoviesViewController.swift; sourceTree = "<group>"; };
 		408525E32456318200D54AD4 /* WatchPartyFinal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchPartyFinal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		408525E62456318200D54AD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				408525E62456318200D54AD4 /* AppDelegate.swift */,
 				6A6F16B62458BF3200601CC6 /* logInVideo.mp4 */,
 				408525E82456318200D54AD4 /* SceneDelegate.swift */,
+				40392CCD245C3DDE0002D054 /* superlikeheart.png */,
 				408525EA2456318200D54AD4 /* ViewController.swift */,
 				408525EC2456318200D54AD4 /* Main.storyboard */,
 				408525EF2456318400D54AD4 /* Assets.xcassets */,
@@ -395,6 +398,7 @@
 				6A0657DE24578F680006D2C2 /* GoogleService-Info.plist in Resources */,
 				408525F02456318400D54AD4 /* Assets.xcassets in Resources */,
 				408525EE2456318200D54AD4 /* Main.storyboard in Resources */,
+				40392CCE245C3DDE0002D054 /* superlikeheart.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
