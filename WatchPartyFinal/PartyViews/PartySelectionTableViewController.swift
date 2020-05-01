@@ -30,14 +30,32 @@ class PartySelectionTableViewController: UITableViewController {
         self.retrievePartyList()
     }
     
+    func forceLogOut(){
+        do {
+            try Auth.auth().signOut()
+            // direct to initial sign-in/sign-up view
+            let initialVC = self.storyboard?.instantiateViewController(identifier: "InitialViewController") as? ViewController
+            self.view.window?.rootViewController = initialVC
+            self.view.window?.makeKeyAndVisible()
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+
+    }
+
     
     func retrievePartyList(){
         
         let userID = Auth.auth().currentUser!.uid
         let db = Firestore.firestore()
-        
+        print("userID", userID)
         db.collection("users").document(userID).getDocument { (document, error) in
             if let document = document {
+                print("userID inside", userID)
+                if (document.get("partyNames")==nil || document.get("partyIDs")==nil){
+                    self.forceLogOut();  //helps deal with cache error (when database is deleted, and user is still logged in)
+                    
+                }
                 self.partyNames = document.get("partyNames")! as! [String]
                 self.partyIDs = document.get("partyIDs")! as! [String]
             } else {

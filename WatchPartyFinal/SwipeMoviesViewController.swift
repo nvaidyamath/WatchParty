@@ -230,13 +230,12 @@ class SwipeMoviesViewController: UIViewController {
             // Update card if fully swiped
             if(swiped != 0){
                 addSeenMember()
+                var refuelNeeded = false;
                 if(self.currMovieIndx + 1 == self.movieStack.count){
                     print("movie count",self.movieStack.count)
                     let page = String((self.movieStack.count / 20) + 1)
+                     refuelNeeded = true;
                     fetchNewMovies(page: page)
-                }else{
-                    self.currMovieIndx += 1
-                    findNextMovieNotSeen();
                 }
                 // If it is a right swipe
                 if (swiped == 1){
@@ -246,6 +245,10 @@ class SwipeMoviesViewController: UIViewController {
                         self.sendMatchAlert()
                         self.addToBucketList()
                     }
+                }
+                if !(refuelNeeded){
+                    self.currMovieIndx += 1
+                    findNextMovieNotSeen();
                 }
                
                 
