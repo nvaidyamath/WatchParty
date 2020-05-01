@@ -21,6 +21,7 @@ struct Movie:Decodable{
         return ["title": title,
                 "overview": overview,
                 "poster_path": poster_path,
-                "num_votes": "0"]
+                "num_votes": "0",
+                "superLikedBy": ""]
     }
 }

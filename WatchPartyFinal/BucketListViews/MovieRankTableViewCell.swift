@@ -14,6 +14,8 @@ class MovieRankTableViewCell: UITableViewCell {
     @IBOutlet weak var moviePoster: UIImageView!
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var movieVotes: UILabel!
+    @IBOutlet weak var superLikeName: UILabel!
+    @IBOutlet weak var superLikeHeart: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

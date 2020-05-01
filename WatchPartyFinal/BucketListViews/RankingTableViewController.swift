@@ -102,20 +102,15 @@ class RankingTableViewController: UITableViewController {
         cell.moviePoster.image = UIImage(data: data!)
         cell.movieTitle.text = movie["title"]!
 
-        let voteInfo = movie["num_votes"]!
         // If the "num_votes" is a userID -> super like!
-        if (voteInfo.count > 20) {
-            let userName = self.userDB[voteInfo]![0] + " " + self.userDB[voteInfo]![1]
-            let heartImage = NSTextAttachment()
-            let fullString = NSMutableAttributedString(string: "")
-            heartImage.image = UIImage(named: "superlikeheart.png")
-            heartImage.bounds = CGRect(x: 0, y: 0, width: 30, height: 30)
-            let heartImageString = NSAttributedString(attachment: heartImage)
-            fullString.append(heartImageString)
-            fullString.append(NSMutableAttributedString(string: "" + userName))
-            cell.movieVotes.attributedText = fullString;
+        let superLike = movie["superLikedBy"]!
+        if !(superLike == "") {
+            cell.superLikeName.text = self.userDB[superLike]![0] + " " + self.userDB[superLike]![1]
+            cell.movieVotes.isHidden = true;
         } else {
-            cell.movieVotes.text = "Votes: " + voteInfo
+            cell.superLikeHeart.isHidden = true;
+            cell.superLikeName.isHidden = true;
+            cell.movieVotes.text = "Votes: " + movie["num_votes"]!
         }
 
         if(indexPath.row == 0){

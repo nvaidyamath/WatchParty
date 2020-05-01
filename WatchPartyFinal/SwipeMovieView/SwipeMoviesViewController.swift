@@ -113,7 +113,6 @@ class SwipeMoviesViewController: UIViewController {
                 self.partySize = ((document.get("members")) as! Array<Any>).count
                 self.seenBy = document.get("seenBy") as! [String:[String]]
                 self.superLikes = document.get("superLikes") as! [String:Double]
-                self.currMovieIndx = 0;
                 self.findNextMovieNotSeenOrSuperliked();
             } else {
                 print("[ACCESS FAIL] Retrieve movie stack")
@@ -218,31 +217,28 @@ class SwipeMoviesViewController: UIViewController {
 
     
     // MARK: - Check If-Seen
-    func checkIfSeen(movieTitle:String) -> Bool {
-       let seenArray = self.seenBy[movieTitle];
-       if (seenArray == nil){
-           return false;
-       }
-       if seenArray!.contains(userID){
-          return true
-       }
-          return false
-     }
+    func checkIfSeen() -> Bool {
+        let movieTitle = self.movieStack[currMovieIndx]["title"]!
+        if let seenArray = self.seenBy[movieTitle] {
+            if (seenArray.contains(userID)){
+                return true
+            }
+        }
+        return false
+    }
      
     func findNextMovieNotSeenOrSuperliked(){
-        var nextMovieTitle = self.movieStack[currMovieIndx]["title"]
-        while (checkIfSeen(movieTitle: nextMovieTitle!) && checkIfSuperLiked()){
+        while (checkIfSeen() || checkIfSuperLiked()){
             currMovieIndx+=1;
-            nextMovieTitle = self.movieStack[currMovieIndx]["title"]
         }
     }
     
     func addSeenMember(){
-        let titleVal = self.movieStack[currMovieIndx]["title"];
-        if ((self.seenBy[titleVal!]) != nil){
-            self.seenBy[titleVal!]! += [userID]
+        let movieTitle = self.movieStack[currMovieIndx]["title"]!;
+        if ((self.seenBy[movieTitle]) != nil){
+            self.seenBy[movieTitle]! += [userID]
         } else {
-            self.seenBy[titleVal!] = [userID]
+            self.seenBy[movieTitle] = [userID]
         }
     }
 
@@ -259,11 +255,7 @@ class SwipeMoviesViewController: UIViewController {
     }
     
     func checkIfSuperLiked()-> Bool{
-        if ((self.members.contains(self.movieStack[currMovieIndx]["num_votes"]!))) {
-            //self.movieStack[currMovieIndx]["num_votes"] = Auth.auth().currentUser?.displayName
-            return true;
-        }
-        return false;
+        return (self.movieStack[currMovieIndx]["superLikedBy"] != "")
     }
     
     func checkCanSuperlike() -> Bool{
@@ -281,7 +273,7 @@ class SwipeMoviesViewController: UIViewController {
     }
     
     func sendNoSuperLikeAvailableAlert(){
-        let alert = UIAlertController(title: "No SuperLike!", message: "Must Wait!", preferredStyle: .alert)
+        let alert = UIAlertController(title: "No more superlike available!", message: "Please Wait 24hrs!", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
@@ -291,8 +283,7 @@ class SwipeMoviesViewController: UIViewController {
             let currentTimeStamp = NSDate().timeIntervalSince1970
             superLikes[userID] = currentTimeStamp;
             handleSwipe(swiped: 1,superLiked: true);  //treat as a swipe
-        }
-        else {
+        } else {
             sendNoSuperLikeAvailableAlert()
         }
     }
@@ -415,23 +406,22 @@ class SwipeMoviesViewController: UIViewController {
             addSeenMember()
             var refuelNeeded = false;
             if(self.currMovieIndx + 1 == self.movieStack.count){
-                print("movie count",self.movieStack.count)
                 let page = String((self.movieStack.count / 20) + 1)
                 refuelNeeded = true;
                 fetchNewMovies(page: page)
             }
+            
             // If it is a right swipe
             if (swiped == 1){
-                if (superLiked == false){
-                    let num_votes = Int(self.movieStack[currMovieIndx]["num_votes"]!)! + 1
-                    self.movieStack[currMovieIndx]["num_votes"] = String(num_votes)
-                    if (num_votes == self.partySize){
-                        self.sendMatchAlert()
-                        self.addToBucketList()
-                    }
-                } else {
-                    self.movieStack[currMovieIndx]["num_votes"] = (userID)
+                let num_votes = Int(self.movieStack[currMovieIndx]["num_votes"]!)! + 1
+                self.movieStack[currMovieIndx]["num_votes"] = String(num_votes)
+                
+                if superLiked {
+                    self.movieStack[currMovieIndx]["superLikedBy"] = userID
                     self.sendSuperLikeAlert()
+                    self.addToBucketList()
+                } else if (num_votes == self.partySize){
+                    self.sendMatchAlert()
                     self.addToBucketList()
                 }
            }
