@@ -163,7 +163,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="90" translatesAutoresizingMaskIntoConstraints="NO" id="DnQ-Iz-Uts">
-                                <rect key="frame" x="66" y="133" width="282" height="30"/>
+                                <rect key="frame" x="66" y="143" width="282" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eQi-pK-18T">
                                         <rect key="frame" x="0.0" y="0.0" width="107" height="30"/>
@@ -474,78 +474,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleAspectFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hnc-rL-cRc">
-                                <rect key="frame" x="0.0" y="44" width="414" height="722"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cup-Jy-D8Y">
+                                <rect key="frame" x="20" y="129" width="374" height="571"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="The_Wolf_of_Wall_Street_(2013).png" translatesAutoresizingMaskIntoConstraints="NO" id="KVt-8m-iE1">
-                                        <rect key="frame" x="8" y="0.0" width="398" height="692"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="thumbs up.png" translatesAutoresizingMaskIntoConstraints="NO" id="aTq-Ti-kZR">
-                                        <rect key="frame" x="8" y="0.0" width="398" height="692"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLv-Vu-kls">
-                                        <rect key="frame" x="20" y="711" width="374" height="27"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="Movie Title">
-                                                <attributes>
-                                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                    <font key="NSFont" size="20" name="AmericanTypewriter"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oxz-sc-LOx">
-                                        <rect key="frame" x="8" y="-13" width="406" height="735"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <connections>
-                                            <action selector="timeToFlip:" destination="NP1-h1-KWY" eventType="touchUpInside" id="dbx-f8-GYO"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <accessibility key="accessibilityConfiguration">
-                                    <bool key="isElement" value="YES"/>
-                                </accessibility>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Party Name: placeholder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngC-HY-vdR">
-                                <rect key="frame" x="88" y="10" width="238" height="26"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sKE-Cn-Tiy">
+                                <rect key="frame" x="188" y="726" width="33.5" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y6g-fd-aRC">
-                                <rect key="frame" x="20" y="772" width="35" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Return to Parties Selection" image="arrowshape.turn.up.left.2.fill" catalog="system"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <state key="normal" image="person.2.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                </state>
                                 <connections>
-                                    <action selector="partiesButtonPressed:" destination="NP1-h1-KWY" eventType="touchUpInside" id="U7f-HR-jAh"/>
+                                    <segue destination="vOh-lI-MJc" kind="show" identifier="SwipeToMemberList" id="9Du-9o-FGF"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mKk-SY-XXs">
-                                <rect key="frame" x="367" y="768" width="27" height="34"/>
+                                <rect key="frame" x="342" y="726" width="25.5" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="tray.fill" catalog="system">
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <state key="normal" image="list.number" catalog="system">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                 </state>
                                 <connections>
                                     <segue destination="f2a-6n-LeH" kind="show" identifier="SwipeToBucketList" id="ule-dg-pxS"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sKE-Cn-Tiy">
-                                <rect key="frame" x="331" y="768" width="28" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y6g-fd-aRC">
+                                <rect key="frame" x="47" y="726" width="31.5" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="person.2.fill" catalog="system"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <state key="normal" image="arrowshape.turn.up.left.2.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                </state>
                                 <connections>
-                                    <segue destination="vOh-lI-MJc" kind="show" identifier="SwipeToMemberList" id="9Du-9o-FGF"/>
+                                    <action selector="partiesButtonPressed:" destination="NP1-h1-KWY" eventType="touchUpInside" id="U7f-HR-jAh"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Party Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngC-HY-vdR">
+                                <rect key="frame" x="128" y="70" width="152" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
@@ -556,12 +530,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="rbM-V8-b4C"/>
                     <connections>
-                        <outlet property="flipperButton" destination="oxz-sc-LOx" id="Bho-l6-0s8"/>
-                        <outlet property="movieObjectView" destination="hnc-rL-cRc" id="hic-bf-Br5"/>
-                        <outlet property="moviePoster" destination="KVt-8m-iE1" id="BVO-Xc-27h"/>
-                        <outlet property="movieTitle" destination="dLv-Vu-kls" id="Tgz-Gu-FZN"/>
+                        <outlet property="movieCardView" destination="Cup-Jy-D8Y" id="67N-qY-vSw"/>
                         <outlet property="partyNameLabel" destination="ngC-HY-vdR" id="Jj5-Cn-Ig8"/>
-                        <outlet property="thumbsImageView" destination="aTq-Ti-kZR" id="QYq-iz-ICY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ehj-Hd-Sqn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -651,7 +621,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ygx-YC-bbL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4581" y="-323"/>
+            <point key="canvasLocation" x="4629" y="-323"/>
         </scene>
         <!--Ranking Table View Controller-->
         <scene sceneID="eJ0-gr-xNu">
@@ -710,7 +680,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="br3-oR-oIm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5319" y="-323"/>
+            <point key="canvasLocation" x="5349" y="-323"/>
         </scene>
         <!--Member Table View Controller-->
         <scene sceneID="SiZ-Qn-2WW">
@@ -738,7 +708,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aqy-S0-xJT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5288" y="396"/>
+            <point key="canvasLocation" x="5319" y="395"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="xDg-pg-5zh">
@@ -761,11 +731,9 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="1.circle" catalog="system" width="128" height="121"/>
-        <image name="The_Wolf_of_Wall_Street_(2013).png" width="127.19999694824219" height="188.63999938964844"/>
         <image name="arrowshape.turn.up.left.2" catalog="system" width="128" height="87"/>
         <image name="arrowshape.turn.up.left.2.fill" catalog="system" width="128" height="87"/>
+        <image name="list.number" catalog="system" width="128" height="97"/>
         <image name="person.2.fill" catalog="system" width="128" height="80"/>
-        <image name="thumbs up.png" width="200" height="200"/>
-        <image name="tray.fill" catalog="system" width="128" height="88"/>
     </resources>
 </document>

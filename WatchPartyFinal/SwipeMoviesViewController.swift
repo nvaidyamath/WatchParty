@@ -13,17 +13,19 @@ import FirebaseFirestore
 
 class SwipeMoviesViewController: UIViewController {
 
-    @IBOutlet var thumbsImageView: UIImageView!
-    @IBOutlet var movieObjectView: UIView!
+
     @IBOutlet weak var partyNameLabel: UILabel!
-    @IBOutlet weak var moviePoster: UIImageView!
-    @IBOutlet weak var movieTitle: UILabel!
-    @IBOutlet var desriptionView: UIView!
-    @IBOutlet var flipperButton: UIButton!
-    
+
+    @IBOutlet weak var movieCardView: UIView!
 
     let descView = UIView()
     let descButton = UIButton()
+    let posterView = UIView()
+    
+    let poster = UIImageView()
+    let thumbUpDown = UIImageView()
+    let flipButton = UIButton()
+    
     var isDesc = false
     let db = Firestore.firestore()
     let userID = Auth.auth().currentUser!.uid
@@ -80,8 +82,8 @@ class SwipeMoviesViewController: UIViewController {
     func updateMovieCard(indx: Int){
         let url = URL(string: "https://image.tmdb.org/t/p/w500" + self.movieStack[indx]["poster_path"]!)
         let data = try? Data(contentsOf: url!)
-        self.moviePoster.image = UIImage(data: data!)
-        self.movieTitle.text = self.movieStack[indx]["title"]!
+        self.poster.image = UIImage(data: data!)
+        // self.movieTitle.text = self.movieStack[indx]["title"]!
         self.removeSpinner()
     }
     
@@ -100,31 +102,51 @@ class SwipeMoviesViewController: UIViewController {
         }
     }
     
-    func createDescriptionCard(){
-        descView.frame =  CGRect(x: movieObjectView.frame.origin.x,
-                                 y: movieObjectView.frame.origin.y,
-                                 width: movieObjectView.frame.width,
-                                 height: movieObjectView.frame.height)
-        descView.backgroundColor = UIColor.red
+    func createPosterSide(){
         
-        descButton.frame = CGRect(x: flipperButton.frame.origin.x,
-                                  y: flipperButton.frame.origin.y,
-                                  width: flipperButton.frame.width,
-                                  height: flipperButton.frame.height)
-        flipperButton.setTitle("", for: .normal)
+        poster.frame = movieCardView.bounds
+        poster.layer.cornerRadius = 15.0
+        poster.clipsToBounds = true
+        
+        thumbUpDown.frame = movieCardView.bounds
+        thumbUpDown.image = UIImage(named: "thumb up.png")
+    
+        flipButton.frame = movieCardView.frame
+        flipButton.addTarget(self, action: #selector(timeToFlip), for: .touchUpInside)
+        
+        posterView.frame = movieCardView.bounds
+        posterView.addSubview(poster)
+        posterView.addSubview(thumbUpDown)
+        posterView.addSubview(flipButton)
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(wasDragged(gestureRecognizer:)))
+        posterView.addGestureRecognizer(gesture)
+        
+        self.movieCardView.addSubview(posterView)
+    }
+    
+    func createDescriptionSide(){
+        
+        self.descView.isHidden = false;
+
+        descButton.frame = movieCardView.frame
         descButton.addTarget(self, action: #selector(timeToFlip), for: .touchUpInside)
+        
         descView.addSubview(descButton)
+        descView.layer.cornerRadius = 15.0
+        descView.clipsToBounds = true
+        descView.backgroundColor = UIColor.orange
+        descView.frame = movieCardView.bounds
+        
+        self.movieCardView.addSubview(descView)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        createDescriptionCard()
-        let gesture = UIPanGestureRecognizer(target: self, action: #selector(wasDragged(gestureRecognizer:)))
-        movieObjectView.addGestureRecognizer(gesture)
-        partyNameLabel.text = "Party Name: " + partyName;
+        createDescriptionSide()
+        createPosterSide()
+        
+        partyNameLabel.text = partyName;
         retrieveMovieStack()
-        moviePoster.layer.cornerRadius = 15.0
-        moviePoster.clipsToBounds = true
     }
    
     @IBAction func partiesButtonPressed(_ sender: Any) {
@@ -136,11 +158,13 @@ class SwipeMoviesViewController: UIViewController {
     @IBAction func timeToFlip(_ sender: Any) {
         if isDesc{
             isDesc = false
-            UIView.transition(from: descView, to: movieObjectView, duration: 0.4, options: .transitionFlipFromLeft, completion: nil)
+            UIView.transition(from: descView, to: posterView, duration: 0.4, options: .transitionFlipFromLeft, completion: nil)
+            self.descView.isHidden = true;
         } else{
             isDesc = true
-            flipperButton.isEnabled = true
-            UIView.transition(from: movieObjectView, to: descView, duration: 0.4, options: .transitionFlipFromLeft, completion: nil)
+            self.descView.isHidden = false;
+            flipButton.isEnabled = true
+            UIView.transition(from: posterView, to: descView, duration: 0.4, options: .transitionFlipFromLeft, completion: nil)
         }
     }
     
@@ -149,33 +173,33 @@ class SwipeMoviesViewController: UIViewController {
         
         // Calculuate rotation and scaling
         let labelPoint = gestureRecognizer.translation(in: view)
-        movieObjectView.center = CGPoint(x: view.bounds.width / 2 + labelPoint.x, y: view.bounds.height / 2 + labelPoint.y)
-        let xFromCenter = view.bounds.width / 2 - movieObjectView.center.x
+        posterView.center = CGPoint(x: movieCardView.bounds.width / 2 + labelPoint.x, y: movieCardView.bounds.height / 2 + labelPoint.y)
+        let xFromCenter = view.bounds.width / 2 - posterView.center.x
         
         var rotation = CGAffineTransform(rotationAngle: -(xFromCenter / 200))
         let scale = min(100 / abs(xFromCenter), 1)
         var scaledAndRotated = rotation.scaledBy(x: scale, y: scale)
         
         // Apply transformation
-        movieObjectView.transform = scaledAndRotated
+        posterView.transform = scaledAndRotated
         if xFromCenter < 0{
-            thumbsImageView.image = UIImage(named: "thumbs up.png")?.withRenderingMode(.alwaysTemplate)
-            thumbsImageView.tintColor = UIColor.green
+            thumbUpDown.image = UIImage(named: "thumbs_up.png")?.withRenderingMode(.alwaysTemplate)
+            thumbUpDown.tintColor = UIColor.green
         }
         else{
-            thumbsImageView.image = UIImage(named: "thumbs down.png")?.withRenderingMode(.alwaysTemplate)
-            thumbsImageView.tintColor = UIColor.red
+            thumbUpDown.image = UIImage(named: "thumbs_down.png")?.withRenderingMode(.alwaysTemplate)
+            thumbUpDown.tintColor = UIColor.red
         }
-        thumbsImageView.alpha = abs(xFromCenter) / view.center.x
+        thumbUpDown.alpha = abs(xFromCenter) / view.center.x
         
         // Check state when gesture ended
         if gestureRecognizer.state == .ended {
-            thumbsImageView.alpha = 0
+            thumbUpDown.alpha = 0
             var swiped = 0;
             
-            if movieObjectView.center.x > (view.bounds.width * 0.75){ // right swipe
+            if posterView.center.x > (view.bounds.width * 0.75){ // right swipe
                 swiped = 1
-            }else if movieObjectView.center.x < (view.bounds.width * 0.25){ // left swipe
+            }else if posterView.center.x < (view.bounds.width * 0.25){ // left swipe
                 swiped = -1
             }
             
@@ -198,11 +222,12 @@ class SwipeMoviesViewController: UIViewController {
                     }
                 }
             }
+            
             // Return card to original position
             rotation = CGAffineTransform(rotationAngle: 0)
             scaledAndRotated = rotation.scaledBy(x: 1, y: 1)
-            movieObjectView.transform = scaledAndRotated
-            movieObjectView.center = CGPoint(x: view.bounds.width / 2, y: view.bounds.height / 2)
+            posterView.transform = scaledAndRotated
+            posterView.center = CGPoint(x: self.movieCardView.bounds.width / 2, y: self.movieCardView.bounds.height / 2)
         }
     }
     
