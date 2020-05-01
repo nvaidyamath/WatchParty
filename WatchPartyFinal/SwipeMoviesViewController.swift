@@ -54,7 +54,7 @@ class SwipeMoviesViewController: UIViewController {
                 for movie in self.newMovies{
                     array.append(movie.asDict)
                 }
-                
+    
                 self.db.collection("parties").document(self.partyID).updateData(["movieStack" : FieldValue.arrayUnion(array)]){ (err) in
                     if let err = err {
                         print("[UPDATE FAIL] Refuel movie stack: \(err)")
@@ -232,10 +232,12 @@ class SwipeMoviesViewController: UIViewController {
             if(swiped != 0){
                 addSeenMember()
                 if(self.currMovieIndx + 1 == self.movieStack.count){
+                    print("movie count",self.movieStack.count)
                     let page = String((self.movieStack.count / 20) + 1)
                     fetchNewMovies(page: page)
                 }else{
                     self.currMovieIndx += 1
+                    findNextMovieNotSeen();
                 }
                 // If it is a right swipe
                 if (swiped == 1){
@@ -246,7 +248,8 @@ class SwipeMoviesViewController: UIViewController {
                         self.addToBucketList()
                     }
                 }
-                findNextMovieNotSeen();
+               
+                
             }
             
             // Return card to original position
