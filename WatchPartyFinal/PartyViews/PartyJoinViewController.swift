@@ -36,8 +36,7 @@ class PartyJoinViewController: UIViewController {
                         "partyIDs": FieldValue.arrayUnion([self.partyIdField.text!])
                     ])
                     db.collection("parties").document(self.partyIdField.text!).updateData([
-                        "members": FieldValue.arrayUnion([userID]),
-                        "swipeProgress."+userID: 0
+                        "members": FieldValue.arrayUnion([userID])
                     ])
                     
                     // Direct back to party management

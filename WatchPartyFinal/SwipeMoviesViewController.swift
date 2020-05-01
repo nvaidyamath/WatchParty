@@ -115,7 +115,6 @@ class SwipeMoviesViewController: UIViewController {
             (document, error) in
             if let document = document {
                 self.movieStack = document.get("movieStack") as! [[String: String]]
-                self.currMovieIndx = (document.get("swipeProgress") as! [String: Int])[self.userID]!
                 self.partySize = ((document.get("members")) as! Array<Any>).count
                 self.seenBy = document.get("seenBy") as! [String:[String]]
                 self.seenBy = document.get("seenBy") as! [String:[String]]
@@ -302,10 +301,9 @@ class SwipeMoviesViewController: UIViewController {
         }
     }
     
-    func updateSwipeProgressAndMovieStack(){
+    func updateMovieStack(){
         self.sortStackByVotes()
         db.collection("parties").document(self.partyID).updateData([
-            "swipeProgress." + self.userID : self.currMovieIndx,
             "movieStack" : self.movieStack,"seenBy": self.seenBy]){ (err) in
             if let err = err {
                 print("[UPDATE FAIL] Update swipe progress and votes: \(err)")
@@ -318,7 +316,7 @@ class SwipeMoviesViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         self.sortByVotes()
-        self.updateSwipeProgressAndMovieStack()
+        self.updateMovieStack()
     }
     func sortByVotes(){
      print("sortbyvotes called")
@@ -346,7 +344,7 @@ class SwipeMoviesViewController: UIViewController {
             dvc.partyID = self.partyID            
         }
         self.sortByVotes() //resorts the values
-        self.updateSwipeProgressAndMovieStack()
+        self.updateMovieStack()
     }
 }
 

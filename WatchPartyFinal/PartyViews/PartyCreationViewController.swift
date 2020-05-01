@@ -56,7 +56,6 @@ class PartyCreationViewController: UIViewController {
         // Create instance of "Party" object
         let members = [userID]
         let bucketList = [String:String]()
-        let swipeProgress = [userID : 0]
         let seenBy = [String:[String]]();
         let db = Firestore.firestore()
         var ref: DocumentReference? = nil
@@ -64,7 +63,6 @@ class PartyCreationViewController: UIViewController {
             "name": partyName,
             "members": members,
             "bucketList": bucketList,
-            "swipeProgress": swipeProgress,
             "seenBy": seenBy,
             "movieStack": self.stack
         ]) { err in
