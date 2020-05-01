@@ -24,8 +24,6 @@ class RankingTableViewController: UITableViewController {
             DispatchQueue.main.async{
                 self.rankMoviesInStack()
                 self.tableView.reloadData()
-                
-                
             }
         }
     }
@@ -52,7 +50,6 @@ class RankingTableViewController: UITableViewController {
     func rankMoviesInStack(){
         for movie in movieStack{
             if ((self.members.contains(movie["num_votes"]!))) {
-                
                 self.movieRanking.append(movie)
                 continue
             }
@@ -70,7 +67,6 @@ class RankingTableViewController: UITableViewController {
     }
     func fillUIDNameMap(){
         for uid in self.members {
-            print(uid)
             memberUIDMap[uid] = getMemberName(uid: uid)
         }
     }
@@ -80,7 +76,6 @@ class RankingTableViewController: UITableViewController {
         db.collection("users").document(uid).getDocument { (document, error) in
             if let document = document {
                 let name = document.get("first_name") as! String
-                print("nameeee",name)
             } else {
                 print("Document does not exist!")
             }
@@ -110,8 +105,6 @@ class RankingTableViewController: UITableViewController {
             fullString.append(heartImageString)
             fullString.append(NSMutableAttributedString(string: ""+movie["num_votes"]!))
             //let superLikedName = memberUIDMap[movie["num_votes"] as! String]
-        
-
             cell.movieVotes.attributedText = fullString;
         }
 

@@ -57,8 +57,6 @@ class PartyCreationViewController: UIViewController {
         }
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let partyName = nameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-    
         view.endEditing(true)
         super.touchesBegan(touches, with: event)
     }

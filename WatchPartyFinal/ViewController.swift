@@ -21,7 +21,6 @@ class ViewController: UIViewController {
         //need to run in viewdidappear due to hierachy
         if Auth.auth().currentUser != nil {
           // User is signed in.
-            print("already signed in")
             self.directToPartyManagement();
 
         } else {

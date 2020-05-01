@@ -87,28 +87,24 @@ class SwipeMoviesViewController: UIViewController {
         return false;
     }
     func findNextMovieNotSeenOrSuperliked(){
-        print("finding next movie")
-          var nextMovieTitle = self.movieStack[currMovieIndx]["title"]
-        print(nextMovieTitle,"currmovieindx",currMovieIndx)
-          while (checkIfSeen(movieTitle: nextMovieTitle!) && checkIfSuperLiked()){
-            print(nextMovieTitle,"currmovieindx",currMovieIndx)
+        var nextMovieTitle = self.movieStack[currMovieIndx]["title"]
+        while (checkIfSeen(movieTitle: nextMovieTitle!) && checkIfSuperLiked()){
             currMovieIndx+=1;
-            
             nextMovieTitle = self.movieStack[currMovieIndx]["title"]
-          }
+            
+        }
+        
+    }
+   func checkIfSeen(movieTitle:String) -> Bool {
+      var seenArray = self.seenBy[movieTitle];
+      if (seenArray == nil){
+          return false;
       }
-   func checkIfSeen(movieTitle:String) -> Bool{
-          var seenArray = self.seenBy[movieTitle];
-          print("seen",seenArray)
-          if (seenArray == nil){
-              return false;
-          }
-
-          if seenArray!.contains(Auth.auth().currentUser!.uid){
-              return true
-          }
-          return false
+      if seenArray!.contains(Auth.auth().currentUser!.uid){
+         return true
       }
+         return false
+    }
 
     func updateMovieCard(indx: Int){
         let url = URL(string: "https://image.tmdb.org/t/p/w500" + self.movieStack[indx]["poster_path"]!)
@@ -156,7 +152,6 @@ class SwipeMoviesViewController: UIViewController {
         var customBackgroundColor = UIColor(red: 68.0/255.0, green:64.0/255.0, blue: 74.0/255.0, alpha: 1.0)
         superLikeButton.backgroundColor = customBackgroundColor
         superLikeButton.layer.cornerRadius = superLikeButton.frame.width/2
-        //let heartIcon = UIImage(named: "heart.png") as UIImage?
         let heartIcon = UIImage(named: "superlikeheart.png") as UIImage?
         superLikeButton.setImage(heartIcon, for: .normal)
         superLikeButton.addTarget(self, action: #selector(superLikeRequested), for: .touchUpInside)
@@ -388,8 +383,6 @@ class SwipeMoviesViewController: UIViewController {
         self.updateMovieStack()
     }
     func sortByVotes(){
-     print("sortbyvotes called")
-     print("notsorted",self.movieStack)
         self.movieStack.sort { (lhs, rhs) -> Bool in
             if let leftValue = lhs["num_votes"], let leftInt = Int(leftValue), let rightValue = rhs["num_votes"], let rightInt = Int(rightValue) {
                 return leftInt > rightInt
@@ -397,7 +390,6 @@ class SwipeMoviesViewController: UIViewController {
                 return false
             }
         }
-         print("sorted", self.movieStack)
     }
 
 
