@@ -78,7 +78,29 @@ class SwipeMoviesViewController: UIViewController {
             }
         }
     }
-   
+    func findNextMovieNotSeen(){
+        print("finding next movie")
+          var nextMovieTitle = self.movieStack[currMovieIndx]["title"]
+        print(nextMovieTitle,"currmovieindx",currMovieIndx)
+          while (checkIfSeen(movieTitle: nextMovieTitle!)){
+            print(nextMovieTitle,"currmovieindx",currMovieIndx)
+            currMovieIndx+=1;
+            nextMovieTitle = self.movieStack[currMovieIndx]["title"]
+          }
+      }
+   func checkIfSeen(movieTitle:String) -> Bool{
+          var seenArray = self.seenBy[movieTitle];
+          print("seen",seenArray)
+          if (seenArray == nil){
+              return false;
+          }
+
+          if seenArray!.contains(Auth.auth().currentUser!.uid){
+              return true
+          }
+          return false
+      }
+
     func updateMovieCard(indx: Int){
         let url = URL(string: "https://image.tmdb.org/t/p/w500" + self.movieStack[indx]["poster_path"]!)
         let data = try? Data(contentsOf: url!)
@@ -96,6 +118,9 @@ class SwipeMoviesViewController: UIViewController {
                 self.currMovieIndx = (document.get("swipeProgress") as! [String: Int])[self.userID]!
                 self.partySize = ((document.get("members")) as! Array<Any>).count
                 self.seenBy = document.get("seenBy") as! [String:[String]]
+                self.seenBy = document.get("seenBy") as! [String:[String]]
+                self.currMovieIndx = 0;
+                self.findNextMovieNotSeen();
             } else {
                 print("[ACCESS FAIL] Retrieve movie stack")
             }
@@ -221,6 +246,7 @@ class SwipeMoviesViewController: UIViewController {
                         self.addToBucketList()
                     }
                 }
+                findNextMovieNotSeen();
             }
             
             // Return card to original position
@@ -288,8 +314,22 @@ class SwipeMoviesViewController: UIViewController {
     
     
     override func viewWillDisappear(_ animated: Bool) {
+        self.sortByVotes()
         self.updateSwipeProgressAndMovieStack()
     }
+    func sortByVotes(){
+     print("sortbyvotes called")
+     print("notsorted",self.movieStack)
+        self.movieStack.sort { (lhs, rhs) -> Bool in
+            if let leftValue = lhs["num_votes"], let leftInt = Int(leftValue), let rightValue = rhs["num_votes"], let rightInt = Int(rightValue) {
+                return leftInt > rightInt
+            } else {
+                return false
+            }
+        }
+         print("sorted", self.movieStack)
+    }
+
 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -302,6 +342,7 @@ class SwipeMoviesViewController: UIViewController {
             dvc.partyName = self.partyName
             dvc.partyID = self.partyID            
         }
+        self.sortByVotes() //resorts the values
         self.updateSwipeProgressAndMovieStack()
     }
 }
