@@ -31,15 +31,10 @@ class PartySelectionTableViewController: UITableViewController {
     }
     
     func forceLogOut(){
-        do {
-            // direct to initial sign-in/sign-up view
-            let initialVC = self.storyboard?.instantiateViewController(identifier: "InitialViewController") as? ViewController
-            self.view.window?.rootViewController = initialVC
-            self.view.window?.makeKeyAndVisible()
-        } catch let signOutError as NSError {
-            print ("Error signing out: %@", signOutError)
-        }
-
+        // direct to initial sign-in/sign-up view
+        let initialVC = self.storyboard?.instantiateViewController(identifier: "InitialViewController") as? ViewController
+        self.view.window?.rootViewController = initialVC
+        self.view.window?.makeKeyAndVisible()
     }
 
     
@@ -47,18 +42,17 @@ class PartySelectionTableViewController: UITableViewController {
         
         let userID = Auth.auth().currentUser!.uid
         let db = Firestore.firestore()
-        print("userID", userID)
         db.collection("users").document(userID).getDocument { (document, error) in
             if let document = document {
-                print("userID inside", userID)
-                if (document.get("partyNames")==nil || document.get("partyIDs")==nil){
+                if (document.get("partyNames") == nil || document.get("partyIDs") == nil){
+                    print("Database Cache Error - Forced Log out")
                     self.forceLogOut();  //helps deal with cache error (when database is deleted, and user is still logged in)
                     return
                 }
                 self.partyNames = document.get("partyNames")! as! [String]
                 self.partyIDs = document.get("partyIDs")! as! [String]
             } else {
-                print("Document does not exist in cache")
+                print("[FIREBASE FAIL] Retrieve party list")
             }
         }
     }

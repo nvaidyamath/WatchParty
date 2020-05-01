@@ -13,29 +13,33 @@ import FirebaseFirestore
 
 class RankingTableViewController: UITableViewController {
     
+    let db = Firestore.firestore()
     var partyID = String()
     var partySize = Int()
     var movieRanking = [[String: String]]()
-    var members = [String]();
-    var memberUIDMap = [String:String]();
-    let group = DispatchGroup()
-    var movieStack = [[String: String]](){
+    var userDB = [String: [String]]()
+    var members = [String](){
         didSet{
-            DispatchQueue.main.async{
-                self.rankMoviesInStack()
+            DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
     }
-
+    var movieStack = [[String: String]](){
+        didSet{
+            DispatchQueue.main.async{
+                self.createMovieRanking()
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        retrieveMembers()
         retrieveMovieStack()
     }
     
     func retrieveMovieStack(){
-        let db = Firestore.firestore()
         db.collection("parties").document(self.partyID).getDocument { (document, error) in
             if let document = document {
                 self.movieStack = document.get("movieStack")! as! [[String: String]]
@@ -47,16 +51,35 @@ class RankingTableViewController: UITableViewController {
         }
     }
     
-    func rankMoviesInStack(){
+    func createMovieRanking(){
         for movie in movieStack{
             if ((self.members.contains(movie["num_votes"]!))) {
                 self.movieRanking.append(movie)
-                continue
-            }
-            if(Int(movie["num_votes"]!)! > Int(0.5 * Double(partySize))){
+            } else if(Int(movie["num_votes"]!)! > Int(0.5 * Double(partySize))){
                 self.movieRanking.append(movie)
             }
-            
+        }
+    }
+    
+    func retrieveMembers(){
+        db.collection("users").getDocuments { (snapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in snapshot!.documents {
+                    let userID = document.documentID
+                    let firstName = document.get("first_name") as! String
+                    let lastName = document.get("last_name") as! String
+                    self.userDB[userID] = [firstName, lastName]
+                }
+            }
+        }
+        db.collection("parties").document(self.partyID).getDocument { (document, error) in
+            if let document = document {
+                self.members = document.get("members") as! [String]
+            } else {
+                print("Document does not exist!")
+            }
         }
     }
 
@@ -65,24 +88,7 @@ class RankingTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.movieRanking.count
     }
-    func fillUIDNameMap(){
-        for uid in self.members {
-            memberUIDMap[uid] = getMemberName(uid: uid)
-        }
-    }
-    func getMemberName(uid: String)-> String{
-         let db = Firestore.firestore()
-        var name = String();
-        db.collection("users").document(uid).getDocument { (document, error) in
-            if let document = document {
-                let name = document.get("first_name") as! String
-            } else {
-                print("Document does not exist!")
-            }
-        }
-        return name;
-            
-    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MovieRankTableViewCell", for: indexPath) as? MovieRankTableViewCell  else {
@@ -95,17 +101,21 @@ class RankingTableViewController: UITableViewController {
         let data = try? Data(contentsOf: url!)
         cell.moviePoster.image = UIImage(data: data!)
         cell.movieTitle.text = movie["title"]!
-        cell.movieVotes.text = "Votes: " + movie["num_votes"]!
-        if ((self.members.contains(movie["num_votes"]!))) {
+
+        let voteInfo = movie["num_votes"]!
+        // If the "num_votes" is a userID -> super like!
+        if (voteInfo.count > 20) {
+            let userName = self.userDB[voteInfo]![0] + " " + self.userDB[voteInfo]![1]
             let heartImage = NSTextAttachment()
             let fullString = NSMutableAttributedString(string: "")
             heartImage.image = UIImage(named: "superlikeheart.png")
             heartImage.bounds = CGRect(x: 0, y: 0, width: 30, height: 30)
             let heartImageString = NSAttributedString(attachment: heartImage)
             fullString.append(heartImageString)
-            fullString.append(NSMutableAttributedString(string: ""+movie["num_votes"]!))
-            //let superLikedName = memberUIDMap[movie["num_votes"] as! String]
+            fullString.append(NSMutableAttributedString(string: "" + userName))
             cell.movieVotes.attributedText = fullString;
+        } else {
+            cell.movieVotes.text = "Votes: " + voteInfo
         }
 
         if(indexPath.row == 0){
@@ -119,56 +129,5 @@ class RankingTableViewController: UITableViewController {
         }
         return cell
     }
-    
-    /*
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    } */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

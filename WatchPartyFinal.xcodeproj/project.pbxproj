@@ -92,7 +92,7 @@
 		6A5C1691245B8E8D00B315DD /* thumbs_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbs_up.png; sourceTree = "<group>"; };
 		6A5C1695245B8EA400B315DD /* thumbs_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbs_down.png; sourceTree = "<group>"; };
 		6A6F16B124589C3800601CC6 /* UIUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
-		6A6F16B62458BF3200601CC6 /* logInVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = logInVideo.mp4; path = ../../../../../../../Downloads/logInVideo.mp4; sourceTree = "<group>"; };
+		92A7CC84245CD8D2002F0ABA /* logInVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = logInVideo.mp4; path = ../../../../../../../Downloads/logInVideo.mp4; sourceTree = "<group>"; };
 		92FF58462457FB7300291CC6 /* PartyManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyManagementViewController.swift; sourceTree = "<group>"; };
 		92FF58482457FBDA00291CC6 /* PartySelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartySelectionTableViewController.swift; sourceTree = "<group>"; };
 		92FF584A2457FEB800291CC6 /* PartyCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyCreationViewController.swift; sourceTree = "<group>"; };
@@ -164,17 +164,14 @@
 				6A6F16B024589BD400601CC6 /* UI Utilities */,
 				6A0657DD24578F680006D2C2 /* GoogleService-Info.plist */,
 				408525E62456318200D54AD4 /* AppDelegate.swift */,
-				6A6F16B62458BF3200601CC6 /* logInVideo.mp4 */,
 				408525E82456318200D54AD4 /* SceneDelegate.swift */,
-				40392CCD245C3DDE0002D054 /* superlikeheart.png */,
-				408525EA2456318200D54AD4 /* ViewController.swift */,
 				408525EC2456318200D54AD4 /* Main.storyboard */,
 				408525EF2456318400D54AD4 /* Assets.xcassets */,
 				408525F12456318400D54AD4 /* LaunchScreen.storyboard */,
 				408525F42456318400D54AD4 /* Info.plist */,
 				92FF5864245A9F5400291CC6 /* AuthenticationViews */,
 				92FF5867245A9FDE00291CC6 /* PartyViews */,
-				403EE0DC2458EA440066A834 /* SwipeMoviesViewController.swift */,
+				92A7CC82245CC563002F0ABA /* SwipeMovieView */,
 				92FF5866245A9FBC00291CC6 /* BucketListViews */,
 				92FF5865245A9F8B00291CC6 /* MemberViews */,
 				92FF5868245A9FFE00291CC6 /* MovieAPI */,
@@ -203,6 +200,8 @@
 		6A6F16B024589BD400601CC6 /* UI Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				40392CCD245C3DDE0002D054 /* superlikeheart.png */,
+				92A7CC84245CD8D2002F0ABA /* logInVideo.mp4 */,
 				6A5C1695245B8EA400B315DD /* thumbs_down.png */,
 				6A5C1691245B8E8D00B315DD /* thumbs_up.png */,
 				6A6F16B124589C3800601CC6 /* UIUtilities.swift */,
@@ -221,9 +220,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		92A7CC82245CC563002F0ABA /* SwipeMovieView */ = {
+			isa = PBXGroup;
+			children = (
+				403EE0DC2458EA440066A834 /* SwipeMoviesViewController.swift */,
+			);
+			path = SwipeMovieView;
+			sourceTree = "<group>";
+		};
 		92FF5864245A9F5400291CC6 /* AuthenticationViews */ = {
 			isa = PBXGroup;
 			children = (
+				408525EA2456318200D54AD4 /* ViewController.swift */,
 				6A0657D62457542A0006D2C2 /* LogInViewController.swift */,
 				6A0657D8245754460006D2C2 /* SignUpViewController.swift */,
 			);
