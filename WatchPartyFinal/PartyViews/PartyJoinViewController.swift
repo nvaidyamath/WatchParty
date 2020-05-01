@@ -28,7 +28,7 @@ class PartyJoinViewController: UIViewController {
         else{
             let userID = Auth.auth().currentUser!.uid
             let db = Firestore.firestore()
-            db.collection("parties").document(partyIdField.text!).getDocument(source: .cache){ (document, error) in
+            db.collection("parties").document(partyIdField.text!).getDocument{ (document, error) in
                 if let document = document {
                     let partyName = document.get("name")!
                     db.collection("users").document(userID).updateData([
