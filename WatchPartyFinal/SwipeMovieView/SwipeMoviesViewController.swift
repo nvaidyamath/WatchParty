@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 import Firebase
 import FirebaseFirestore
-
+import SCLAlertView
 class SwipeMoviesViewController: UIViewController {
 
     // MARK: - Properties
@@ -256,7 +256,6 @@ class SwipeMoviesViewController: UIViewController {
         }
     }
 
-    
     // MARK: - Super Like
     func createSuperLikeButton(){
         superLikeButton = UIButton(frame: CGRect(x: 290, y: 470, width: 75, height: 75))
@@ -286,26 +285,33 @@ class SwipeMoviesViewController: UIViewController {
         }
     }
     
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+      return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    }
     func sendNoSuperLikeAvailableAlert(){
-        let alert = UIAlertController(title: "No more superlike available!", message: "Please Wait 24hrs!", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        let currentTimeStamp = NSDate().timeIntervalSince1970
+        let timeRemaining = 86400 - (currentTimeStamp - superLikes[userID]!);
+        let (h,m,s) = secondsToHoursMinutesSeconds(seconds:Int(round(timeRemaining)))
+        let timeString = "Will be available in: "+String(h)+":"+String(m)+":"+String(s)
+        SCLAlertView().showWarning("No more superlike available!", subTitle: timeString);
     }
     
     @objc func superLikeRequested(sender: UIButton!) {
-        if (checkCanSuperlike()){
-            let currentTimeStamp = NSDate().timeIntervalSince1970
-            superLikes[userID] = currentTimeStamp;
-            handleSwipe(swiped: 1,superLiked: true);  //treat as a swipe
-        } else {
-            sendNoSuperLikeAvailableAlert()
+    if (checkCanSuperlike()){
+        let currentTimeStamp = NSDate().timeIntervalSince1970
+        superLikes[userID] = currentTimeStamp;
+        handleSwipe(swiped: 1,superLiked: true);  //treat as a swipe
+        }
+    else {
+        sendNoSuperLikeAvailableAlert()
         }
     }
     
+    
     func sendSuperLikeAlert(){
-        let alert = UIAlertController(title: "SuperLiked!", message: "You have superliked this movie!", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok, add to bucket list!", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        let color = UIColor(red: 255.0/255.0, green: 178.0/255.0, blue: 102.0/255.0, alpha: 1)
+        let imageVal = UIImage(named: "superlikeheart.png")! as UIImage
+        SCLAlertView().showCustom("SuperLiked!", subTitle: "Movie is added to BucketList!", color: color, icon: imageVal)
     }
 
     
@@ -426,7 +432,6 @@ class SwipeMoviesViewController: UIViewController {
                 refuelNeeded = true;
                 fetchNewMovies(page: page)
             }
-            
             // If it is a right swipe
             if (swiped == 1){
                 let num_votes = Int(self.movieStack[currMovieIndx]["num_votes"]!)! + 1
@@ -450,21 +455,21 @@ class SwipeMoviesViewController: UIViewController {
     
     // MARK: - Bucket list and Match
     func sendMatchAlert(){
-        let alert = UIAlertController(title: "Match!", message: "Everyone voted for this movie!", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok, add to bucket list!", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        SCLAlertView().showSuccess("Match!", subTitle: "Movie will be added to BucketList")
     }
 
     // MARK: - Leave Party
     
     @IBAction func leavePartyBtnPressed(_ sender: Any) {
-        let alert = UIAlertController(title: "Leave Party?", message: "Are you sure?", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (action: UIAlertAction!) in
+        let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+        let alert = SCLAlertView(appearance: appearance)
+        alert.addButton("Confirm") {
             self.leavingParty = true
             self.leaveParty()
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
+        }
+        alert.addButton("Cancel") {
+       }
+       alert.showWarning("Leave Party?", subTitle: "Are you sure?")
     }
     
     func leaveParty(){
