@@ -31,11 +31,15 @@ class SwipeMoviesViewController: UIViewController {
     let poster = UIImageView()
     let flipButton = UIButton()
     var superLikeButton = UIButton()
-    
+    var superLikeAlert = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
+    var alertViewResponder = SCLAlertViewResponder(alertview: SCLAlertView());
     let db = Firestore.firestore()
     let userID = Auth.auth().currentUser!.uid
     var partyName = String();
     var partyID = String();
+    var stopTimer = false;
+    var timeRemaining = 0;
+    var timerSuperLike = Timer();
     var leavingParty = false;
     var partyNames = [String]();
     var partyIDs = [String](){
@@ -286,16 +290,31 @@ class SwipeMoviesViewController: UIViewController {
     }
     
     func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
-      return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
     func sendNoSuperLikeAvailableAlert(){
         let currentTimeStamp = NSDate().timeIntervalSince1970
         let timeRemaining = 86400 - (currentTimeStamp - superLikes[userID]!);
-        let (h,m,s) = secondsToHoursMinutesSeconds(seconds:Int(round(timeRemaining)))
+        self.timeRemaining = Int(round(timeRemaining));
+        let (h,m,s) = secondsToHoursMinutesSeconds(seconds: self.timeRemaining)
         let timeString = "Will be available in: "+String(h)+":"+String(m)+":"+String(s)
-        SCLAlertView().showWarning("No more superlike available!", subTitle: timeString);
+        superLikeAlert.addButton("Okay, I'll Wait!") {
+            self.stopTimer = true;
+        }
+        alertViewResponder = superLikeAlert.showWarning("No more superlike available!", subTitle: timeString)
+        timerSuperLike = Timer.scheduledTimer(timeInterval: 1, target: self,selector: #selector(updateLabel), userInfo: nil, repeats: true)
     }
-    
+    @objc func updateLabel() {
+        if (self.stopTimer){
+            timerSuperLike.invalidate();
+        }
+        self.timeRemaining = self.timeRemaining-1;
+        let (h,m,s) = secondsToHoursMinutesSeconds(seconds:self.timeRemaining)
+        let timeString = "Will be available in: "+String(h)+":"+String(m)+":"+String(s)
+        alertViewResponder.setSubTitle(timeString)
+        
+    }
+
     @objc func superLikeRequested(sender: UIButton!) {
     if (checkCanSuperlike()){
         let currentTimeStamp = NSDate().timeIntervalSince1970
@@ -457,12 +476,12 @@ class SwipeMoviesViewController: UIViewController {
     func sendMatchAlert(){
         SCLAlertView().showSuccess("Match!", subTitle: "Movie will be added to BucketList")
     }
-
     // MARK: - Leave Party
     
     @IBAction func leavePartyBtnPressed(_ sender: Any) {
         let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
         let alert = SCLAlertView(appearance: appearance)
+        
         alert.addButton("Confirm") {
             self.leavingParty = true
             self.leaveParty()
