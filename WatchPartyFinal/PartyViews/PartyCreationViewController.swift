@@ -73,7 +73,6 @@ class PartyCreationViewController: UIViewController {
        
         // Create instance of "Party" object
         let members = [userID]
-        let bucketList = [String:String]()
         let seenBy = [String:[String]]();
         let superLikes = [String:Double]();
         let db = Firestore.firestore()
@@ -81,7 +80,6 @@ class PartyCreationViewController: UIViewController {
         ref = db.collection("parties").addDocument(data: [
             "name": partyName,
             "members": members,
-            "bucketList": bucketList,
             "seenBy": seenBy,
             "superLikes":superLikes,
             "movieStack": self.stack

@@ -36,12 +36,15 @@ class SwipeMoviesViewController: UIViewController {
     let userID = Auth.auth().currentUser!.uid
     var partyName = String();
     var partyID = String();
+    var leavingParty = false;
     var partyNames = [String]();
     var partyIDs = [String](){
         didSet{
             DispatchQueue.main.async{
-                self.updateUserDataForPartyLeave()
-                self.directToPartyManagement()
+                if self.leavingParty {
+                    self.updateUserDataForPartyLeave()
+                    self.directToPartyManagement()
+                }
             }
         }
     }
@@ -91,6 +94,7 @@ class SwipeMoviesViewController: UIViewController {
         retrieveMovieStack()
         createDescriptionSide()
         createPosterSide()
+        leavingParty = false
         partyNameLabel.text = partyName;
      }
     
@@ -456,6 +460,7 @@ class SwipeMoviesViewController: UIViewController {
     @IBAction func leavePartyBtnPressed(_ sender: Any) {
         let alert = UIAlertController(title: "Leave Party?", message: "Are you sure?", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (action: UIAlertAction!) in
+            self.leavingParty = true
             self.leaveParty()
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -539,7 +544,6 @@ class SwipeMoviesViewController: UIViewController {
     
     // MARK: - Exiting View
     func directToPartyManagement(){
-        print("left success")
         let partyManagementVC = self.storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
         self.view.window?.rootViewController = partyManagementVC
         self.view.window?.makeKeyAndVisible()

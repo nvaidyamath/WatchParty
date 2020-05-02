@@ -59,7 +59,6 @@ class PartyManagementViewController: UIViewController, SegueHandler {
             let dvc = segue.destination as! SwipeMoviesViewController
             dvc.partyName = self.selectedPartyName
             dvc.partyID = self.selectedPartyID
-            //removeSpinner()
         }
     }
 }

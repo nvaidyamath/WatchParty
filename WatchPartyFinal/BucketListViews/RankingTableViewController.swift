@@ -53,9 +53,7 @@ class RankingTableViewController: UITableViewController {
     
     func createMovieRanking(){
         for movie in movieStack{
-            if ((self.members.contains(movie["num_votes"]!))) {
-                self.movieRanking.append(movie)
-            } else if(Int(movie["num_votes"]!)! > Int(0.5 * Double(partySize))){
+            if(Int(movie["num_votes"]!)! > Int(0.5 * Double(partySize)) || movie["superLikedBy"] != ""){
                 self.movieRanking.append(movie)
             }
         }
