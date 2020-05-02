@@ -32,6 +32,11 @@ class PartySelectionTableViewController: UITableViewController {
     
     func forceLogOut(){
         // direct to initial sign-in/sign-up view
+        do {
+            try Auth.auth().signOut()
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
         let initialVC = self.storyboard?.instantiateViewController(identifier: "InitialViewController") as? ViewController
         self.view.window?.rootViewController = initialVC
         self.view.window?.makeKeyAndVisible()
@@ -59,12 +64,6 @@ class PartySelectionTableViewController: UITableViewController {
 
     // MARK: - Table view data source
     
-    /*
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-    */
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.partyNames.count
     }
@@ -79,7 +78,6 @@ class PartySelectionTableViewController: UITableViewController {
         delegate?.getPartyInfo(name: self.partyNames[indexPath.row], ID: self.partyIDs[indexPath.row])
         delegate?.segueToNext(identifier: "SwipeSegue")
     }
-    
 
     /*
     // Override to support conditional editing of the table view.

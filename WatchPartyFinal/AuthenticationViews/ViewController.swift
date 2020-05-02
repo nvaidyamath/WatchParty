@@ -17,31 +17,30 @@ class ViewController: UIViewController {
     
     @IBOutlet var signUpButton: UIButton!
     @IBOutlet var logInButton: UIButton!
+    
     override func viewDidAppear(_ animated: Bool) {
         //need to run in viewdidappear due to hierachy
         if Auth.auth().currentUser != nil {
           // User is signed in.
             self.directToPartyManagement();
-
         } else {
-          // No user is signed in.
-          // ...
-            print("not signed in")
+            print("No user is signed in!")
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //testing to see if git pushes changes
         // Do any additional setup after loading the view.
         initUI()
-
-    
     }
+    
     func directToMovieSwipe() {
        let movieSwipeVC = storyboard?.instantiateViewController(identifier: "MovieSwipe") as? SwipeMoviesViewController
        view.window?.rootViewController = movieSwipeVC
        view.window?.makeKeyAndVisible()
     }
+    
     func directToPartyManagement() {
         let partyManagementVC = storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
         view.window?.rootViewController = partyManagementVC

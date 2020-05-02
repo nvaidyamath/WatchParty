@@ -36,6 +36,17 @@ class SwipeMoviesViewController: UIViewController {
     let userID = Auth.auth().currentUser!.uid
     var partyName = String();
     var partyID = String();
+    var partyNames = [String]();
+    var partyIDs = [String](){
+        didSet{
+            DispatchQueue.main.async{
+                self.partyNames = self.partyNames.filter{ $0 != self.partyName}
+                self.partyIDs = self.partyIDs.filter{ $0 != self.partyID}
+                self.updateUserData()
+                self.directToPartyManagement()
+            }
+        }
+    }
     var partySize = Int();
     var members = [String]()
     var seenBy = [String:[String]]();
@@ -344,8 +355,10 @@ class SwipeMoviesViewController: UIViewController {
             // Update card if fully swiped
             handleSwipe(swiped: swiped, superLiked: false);
             
-            UIView.transition(from: descView, to: posterView, duration: 0.4, completion: nil)
-            self.descView.isHidden = true;
+            if(swiped != 0){
+                UIView.transition(from: descView, to: posterView, duration: 0.4, completion: nil)
+                self.descView.isHidden = true;
+            }
             
             // Return card to original position
             rotation = CGAffineTransform(rotationAngle: 0)
@@ -415,6 +428,7 @@ class SwipeMoviesViewController: UIViewController {
             if (swiped == 1){
                 let num_votes = Int(self.movieStack[currMovieIndx]["num_votes"]!)! + 1
                 self.movieStack[currMovieIndx]["num_votes"] = String(num_votes)
+                self.movieStack[currMovieIndx]["votedBy"] = self.movieStack[currMovieIndx]["votedBy"]! + "," + userID
                 
                 if superLiked {
                     self.movieStack[currMovieIndx]["superLikedBy"] = userID
@@ -454,6 +468,62 @@ class SwipeMoviesViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
 
+    // MARK: - Leave Party
+    
+    @IBAction func leavePartyBtnPressed(_ sender: Any) {
+        let alert = UIAlertController(title: "Leave Party?", message: "Are you sure?", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (action: UIAlertAction!) in
+            self.leaveParty()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func leaveParty(){
+        // Update members
+        print("Leaving Party Sequence Initiated...")
+        self.members = self.members.filter { $0 != userID }
+        
+        // Update movie stack
+        for (indx, movie) in self.movieStack.enumerated(){
+            var users = movie["votedBy"]!.split(separator: ",")
+            for user in users{
+                if user == self.userID {
+                    users = users.filter { $0 != self.userID}
+                    self.movieStack[indx]["votedBy"] = "," + users.joined(separator: ",")
+                    self.movieStack[indx]["num_votes"] = String(Int(self.movieStack[indx]["num_votes"]!)! - 1)
+                    if self.movieStack[indx]["superLikedBy"]! == self.userID{
+                        self.movieStack[indx]["superLikedBy"] = ""
+                        self.superLikes.removeValue(forKey: self.userID)
+                    }
+                }
+            }
+        }
+        self.retrieveUserData()
+    }
+    
+    func retrieveUserData() {
+        db.collection("users").document(self.userID).getDocument { (document, error) in
+            if let document = document {
+                self.partyNames = document.get("partyNames")! as! [String]
+                self.partyIDs = document.get("partyIDs")! as! [String]
+            } else {
+                print("[FIREBASE FAIL] Retrieve user data")
+            }
+        }
+    }
+    
+    func updateUserData() {
+        db.collection("users").document(self.userID).updateData([
+            "partyNames" : self.partyNames,
+            "partyIDs" : self.partyIDs]){ (err) in
+            if let err = err {
+                print("[UPDATE FAIL] Update user data: \(err)")
+            } else {
+                print("[UPDATE SUCCESS] Update user data")
+            }
+        }
+    }
     
     // MARK: - Sort and Update Data
     func sortStackByVotes(){
@@ -469,6 +539,7 @@ class SwipeMoviesViewController: UIViewController {
     func updateMovieStack(){
         self.sortStackByVotes()
         db.collection("parties").document(self.partyID).updateData([
+            "members" : self.members,
             "movieStack" : self.movieStack,
             "superLikes":self.superLikes,
             "seenBy": self.seenBy]){ (err) in
@@ -482,6 +553,13 @@ class SwipeMoviesViewController: UIViewController {
     
     
     // MARK: - Exiting View
+    func directToPartyManagement(){
+        print("left success")
+        let partyManagementVC = self.storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
+        self.view.window?.rootViewController = partyManagementVC
+        self.view.window?.makeKeyAndVisible()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         self.updateMovieStack()
     }
