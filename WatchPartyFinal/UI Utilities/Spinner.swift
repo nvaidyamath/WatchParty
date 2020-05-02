@@ -9,10 +9,11 @@
 import Foundation
 import UIKit
 var vSpinner : UIView?
+
+
 extension UIViewController {
     func showSpinner(onView : UIView) {
-        print("Showing Spinner!")
-        
+
         //Spinner Setup
         let spinnerView = UIView.init(frame: onView.bounds)
         spinnerView.backgroundColor = UIColor.init(red: 1, green: 1, blue: 1, alpha: 1)
@@ -27,12 +28,10 @@ extension UIViewController {
             spinnerView.addSubview(ai)
             onView.addSubview(spinnerView)
         }
-        
         vSpinner = spinnerView
     }
     
     func removeSpinner() {
-        //Get Rid of Spinner
         DispatchQueue.main.async {
             vSpinner?.removeFromSuperview()
             vSpinner = nil

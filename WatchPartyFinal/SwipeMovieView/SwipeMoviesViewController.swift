@@ -11,6 +11,8 @@ import FirebaseAuth
 import Firebase
 import FirebaseFirestore
 import SCLAlertView
+
+
 class SwipeMoviesViewController: UIViewController {
 
     // MARK: - Properties
@@ -19,6 +21,10 @@ class SwipeMoviesViewController: UIViewController {
     @IBOutlet var titleLabelPos: UILabel!
     @IBOutlet var descLabelPos: UILabel!
     @IBOutlet var votesLabelPos: UILabel!
+    
+    let db = Firestore.firestore()
+    let userID = Auth.auth().currentUser!.uid
+    var alertViewResponder = SCLAlertViewResponder(alertview: SCLAlertView());
     
     let descView = UIView()
     let descButton = UIButton()
@@ -30,45 +36,26 @@ class SwipeMoviesViewController: UIViewController {
     let posterView = UIView()
     let poster = UIImageView()
     let flipButton = UIButton()
+    
     var superLikeButton = UIButton()
     var superLikeAlert = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
-    var alertViewResponder = SCLAlertViewResponder(alertview: SCLAlertView());
-    let db = Firestore.firestore()
-    let userID = Auth.auth().currentUser!.uid
-    var partyName = String();
-    var partyID = String();
+    var superLikes = [String:Double]();
     var stopTimer = false;
     var timeRemaining = 0;
     var timerSuperLike = Timer();
-    var leavingParty = false;
-    var partyNames = [String]();
-    var partyIDs = [String](){
-        didSet{
-            DispatchQueue.main.async{
-                if self.leavingParty {
-                    self.updateUserDataForPartyLeave()
-                    self.directToPartyManagement()
-                }
-            }
-        }
-    }
+    
+    var partyName = String();
+    var partyID = String();
     var partySize = Int();
     var members = [String]()
     var seenBy = [String:[String]]();
-    var superLikes = [String:Double]();
-    var currMovieIndx = 0{
-        didSet{
-            DispatchQueue.main.async{
-                self.updateMovieCard(indx: self.currMovieIndx)
-                self.updateDescriptionCard(indx: self.currMovieIndx)
-            }
-        }
-    };
+    var currMovieIndx = 0
     var movieStack = [[String: String]](){
         didSet {
             DispatchQueue.main.async{
-                self.updateMovieCard(indx: self.currMovieIndx)
-                self.updateDescriptionCard(indx: self.currMovieIndx)
+                self.findNextMovieNotSeenOrSuperliked();
+                self.updateMovieCard()
+                self.updateDescriptionCard()
             }
         }
     }
@@ -91,6 +78,19 @@ class SwipeMoviesViewController: UIViewController {
             }
         }
     };
+    
+    var leavingParty = false;
+    var partyNames = [String]();
+    var partyIDs = [String](){
+        didSet{
+            DispatchQueue.main.async{
+                if self.leavingParty {
+                    self.updateUserDataForPartyLeave()
+                    self.directToPartyManagement()
+                }
+            }
+        }
+    }
     
     // MARK: - View Did Load
     override func viewDidLoad() {
@@ -131,9 +131,9 @@ class SwipeMoviesViewController: UIViewController {
                 self.seenBy = document.get("seenBy") as! [String:[String]]
                 self.superLikes = document.get("superLikes") as! [String:Double]
                 self.members = document.get("members") as! [String]
-                self.findNextMovieNotSeenOrSuperliked();
+                print("[ACCESS SUCCESS] Retrieve movie stack.")
             } else {
-                print("[ACCESS FAIL] Retrieve movie stack")
+                print("[ACCESS FAIL] Retrieve movie stack.")
             }
         }
     }
@@ -146,7 +146,7 @@ class SwipeMoviesViewController: UIViewController {
         poster.clipsToBounds = true
         
         thumbUpDownPoster.frame = movieCardView.bounds
-        thumbUpDownPoster.image = UIImage(named: "thumb up.png")
+        thumbUpDownPoster.image = UIImage(named: "thumb_up.png")
         
         flipButton.frame = poster.frame
         flipButton.addTarget(self, action: #selector(timeToFlip), for: .touchUpInside)
@@ -184,13 +184,15 @@ class SwipeMoviesViewController: UIViewController {
         self.movieCardView.addSubview(descView)
     }
     
-    func updateDescriptionCard(indx: Int){
+    func updateDescriptionCard(){
         
         thumbUpDownDesc.frame = movieCardView.bounds
         thumbUpDownDesc.image = UIImage(named: "thumb_up.png")
         
+        let movie = self.movieStack[self.currMovieIndx]
+        
         //Create Movie Title
-        let titleVal = self.movieStack[indx]["title"]
+        let titleVal = movie["title"]
         titleLabel.frame = titleLabelPos.bounds
         titleLabel.frame.origin.x = titleLabelPos.frame.origin.x
         titleLabel.frame.origin.y = titleLabelPos.frame.origin.y
@@ -200,7 +202,7 @@ class SwipeMoviesViewController: UIViewController {
         titleLabel.lineBreakMode = .byWordWrapping
 
         //Create Description
-        let descVal = self.movieStack[indx]["overview"]
+        let descVal = movie["overview"]
         descLabel.frame = descLabelPos.bounds
         descLabel.frame.origin.x = descLabelPos.frame.origin.x
         descLabel.frame.origin.y = descLabelPos.frame.origin.y
@@ -210,7 +212,7 @@ class SwipeMoviesViewController: UIViewController {
         descLabel.text = descVal
         
         //Create Movie Votes
-        let votesVal = "Number of Votes: "+self.movieStack[indx]["num_votes"]!
+        let votesVal = "Number of Votes: " + movie["num_votes"]!
         votesLabel.frame = votesLabelPos.bounds
         votesLabel.frame.origin.x = votesLabelPos.frame.origin.x
         votesLabel.frame.origin.y = votesLabelPos.frame.origin.y
@@ -226,8 +228,8 @@ class SwipeMoviesViewController: UIViewController {
         descView.addSubview(thumbUpDownDesc)
     }
     
-    func updateMovieCard(indx: Int){
-        let url = URL(string: "https://image.tmdb.org/t/p/w500" + self.movieStack[indx]["poster_path"]!)
+    func updateMovieCard(){
+        let url = URL(string: "https://image.tmdb.org/t/p/w500" + self.movieStack[self.currMovieIndx]["poster_path"]!)
         let data = try? Data(contentsOf: url!)
         self.poster.image = UIImage(data: data!)
         self.removeSpinner()
@@ -247,7 +249,7 @@ class SwipeMoviesViewController: UIViewController {
      
     func findNextMovieNotSeenOrSuperliked(){
         while (checkIfSeen() || checkIfSuperLiked()){
-            currMovieIndx+=1;
+            currMovieIndx += 1;
         }
     }
     
@@ -263,8 +265,7 @@ class SwipeMoviesViewController: UIViewController {
     // MARK: - Super Like
     func createSuperLikeButton(){
         superLikeButton = UIButton(frame: CGRect(x: 290, y: 470, width: 75, height: 75))
-        let customBackgroundColor = UIColor(red: 68.0/255.0, green:64.0/255.0, blue: 74.0/255.0, alpha: 1.0)
-        superLikeButton.backgroundColor = customBackgroundColor
+        superLikeButton.backgroundColor = UIColor(red: 68.0/255.0, green:64.0/255.0, blue: 74.0/255.0, alpha: 1.0)
         superLikeButton.layer.cornerRadius = superLikeButton.frame.width/2
         let heartIcon = UIImage(named: "superlikeheart.png") as UIImage?
         superLikeButton.setImage(heartIcon, for: .normal)
@@ -278,20 +279,16 @@ class SwipeMoviesViewController: UIViewController {
     func checkCanSuperlike() -> Bool{
         if superLikes[userID] == nil {
             return true
-        } else{
-            let currentTimeStamp = NSDate().timeIntervalSince1970
-            let timePassed = currentTimeStamp - superLikes[userID]!;
-            if (timePassed >= 86400){     //user has waited 24 hours, now can superlike
-                return true
-            } else {
-                return false
-            }
         }
+        let currentTimeStamp = NSDate().timeIntervalSince1970
+        let timePassed = currentTimeStamp - superLikes[userID]!;
+        return timePassed >= 86400 //user has waited 24 hours, now can superlike
     }
     
     func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
         return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
+    
     func sendNoSuperLikeAvailableAlert(){
         let currentTimeStamp = NSDate().timeIntervalSince1970
         let timeRemaining = 86400 - (currentTimeStamp - superLikes[userID]!);
@@ -304,6 +301,7 @@ class SwipeMoviesViewController: UIViewController {
         alertViewResponder = superLikeAlert.showWarning("No more superlike available!", subTitle: timeString)
         timerSuperLike = Timer.scheduledTimer(timeInterval: 1, target: self,selector: #selector(updateLabel), userInfo: nil, repeats: true)
     }
+    
     @objc func updateLabel() {
         if (self.stopTimer){
             timerSuperLike.invalidate();
@@ -312,20 +310,17 @@ class SwipeMoviesViewController: UIViewController {
         let (h,m,s) = secondsToHoursMinutesSeconds(seconds:self.timeRemaining)
         let timeString = "Will be available in: "+String(h)+":"+String(m)+":"+String(s)
         alertViewResponder.setSubTitle(timeString)
-        
     }
 
     @objc func superLikeRequested(sender: UIButton!) {
-    if (checkCanSuperlike()){
-        let currentTimeStamp = NSDate().timeIntervalSince1970
-        superLikes[userID] = currentTimeStamp;
-        handleSwipe(swiped: 1,superLiked: true);  //treat as a swipe
-        }
-    else {
-        sendNoSuperLikeAvailableAlert()
+        if (checkCanSuperlike()){
+            let currentTimeStamp = NSDate().timeIntervalSince1970
+            superLikes[userID] = currentTimeStamp;
+            handleSwipe(swiped: 1,superLiked: true);  //treat as a swipe
+        } else {
+            sendNoSuperLikeAvailableAlert()
         }
     }
-    
     
     func sendSuperLikeAlert(){
         let color = UIColor(red: 255.0/255.0, green: 178.0/255.0, blue: 102.0/255.0, alpha: 1)
@@ -333,6 +328,7 @@ class SwipeMoviesViewController: UIViewController {
         SCLAlertView().showCustom("SuperLiked!", subTitle: "Movie is added to BucketList!", color: color, icon: imageVal)
     }
 
+    // MARK: - Card Flipper
     
     @IBAction func timeToFlip(_ sender: Any) {
         if self.descView.isHidden == false{
@@ -461,21 +457,19 @@ class SwipeMoviesViewController: UIViewController {
                     self.movieStack[currMovieIndx]["superLikedBy"] = userID
                     self.sendSuperLikeAlert()
                 } else if (num_votes == self.partySize){
-                    self.sendMatchAlert()
+                    SCLAlertView().showSuccess("Match!", subTitle: "Movie will be added to BucketList")
                 }
            }
             
-           if !(refuelNeeded){
-               self.currMovieIndx += 1
-               findNextMovieNotSeenOrSuperliked();
+            if !(refuelNeeded){
+                self.currMovieIndx += 1
+                self.findNextMovieNotSeenOrSuperliked();
+                self.updateMovieCard()
+                self.updateDescriptionCard()
            }
        }
     }
     
-    // MARK: - Bucket list and Match
-    func sendMatchAlert(){
-        SCLAlertView().showSuccess("Match!", subTitle: "Movie will be added to BucketList")
-    }
     // MARK: - Leave Party
     
     @IBAction func leavePartyBtnPressed(_ sender: Any) {
@@ -487,8 +481,8 @@ class SwipeMoviesViewController: UIViewController {
             self.leaveParty()
         }
         alert.addButton("Cancel") {
-       }
-       alert.showWarning("Leave Party?", subTitle: "Are you sure?")
+        }
+        alert.showWarning("Leave Party?", subTitle: "Are you sure?")
     }
     
     func leaveParty(){
@@ -511,10 +505,10 @@ class SwipeMoviesViewController: UIViewController {
                 }
             }
         }
-        self.retrieveUserData()
+        self.retrieveUserDataForPartyLeave()
     }
     
-    func retrieveUserData() {
+    func retrieveUserDataForPartyLeave() {
         db.collection("users").document(self.userID).getDocument { (document, error) in
             if let document = document {
                 self.partyNames = document.get("partyNames")! as! [String]

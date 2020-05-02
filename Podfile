@@ -24,4 +24,5 @@ target 'WatchPartyFinal' do
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
   pod 'SCLAlertView' 
+
 end
