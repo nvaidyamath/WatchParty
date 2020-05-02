@@ -40,9 +40,7 @@ class SwipeMoviesViewController: UIViewController {
     var partyIDs = [String](){
         didSet{
             DispatchQueue.main.async{
-                self.partyNames = self.partyNames.filter{ $0 != self.partyName}
-                self.partyIDs = self.partyIDs.filter{ $0 != self.partyID}
-                self.updateUserData()
+                self.updateUserDataForPartyLeave()
                 self.directToPartyManagement()
             }
         }
@@ -124,6 +122,7 @@ class SwipeMoviesViewController: UIViewController {
                 self.partySize = ((document.get("members")) as! Array<Any>).count
                 self.seenBy = document.get("seenBy") as! [String:[String]]
                 self.superLikes = document.get("superLikes") as! [String:Double]
+                self.members = document.get("members") as! [String]
                 self.findNextMovieNotSeenOrSuperliked();
             } else {
                 print("[ACCESS FAIL] Retrieve movie stack")
@@ -433,10 +432,8 @@ class SwipeMoviesViewController: UIViewController {
                 if superLiked {
                     self.movieStack[currMovieIndx]["superLikedBy"] = userID
                     self.sendSuperLikeAlert()
-                    self.addToBucketList()
                 } else if (num_votes == self.partySize){
                     self.sendMatchAlert()
-                    self.addToBucketList()
                 }
            }
             
@@ -448,20 +445,6 @@ class SwipeMoviesViewController: UIViewController {
     }
     
     // MARK: - Bucket list and Match
-    
-    func addToBucketList(){
-        var array = [[String: String]]()
-        array.append(self.movieStack[self.currMovieIndx])
-        self.db.collection("parties").document(self.partyID).updateData(["bucketList" : FieldValue.arrayUnion(array)]){ (err) in
-            if let err = err {
-                print("[UPDATE FAIL] Add to bucketlist - \(err)")
-            } else {
-                print("[UPDATE SUCCESS] Add to bucketlist")
-            }
-        }
-    }
-    
-    
     func sendMatchAlert(){
         let alert = UIAlertController(title: "Match!", message: "Everyone voted for this movie!", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok, add to bucket list!", style: .default, handler: nil))
@@ -480,11 +463,11 @@ class SwipeMoviesViewController: UIViewController {
     }
     
     func leaveParty(){
-        // Update members
+        // Party: Update members
         print("Leaving Party Sequence Initiated...")
         self.members = self.members.filter { $0 != userID }
         
-        // Update movie stack
+        // Party: Update movie stack
         for (indx, movie) in self.movieStack.enumerated(){
             var users = movie["votedBy"]!.split(separator: ",")
             for user in users{
@@ -513,7 +496,9 @@ class SwipeMoviesViewController: UIViewController {
         }
     }
     
-    func updateUserData() {
+    func updateUserDataForPartyLeave() {
+        self.partyNames = self.partyNames.filter{$0 != self.partyName}
+        self.partyIDs = self.partyIDs.filter{$0 != self.partyID}
         db.collection("users").document(self.userID).updateData([
             "partyNames" : self.partyNames,
             "partyIDs" : self.partyIDs]){ (err) in
@@ -544,9 +529,9 @@ class SwipeMoviesViewController: UIViewController {
             "superLikes":self.superLikes,
             "seenBy": self.seenBy]){ (err) in
             if let err = err {
-                print("[UPDATE FAIL] Update swipe progress and votes: \(err)")
+                print("[UPDATE FAIL] Update movie stack: \(err)")
             } else {
-                print("[UPDATE SUCCESS] Update swipe progress and votes")
+                print("[UPDATE SUCCESS] Update movie stack")
             }
         }
     }

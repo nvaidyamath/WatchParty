@@ -619,16 +619,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J30-oS-GIw">
-                                <rect key="frame" x="78" y="654" width="258" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title=" Return to Swiping" image="arrowshape.turn.up.left.2" catalog="system">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="NP1-h1-KWY" kind="showDetail" identifier="MemberToSwipe" id="yda-8G-xCE"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="csl-gj-pKp"/>
@@ -637,7 +627,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A4q-aj-Oqb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4630" y="395"/>
+            <point key="canvasLocation" x="4629" y="394"/>
         </scene>
         <!--Bucket List View Controller-->
         <scene sceneID="1VD-lO-jiT">
@@ -661,16 +651,6 @@
                                     <segue destination="jyA-D1-dNN" kind="embed" identifier="EmbeddedRankingSegue" id="axF-DR-P31"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OSk-Gq-TkS">
-                                <rect key="frame" x="78" y="646" width="258" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title=" Return to Swiping" image="arrowshape.turn.up.left.2" catalog="system">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="NP1-h1-KWY" kind="showDetail" identifier="BucketListToSwipe" id="of2-9q-7te"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="yGr-Ct-cRn"/>
@@ -679,7 +659,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ygx-YC-bbL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4629" y="-323"/>
+            <point key="canvasLocation" x="4629" y="-289"/>
         </scene>
         <!--Ranking Table View Controller-->
         <scene sceneID="eJ0-gr-xNu">
@@ -724,7 +704,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dr3-Bq-LlO">
-                                            <rect key="frame" x="114" y="59" width="68" height="17"/>
+                                            <rect key="frame" x="114" y="55" width="68" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <nil key="textColor"/>
@@ -782,12 +762,8 @@
             <point key="canvasLocation" x="5319" y="395"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="yda-8G-xCE"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="1.circle" catalog="system" width="128" height="121"/>
-        <image name="arrowshape.turn.up.left.2" catalog="system" width="128" height="87"/>
         <image name="arrowshape.turn.up.left.2.fill" catalog="system" width="128" height="87"/>
         <image name="eject.fill" catalog="system" width="128" height="112"/>
         <image name="list.number" catalog="system" width="128" height="97"/>

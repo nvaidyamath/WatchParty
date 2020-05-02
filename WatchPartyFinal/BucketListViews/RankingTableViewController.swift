@@ -72,11 +72,13 @@ class RankingTableViewController: UITableViewController {
                     let lastName = document.get("last_name") as! String
                     self.userDB[userID] = [firstName, lastName]
                 }
+                print("Finished retrieving userDB.")
             }
         }
         db.collection("parties").document(self.partyID).getDocument { (document, error) in
             if let document = document {
                 self.members = document.get("members") as! [String]
+                print("Finished retrieving party members")
             } else {
                 print("Document does not exist!")
             }
@@ -95,6 +97,10 @@ class RankingTableViewController: UITableViewController {
             fatalError("The dequeued cell is not an instance of MovieRankTableViewCell.")
         }
         
+        if self.userDB.count == 0 {
+            return cell
+        }
+        
         let movie = self.movieRanking[indexPath.row]
                 
         let url = URL(string: "https://image.tmdb.org/t/p/w500" + movie["poster_path"]!)
@@ -102,11 +108,13 @@ class RankingTableViewController: UITableViewController {
         cell.moviePoster.image = UIImage(data: data!)
         cell.movieTitle.text = movie["title"]!
 
-        // If the "num_votes" is a userID -> super like!
+        // If movie has been super liked!
         let superLike = movie["superLikedBy"]!
         if !(superLike == "") {
-            cell.superLikeName.text = self.userDB[superLike]![0] + " " + self.userDB[superLike]![1]
-            cell.movieVotes.isHidden = true;
+            if let nameInfo = self.userDB[superLike]{
+                cell.superLikeName.text = nameInfo[0] + " " + nameInfo[1]
+                cell.movieVotes.isHidden = true;
+            }
         } else {
             cell.superLikeHeart.isHidden = true;
             cell.superLikeName.isHidden = true;
@@ -120,7 +128,7 @@ class RankingTableViewController: UITableViewController {
         } else if (indexPath.row == 2){
             cell.movieRank.image = UIImage(systemName: "rosette")?.withTintColor(.brown, renderingMode: .alwaysOriginal)
         } else {
-            cell.movieRank.image = UIImage(systemName: String(indexPath.row) + ".circle")?.withTintColor(.lightGray, renderingMode: .alwaysOriginal)
+            cell.movieRank.image = UIImage(systemName: String(indexPath.row + 1) + ".circle")?.withTintColor(.lightGray, renderingMode: .alwaysOriginal)
         }
         return cell
     }
