@@ -54,7 +54,8 @@ class SwipeMoviesViewController: UIViewController {
     var members = [String]()
     var seenBy = [String:[String]]();
     var currMovieIndx = 0
-    var movieStack = [[String: String]](){
+    var movieStack = [[String: String]]()
+    var movieStackLoaded = false{
         didSet {
             DispatchQueue.main.async{
                 self.findNextMovieNotSeenOrSuperliked();
@@ -69,6 +70,9 @@ class SwipeMoviesViewController: UIViewController {
                 for movie in self.newMovies{
                     self.movieStack.append(movie.asDict)
                 }
+                self.findNextMovieNotSeenOrSuperliked();
+                self.updateMovieCard()
+                self.updateDescriptionCard()
             }
         }
     }
@@ -127,7 +131,7 @@ class SwipeMoviesViewController: UIViewController {
                 self.seenBy = document.get("seenBy") as! [String:[String]]
                 self.superLikes = document.get("superLikes") as! [String:Double]
                 self.members = document.get("members") as! [String]
-                print("[ACCESS SUCCESS] Retrieve movie stack.")
+                self.movieStackLoaded = true
             } else {
                 print("[ACCESS FAIL] Retrieve movie stack.")
             }
@@ -150,13 +154,13 @@ class SwipeMoviesViewController: UIViewController {
         createSuperLikeButton()
         
         posterView.frame = movieCardView.bounds
-//        //Add shadow to view
-//        posterView.layer.shadowPath = UIBezierPath(roundedRect: posterView.bounds, cornerRadius: 15).cgPath
-//        posterView.layer.shadowColor = UIColor.black.cgColor
-//        posterView.layer.shadowOpacity = 0.5
-//        posterView.layer.shadowOffset = CGSize(width: 10, height: 10)
-//        posterView.layer.shadowRadius = 1
-//        posterView.layer.masksToBounds = false
+        //        //Add shadow to view
+        //        posterView.layer.shadowPath = UIBezierPath(roundedRect: posterView.bounds, cornerRadius: 15).cgPath
+        //        posterView.layer.shadowColor = UIColor.black.cgColor
+        //        posterView.layer.shadowOpacity = 0.5
+        //        posterView.layer.shadowOffset = CGSize(width: 10, height: 10)
+        //        posterView.layer.shadowRadius = 1
+        //        posterView.layer.masksToBounds = false
         
         posterView.addSubview(flipButton)
         posterView.addSubview(poster)
@@ -479,35 +483,33 @@ class SwipeMoviesViewController: UIViewController {
     
     
     func handleSwipe(swiped:Int, superLiked: Bool){
-        if(swiped != 0){
-            addSeenMember()
-            var refuelNeeded = false;
-            if(self.currMovieIndx + 1 == self.movieStack.count){
-                let page = String((self.movieStack.count / 20) + 1)
-                refuelNeeded = true;
-                fetchNewMovies(page: page)
-            }
-            // If it is a right swipe
-            if (swiped == 1){
-                let num_votes = Int(self.movieStack[currMovieIndx]["num_votes"]!)! + 1
-                self.movieStack[currMovieIndx]["num_votes"] = String(num_votes)
-                self.movieStack[currMovieIndx]["votedBy"] = self.movieStack[currMovieIndx]["votedBy"]! + "," + userID
-                
-                if superLiked {
-                    self.movieStack[currMovieIndx]["superLikedBy"] = userID
-                    self.sendSuperLikeAlert()
-                } else if (num_votes == self.partySize){
-                    SCLAlertView().showSuccess("Match!", subTitle: "Movie will be added to BucketList")
-                }
-           }
+        if(swiped == 0){
+            return
+        }
+        self.addSeenMember()
+        // If it is a right swipe
+        if (swiped == 1){
+            let num_votes = Int(self.movieStack[currMovieIndx]["num_votes"]!)! + 1
+            self.movieStack[currMovieIndx]["num_votes"] = String(num_votes)
+            self.movieStack[currMovieIndx]["votedBy"] = self.movieStack[currMovieIndx]["votedBy"]! + "," + userID
             
-            if !(refuelNeeded){
-                self.currMovieIndx += 1
-                self.findNextMovieNotSeenOrSuperliked();
-                self.updateMovieCard()
-                self.updateDescriptionCard()
-           }
-       }
+            if superLiked {
+                self.movieStack[currMovieIndx]["superLikedBy"] = userID
+                self.sendSuperLikeAlert()
+            } else if (num_votes == self.partySize){
+                SCLAlertView().showSuccess("Match!", subTitle: "Movie will be added to BucketList")
+            }
+        }
+        
+        if(self.currMovieIndx + 1 == self.movieStack.count){
+            let page = String((self.movieStack.count / 20) + 1)
+            self.fetchNewMovies(page: page)
+        } else {
+            self.currMovieIndx += 1
+            self.findNextMovieNotSeenOrSuperliked();
+            self.updateMovieCard()
+            self.updateDescriptionCard()
+        }
     }
     
     // MARK: - Leave Party
