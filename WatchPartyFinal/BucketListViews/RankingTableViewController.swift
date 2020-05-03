@@ -18,10 +18,10 @@ class RankingTableViewController: UITableViewController {
     var partySize = Int()
     var movieRanking = [[String: String]]()
     var userDB = [String: [String]]()
-    var members = [String](){
+    var finishedGetUserDB = false{
         didSet{
             DispatchQueue.main.async {
-                self.tableView.reloadData()
+                self.getMovieStack()
             }
         }
     }
@@ -29,24 +29,39 @@ class RankingTableViewController: UITableViewController {
         didSet{
             DispatchQueue.main.async{
                 self.createMovieRanking()
+                self.tableView.reloadData()
             }
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        retrieveMembers()
-        retrieveMovieStack()
+        self.getUserDB()
     }
     
-    func retrieveMovieStack(){
+    func getMovieStack(){
         db.collection("parties").document(self.partyID).getDocument { (document, error) in
             if let document = document {
                 self.movieStack = document.get("movieStack")! as! [[String: String]]
                 self.partySize = ((document.get("members")) as! [String]).count
-                self.members = ((document.get("members")) as! [String])
             } else {
-                print("Document does not exist!")
+                print("[ACCESS FAIL] Get Movie Stack")
+            }
+        }
+    }
+    
+    func getUserDB(){
+        db.collection("users").getDocuments { (snapshot, err) in
+            if let err = err {
+                print("[ACCESS FAIL] Get UserDB: \(err)")
+            } else {
+                for document in snapshot!.documents {
+                    let userID = document.documentID
+                    let firstName = document.get("first_name") as! String
+                    let lastName = document.get("last_name") as! String
+                    self.userDB[userID] = [firstName, lastName]
+                }
+                self.finishedGetUserDB = true;
             }
         }
     }
@@ -55,30 +70,6 @@ class RankingTableViewController: UITableViewController {
         for movie in movieStack{
             if(Int(movie["num_votes"]!)! > Int(0.5 * Double(partySize)) || movie["superLikedBy"] != ""){
                 self.movieRanking.append(movie)
-            }
-        }
-    }
-    
-    func retrieveMembers(){
-        db.collection("users").getDocuments { (snapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in snapshot!.documents {
-                    let userID = document.documentID
-                    let firstName = document.get("first_name") as! String
-                    let lastName = document.get("last_name") as! String
-                    self.userDB[userID] = [firstName, lastName]
-                }
-                print("Finished retrieving userDB.")
-            }
-        }
-        db.collection("parties").document(self.partyID).getDocument { (document, error) in
-            if let document = document {
-                self.members = document.get("members") as! [String]
-                print("Finished retrieving party members")
-            } else {
-                print("Document does not exist!")
             }
         }
     }
@@ -91,13 +82,7 @@ class RankingTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MovieRankTableViewCell", for: indexPath) as? MovieRankTableViewCell  else {
-            fatalError("The dequeued cell is not an instance of MovieRankTableViewCell.")
-        }
-        
-        if self.userDB.count == 0 {
-            return cell
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MovieRankTableViewCell", for: indexPath) as! MovieRankTableViewCell
         
         let movie = self.movieRanking[indexPath.row]
                 
@@ -110,12 +95,15 @@ class RankingTableViewController: UITableViewController {
         let superLike = movie["superLikedBy"]!
         if !(superLike == "") {
             if let nameInfo = self.userDB[superLike]{
+                cell.superLikeHeart.isHidden = false
+                cell.superLikeName.isHidden = false
+                cell.movieVotes.isHidden = true
                 cell.superLikeName.text = nameInfo[0] + " " + nameInfo[1]
-                cell.movieVotes.isHidden = true;
             }
         } else {
-            cell.superLikeHeart.isHidden = true;
-            cell.superLikeName.isHidden = true;
+            cell.superLikeHeart.isHidden = true
+            cell.superLikeName.isHidden = true
+            cell.movieVotes.isHidden = false
             cell.movieVotes.text = "Votes: " + movie["num_votes"]!
         }
 

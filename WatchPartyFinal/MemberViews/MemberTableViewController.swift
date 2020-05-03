@@ -18,7 +18,14 @@ class MemberTableViewController: UITableViewController {
     var partyID = String()
     var partyName = String()
     var userDB = [String: [String]]()
-    var members = [String](){
+    var finishedGetUserDB = false{
+        didSet{
+            DispatchQueue.main.async {
+                self.getPartyMembers()
+            }
+        }
+    }
+    var partyMembers = [String](){
         didSet{
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -28,10 +35,20 @@ class MemberTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.retrieveMembers()
+        self.getUserDB()
     }
     
-    func retrieveMembers(){
+    func getPartyMembers(){
+        db.collection("parties").document(self.partyID).getDocument { (document, error) in
+            if let document = document {
+                self.partyMembers = document.get("members") as! [String]
+            } else {
+                print("Document does not exist!")
+            }
+        }
+    }
+    
+    func getUserDB(){
         db.collection("users").getDocuments { (snapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
@@ -42,25 +59,21 @@ class MemberTableViewController: UITableViewController {
                     let lastName = document.get("last_name") as! String
                     self.userDB[userID] = [firstName, lastName]
                 }
-            }
-        }
-        
-        db.collection("parties").document(self.partyID).getDocument { (document, error) in
-            if let document = document {
-                self.members = document.get("members") as! [String]
-            } else {
-                print("Document does not exist!")
+                self.finishedGetUserDB = true
             }
         }
     }
 
+    
+    // MARK: - Table view data source
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.members.count
+        return self.partyMembers.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemberCell", for: indexPath)
-        let userID = self.members[indexPath.row]
+        let userID = self.partyMembers[indexPath.row]
         if let userName = self.userDB[userID]{
             cell.textLabel?.text = userName[0] + " " + userName[1]
         }
