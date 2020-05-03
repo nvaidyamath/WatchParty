@@ -40,7 +40,7 @@ class SignUpViewController: UIViewController {
         UIUtilities.styleTextField(lastNameField)
         UIUtilities.styleTextField(emailField)
         UIUtilities.styleTextField(passwordField)
-        UIUtilities.styleFilledButton(signUpButton)
+        UIUtilities.styleFilledButtonParty(signUpButton)
         setupBackgroundImage()
     }
     

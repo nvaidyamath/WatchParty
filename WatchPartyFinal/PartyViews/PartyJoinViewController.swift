@@ -23,7 +23,31 @@ class PartyJoinViewController: UIViewController {
         UIUtilities.styleTextField(partyIdField)
         UIUtilities.styleFilledButtonParty(joinButton)
         UIUtilities.styleFilledButtonCancel(exitButton)
-        errorMessage.alpha = 0;
+        joinButton.isEnabled = false
+        errorMessage.alpha = 0
+        setupBackgroundImage()
+    }
+    
+
+    @IBAction func partyIDFieldUpdated(_ sender: Any) {
+        let partyID = self.partyIdField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        if (partyID.count > 0) {
+            joinButton.isEnabled = true
+            UIUtilities.styleFilledButtonParty(joinButton)
+        } else {
+            joinButton.isEnabled = false
+            UIUtilities.styleFilledButtonLocked(joinButton)
+        }
+    }
+    
+    func setupBackgroundImage(){
+        let imageView = UIImageView(frame: view.bounds)
+        imageView.contentMode = UIView.ContentMode.scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.image = UIImage(named: "popcorn")
+        imageView.center = view.center
+        self.view.addSubview(imageView)
+        self.view.sendSubviewToBack(imageView)
     }
 
     @IBAction func joinParty(_ sender: Any) {

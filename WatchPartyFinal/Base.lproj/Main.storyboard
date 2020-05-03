@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="36C-TT-1WO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="36C-TT-1WO">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -294,6 +294,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="partyIDFieldUpdated:" destination="jf7-Cp-bHh" eventType="editingChanged" id="k9X-PZ-lae"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ew-tY-1IA">
                                 <rect key="frame" x="106" y="241" width="203" height="30"/>
@@ -354,7 +357,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
-                                    <action selector="edittedField:" destination="KLa-cI-YWt" eventType="editingChanged" id="Rwm-uB-sw2"/>
+                                    <action selector="partyNameFieldUpdated:" destination="KLa-cI-YWt" eventType="editingChanged" id="Av0-Zw-bnR"/>
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w81-Ax-CbP">
@@ -769,12 +772,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="1.circle" catalog="system" width="64" height="60"/>
-        <image name="arrowshape.turn.up.left.2.fill" catalog="system" width="64" height="42"/>
-        <image name="eject.fill" catalog="system" width="64" height="56"/>
-        <image name="list.number" catalog="system" width="64" height="48"/>
-        <image name="paperplane.fill" catalog="system" width="64" height="60"/>
-        <image name="person.2.fill" catalog="system" width="64" height="40"/>
+        <image name="1.circle" catalog="system" width="128" height="121"/>
+        <image name="arrowshape.turn.up.left.2.fill" catalog="system" width="128" height="87"/>
+        <image name="eject.fill" catalog="system" width="128" height="112"/>
+        <image name="list.number" catalog="system" width="128" height="97"/>
+        <image name="paperplane.fill" catalog="system" width="128" height="121"/>
+        <image name="person.2.fill" catalog="system" width="128" height="80"/>
         <image name="superlikeheart.png" width="256" height="256"/>
     </resources>
 </document>

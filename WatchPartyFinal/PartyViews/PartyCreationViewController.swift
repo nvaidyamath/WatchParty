@@ -47,11 +47,21 @@ class PartyCreationViewController: UIViewController {
         UIUtilities.styleFilledButtonLocked(submitButton)
         UIUtilities.styleFilledButtonCancel(cancelButton)
         UIUtilities.styleTextField(nameField)
-        submitButton.isEnabled = false; //disabled untill user enters a name
-
+        submitButton.isEnabled = false
+        setupBackgroundImage()
     }
-
-    @IBAction func edittedField(_ sender: Any) {
+    
+    func setupBackgroundImage(){
+        let imageView = UIImageView(frame: view.bounds)
+        imageView.contentMode =  UIView.ContentMode.scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.image = UIImage(named: "popcorn")
+        imageView.center = view.center
+        self.view.addSubview(imageView)
+        self.view.sendSubviewToBack(imageView)
+    }
+    
+    @IBAction func partyNameFieldUpdated(_ sender: Any) {
         let partyName = nameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         if (partyName.count==0){
             submitButton.isEnabled = false;
@@ -62,13 +72,6 @@ class PartyCreationViewController: UIViewController {
             UIUtilities.styleFilledButtonParty(submitButton)
         }
     }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-        super.touchesBegan(touches, with: event)
-    }
-
-    
 
     @IBAction func submitButtonPressed(_ sender: Any) {
         
@@ -110,6 +113,7 @@ class PartyCreationViewController: UIViewController {
         self.view.window?.rootViewController = partyManagementVC
         self.view.window?.makeKeyAndVisible()
     }
+    
     @IBAction func cancel(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
