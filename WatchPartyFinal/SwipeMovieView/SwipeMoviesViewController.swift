@@ -183,30 +183,32 @@ class SwipeMoviesViewController: UIViewController {
         titleLabel.frame = titleLabelPos.bounds
         titleLabel.frame.origin.x = titleLabelPos.frame.origin.x
         titleLabel.frame.origin.y = titleLabelPos.frame.origin.y
-        titleLabel.font = titleLabelPos.font.withSize(60)
+        titleLabel.font = titleLabelPos.font
+        titleLabel.numberOfLines = titleLabelPos.numberOfLines
+        titleLabel.lineBreakMode = titleLabelPos.lineBreakMode
         titleLabel.text = titleVal
-        titleLabel.numberOfLines = 0
-        titleLabel.lineBreakMode = .byWordWrapping
+        titleLabel.sizeToFit()
 
         //Create Description
         let descVal = movie["overview"]
         descLabel.frame = descLabelPos.bounds
         descLabel.frame.origin.x = descLabelPos.frame.origin.x
         descLabel.frame.origin.y = descLabelPos.frame.origin.y
-        descLabel.font = descLabelPos.font.withSize(15)
-        descLabel.numberOfLines = 0
-        descLabel.lineBreakMode = .byWordWrapping
+        descLabel.font = descLabelPos.font
+        descLabel.numberOfLines = descLabelPos.numberOfLines
+        descLabel.lineBreakMode = descLabelPos.lineBreakMode
         descLabel.text = descVal
+        descLabel.sizeToFit()
         
         //Create Movie Votes
         let votesVal = "Number of Votes: " + movie["num_votes"]!
         votesLabel.frame = votesLabelPos.bounds
         votesLabel.frame.origin.x = votesLabelPos.frame.origin.x
         votesLabel.frame.origin.y = votesLabelPos.frame.origin.y
-        votesLabel.font = votesLabelPos.font.withSize(15)
-        votesLabel.text = votesVal
-        votesLabel.numberOfLines = 0
-        votesLabel.lineBreakMode = .byWordWrapping
+        votesLabel.font = votesLabelPos.font
+        votesLabel.numberOfLines = votesLabelPos.numberOfLines
+        votesLabel.lineBreakMode = votesLabelPos.lineBreakMode
+        votesLabel.text = votesVal  
         
         //Set All
         descView.addSubview(titleLabel)
