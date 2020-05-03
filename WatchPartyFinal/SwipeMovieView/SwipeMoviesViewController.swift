@@ -25,6 +25,7 @@ class SwipeMoviesViewController: UIViewController {
     @IBOutlet var membersButton: UIButton!
     @IBOutlet var bucketListButton: UIButton!
     @IBOutlet var leavePartyButton: UIButton!
+    @IBOutlet weak var shareIDButton: UIButton!
     
     let db = Firestore.firestore()
     let userID = Auth.auth().currentUser!.uid
@@ -93,9 +94,11 @@ class SwipeMoviesViewController: UIViewController {
         super.viewDidLoad()
         UIUtilities.circularIcon(membersButton)
         UIUtilities.circularIcon(bucketListButton)
-        UIUtilities.circularIcon(leavePartyButton)
+        UIUtilities.circularIcon(returnButton)
         
-        UIUtilities.circularIcon(returnButton) 
+        //UIUtilities.circularIcon(leavePartyButton)
+        //UIUtilities.circularIcon(shareIDButton)
+        
         partyNameLabel.text = partyName;
         createDescriptionSide()
         createPosterSide()
@@ -519,6 +522,24 @@ class SwipeMoviesViewController: UIViewController {
             self.updateMovieCard()
             self.updateDescriptionCard()
         }
+    }
+    
+    // MARK: - Share Party Access Code
+    @IBAction func shareBtnPressed(_ sender: Any) {
+        let activityViewController : UIActivityViewController = UIActivityViewController(
+            activityItems: [self.partyID], applicationActivities: nil)
+
+        activityViewController.excludedActivityTypes = [
+            UIActivity.ActivityType.postToWeibo,
+            UIActivity.ActivityType.print,
+            UIActivity.ActivityType.assignToContact,
+            UIActivity.ActivityType.saveToCameraRoll,
+            UIActivity.ActivityType.addToReadingList,
+            UIActivity.ActivityType.postToFlickr,
+            UIActivity.ActivityType.postToVimeo,
+            UIActivity.ActivityType.postToTencentWeibo
+        ]
+        self.present(activityViewController, animated: true, completion: nil)
     }
     
     // MARK: - Leave Party

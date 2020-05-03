@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="36C-TT-1WO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="36C-TT-1WO">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -516,7 +516,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NYg-5C-Ne6">
-                                <rect key="frame" x="317.5" y="59" width="50" height="50"/>
+                                <rect key="frame" x="317.5" y="60" width="50" height="50"/>
                                 <rect key="contentStretch" x="0.0" y="0.0" width="0.75" height="1"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="2NX-PZ-2NZ"/>
@@ -532,6 +532,23 @@
                                     <action selector="leavePartyBtnPressed:" destination="NP1-h1-KWY" eventType="touchUpInside" id="JYc-F9-TDS"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rkr-4W-BDT">
+                                <rect key="frame" x="47" y="60" width="50" height="50"/>
+                                <rect key="contentStretch" x="0.0" y="0.0" width="0.75" height="1"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="k2A-oa-I5v"/>
+                                    <constraint firstAttribute="height" constant="50" id="kjg-6O-EXk"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="tintColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <size key="titleShadowOffset" width="13" height="0.0"/>
+                                <state key="normal" image="paperplane.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                                </state>
+                                <connections>
+                                    <action selector="shareBtnPressed:" destination="NP1-h1-KWY" eventType="touchUpInside" id="uW9-6s-YfY"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
@@ -539,7 +556,7 @@
                             <constraint firstItem="y6g-fd-aRC" firstAttribute="leading" secondItem="zGO-yk-750" secondAttribute="leading" constant="47" id="9kI-4Y-OG9"/>
                             <constraint firstItem="Cup-Jy-D8Y" firstAttribute="leading" secondItem="KuB-5a-jub" secondAttribute="leadingMargin" id="C9T-Un-IPP"/>
                             <constraint firstItem="sKE-Cn-Tiy" firstAttribute="centerX" secondItem="ngC-HY-vdR" secondAttribute="centerX" id="EdM-2h-gn9"/>
-                            <constraint firstItem="NYg-5C-Ne6" firstAttribute="top" secondItem="zGO-yk-750" secondAttribute="top" constant="59" id="FaS-fN-c2I"/>
+                            <constraint firstItem="NYg-5C-Ne6" firstAttribute="top" secondItem="zGO-yk-750" secondAttribute="top" constant="60" id="FaS-fN-c2I"/>
                             <constraint firstItem="sKE-Cn-Tiy" firstAttribute="top" secondItem="y6g-fd-aRC" secondAttribute="top" id="JbT-C3-5KD"/>
                             <constraint firstItem="NYg-5C-Ne6" firstAttribute="centerX" secondItem="mKk-SY-XXs" secondAttribute="centerX" id="M2K-Tn-Oy1"/>
                             <constraint firstItem="sKE-Cn-Tiy" firstAttribute="leading" secondItem="KuB-5a-jub" secondAttribute="leading" constant="188" id="NkM-DI-ggF"/>
@@ -550,6 +567,8 @@
                             <constraint firstItem="Cup-Jy-D8Y" firstAttribute="top" secondItem="KuB-5a-jub" secondAttribute="top" constant="129" id="aXx-8z-yJy"/>
                             <constraint firstItem="zGO-yk-750" firstAttribute="trailing" secondItem="mKk-SY-XXs" secondAttribute="trailing" constant="46.5" id="cOv-S7-HVt"/>
                             <constraint firstItem="Cup-Jy-D8Y" firstAttribute="top" secondItem="ngC-HY-vdR" secondAttribute="bottom" constant="33" id="czJ-et-nch"/>
+                            <constraint firstItem="rkr-4W-BDT" firstAttribute="centerX" secondItem="y6g-fd-aRC" secondAttribute="centerX" id="kSK-fJ-6D0"/>
+                            <constraint firstItem="rkr-4W-BDT" firstAttribute="top" secondItem="zGO-yk-750" secondAttribute="top" constant="60" id="wfo-mk-dem"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zGO-yk-750"/>
                         <connections>
@@ -565,6 +584,7 @@
                         <outlet property="movieCardView" destination="Cup-Jy-D8Y" id="67N-qY-vSw"/>
                         <outlet property="partyNameLabel" destination="ngC-HY-vdR" id="Jj5-Cn-Ig8"/>
                         <outlet property="returnButton" destination="y6g-fd-aRC" id="4dL-eu-9n9"/>
+                        <outlet property="shareIDButton" destination="rkr-4W-BDT" id="J7S-SF-Tf1"/>
                         <outlet property="titleLabelPos" destination="F16-QV-dSN" id="FpQ-Vn-6F7"/>
                         <outlet property="votesLabelPos" destination="Hbs-gE-B7U" id="4go-ie-wIK"/>
                     </connections>
@@ -740,11 +760,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="1.circle" catalog="system" width="64" height="60"/>
-        <image name="arrowshape.turn.up.left.2.fill" catalog="system" width="64" height="42"/>
-        <image name="eject.fill" catalog="system" width="64" height="56"/>
-        <image name="list.number" catalog="system" width="64" height="48"/>
-        <image name="person.2.fill" catalog="system" width="64" height="40"/>
+        <image name="1.circle" catalog="system" width="128" height="121"/>
+        <image name="arrowshape.turn.up.left.2.fill" catalog="system" width="128" height="87"/>
+        <image name="eject.fill" catalog="system" width="128" height="112"/>
+        <image name="list.number" catalog="system" width="128" height="97"/>
+        <image name="paperplane.fill" catalog="system" width="128" height="121"/>
+        <image name="person.2.fill" catalog="system" width="128" height="80"/>
         <image name="superlikeheart.png" width="256" height="256"/>
     </resources>
 </document>
