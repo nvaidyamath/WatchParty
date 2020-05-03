@@ -28,6 +28,7 @@ class PartySelectionTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.retrievePartyList()
+        view.backgroundColor = UIColor.clear
     }
     
     func forceLogOut(){
@@ -70,6 +71,7 @@ class PartySelectionTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PartyCell", for: indexPath)
         cell.textLabel?.text = self.partyNames[indexPath.row]
+        cell.backgroundColor = UIColor.clear
         return cell
     }
     
