@@ -62,32 +62,20 @@ class SwipeMoviesViewController: UIViewController {
     var newMovies = [Movie](){
         didSet {
             DispatchQueue.main.async{
-                self.createDescriptionSide()
-                var array = [[String: String]]()
                 for movie in self.newMovies{
-                    array.append(movie.asDict)
+                    self.movieStack.append(movie.asDict)
                 }
-                self.db.collection("parties").document(self.partyID).updateData(["movieStack" : FieldValue.arrayUnion(array)]){ (err) in
-                    if let err = err {
-                        print("[UPDATE FAIL] Refuel movie stack: \(err)")
-                    } else {
-                        print("[UPDATE SUCCESS] Refuel movie stack")
-                    }
-                }
-                self.movieStack += array
             }
         }
-    };
-    
-    var leavingParty = false;
+    }
+
     var partyNames = [String]();
-    var partyIDs = [String](){
+    var partyIDs = [String]()
+    var readyToLeaveParty = false{
         didSet{
             DispatchQueue.main.async{
-                if self.leavingParty {
-                    self.updateUserDataForPartyLeave()
-                    self.directToPartyManagement()
-                }
+                self.updateUserDataForPartyLeave()
+                self.directToPartyManagement()
             }
         }
     }
@@ -95,11 +83,10 @@ class SwipeMoviesViewController: UIViewController {
     // MARK: - View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
-        retrieveMovieStack()
+        partyNameLabel.text = partyName;
         createDescriptionSide()
         createPosterSide()
-        leavingParty = false
-        partyNameLabel.text = partyName;
+        retrieveMovieStack()
      }
     
     @IBAction func partiesButtonPressed(_ sender: Any) {
@@ -477,11 +464,9 @@ class SwipeMoviesViewController: UIViewController {
         let alert = SCLAlertView(appearance: appearance)
         
         alert.addButton("Confirm") {
-            self.leavingParty = true
             self.leaveParty()
         }
-        alert.addButton("Cancel") {
-        }
+        alert.addButton("Cancel"){}
         alert.showWarning("Leave Party?", subTitle: "Are you sure?")
     }
     
@@ -513,6 +498,7 @@ class SwipeMoviesViewController: UIViewController {
             if let document = document {
                 self.partyNames = document.get("partyNames")! as! [String]
                 self.partyIDs = document.get("partyIDs")! as! [String]
+                self.readyToLeaveParty = true;
             } else {
                 print("[FIREBASE FAIL] Retrieve user data")
             }

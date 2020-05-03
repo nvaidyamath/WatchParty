@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		15FC1AEAB9D82106B06A2B24 /* Pods_WatchPartyFinal_WatchPartyFinalUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5E4481AE9CF8792B59567E /* Pods_WatchPartyFinal_WatchPartyFinalUITests.framework */; };
 		247C471D21088492EF8E1360 /* Pods_WatchPartyFinal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C34732AB5D249C4B5D56D28 /* Pods_WatchPartyFinal.framework */; };
-		40392CCE245C3DDE0002D054 /* superlikeheart.png in Resources */ = {isa = PBXBuildFile; fileRef = 40392CCD245C3DDE0002D054 /* superlikeheart.png */; };
 		403EE0DD2458EA440066A834 /* SwipeMoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403EE0DC2458EA440066A834 /* SwipeMoviesViewController.swift */; };
 		408525E72456318200D54AD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408525E62456318200D54AD4 /* AppDelegate.swift */; };
 		408525E92456318200D54AD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408525E82456318200D54AD4 /* SceneDelegate.swift */; };
@@ -25,12 +24,6 @@
 		6A0657DE24578F680006D2C2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A0657DD24578F680006D2C2 /* GoogleService-Info.plist */; };
 		6A0D2A04245B388700EAB3B4 /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0D2A03245B388700EAB3B4 /* Spinner.swift */; };
 		6A2D18FE245A2B2100690362 /* PartyJoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2D18FD245A2B2100690362 /* PartyJoinViewController.swift */; };
-		6A5C1692245B8E8E00B315DD /* thumbs_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A5C1691245B8E8D00B315DD /* thumbs_up.png */; };
-		6A5C1693245B8E8E00B315DD /* thumbs_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A5C1691245B8E8D00B315DD /* thumbs_up.png */; };
-		6A5C1694245B8E8E00B315DD /* thumbs_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A5C1691245B8E8D00B315DD /* thumbs_up.png */; };
-		6A5C1696245B8EA500B315DD /* thumbs_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A5C1695245B8EA400B315DD /* thumbs_down.png */; };
-		6A5C1697245B8EA500B315DD /* thumbs_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A5C1695245B8EA400B315DD /* thumbs_down.png */; };
-		6A5C1698245B8EA500B315DD /* thumbs_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A5C1695245B8EA400B315DD /* thumbs_down.png */; };
 		6A6F16B224589C3800601CC6 /* UIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F16B124589C3800601CC6 /* UIUtilities.swift */; };
 		92FF58472457FB7300291CC6 /* PartyManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF58462457FB7300291CC6 /* PartyManagementViewController.swift */; };
 		92FF58492457FBDA00291CC6 /* PartySelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF58482457FBDA00291CC6 /* PartySelectionTableViewController.swift */; };
@@ -65,7 +58,6 @@
 		0EE9F89248E4FA29861E06B0 /* Pods-WatchPartyFinalTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchPartyFinalTests.release.xcconfig"; path = "Target Support Files/Pods-WatchPartyFinalTests/Pods-WatchPartyFinalTests.release.xcconfig"; sourceTree = "<group>"; };
 		286225293032398ABD911ACC /* Pods-WatchPartyFinal-WatchPartyFinalUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WatchPartyFinal-WatchPartyFinalUITests.release.xcconfig"; path = "Target Support Files/Pods-WatchPartyFinal-WatchPartyFinalUITests/Pods-WatchPartyFinal-WatchPartyFinalUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2C34732AB5D249C4B5D56D28 /* Pods_WatchPartyFinal.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WatchPartyFinal.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		40392CCD245C3DDE0002D054 /* superlikeheart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = superlikeheart.png; sourceTree = "<group>"; };
 		403EE0DC2458EA440066A834 /* SwipeMoviesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeMoviesViewController.swift; sourceTree = "<group>"; };
 		408525E32456318200D54AD4 /* WatchPartyFinal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchPartyFinal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		408525E62456318200D54AD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -89,8 +81,6 @@
 		6A0657DD24578F680006D2C2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6A0D2A03245B388700EAB3B4 /* Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
 		6A2D18FD245A2B2100690362 /* PartyJoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyJoinViewController.swift; sourceTree = "<group>"; };
-		6A5C1691245B8E8D00B315DD /* thumbs_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbs_up.png; sourceTree = "<group>"; };
-		6A5C1695245B8EA400B315DD /* thumbs_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbs_down.png; sourceTree = "<group>"; };
 		6A6F16B124589C3800601CC6 /* UIUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
 		92A7CC84245CD8D2002F0ABA /* logInVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = logInVideo.mp4; path = ../../../../../../../Downloads/logInVideo.mp4; sourceTree = "<group>"; };
 		92FF58462457FB7300291CC6 /* PartyManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyManagementViewController.swift; sourceTree = "<group>"; };
@@ -200,10 +190,7 @@
 		6A6F16B024589BD400601CC6 /* UI Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				40392CCD245C3DDE0002D054 /* superlikeheart.png */,
 				92A7CC84245CD8D2002F0ABA /* logInVideo.mp4 */,
-				6A5C1695245B8EA400B315DD /* thumbs_down.png */,
-				6A5C1691245B8E8D00B315DD /* thumbs_up.png */,
 				6A6F16B124589C3800601CC6 /* UIUtilities.swift */,
 				6A0D2A03245B388700EAB3B4 /* Spinner.swift */,
 			);
@@ -400,13 +387,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A5C1692245B8E8E00B315DD /* thumbs_up.png in Resources */,
 				408525F32456318400D54AD4 /* LaunchScreen.storyboard in Resources */,
-				6A5C1696245B8EA500B315DD /* thumbs_down.png in Resources */,
 				6A0657DE24578F680006D2C2 /* GoogleService-Info.plist in Resources */,
 				408525F02456318400D54AD4 /* Assets.xcassets in Resources */,
 				408525EE2456318200D54AD4 /* Main.storyboard in Resources */,
-				40392CCE245C3DDE0002D054 /* superlikeheart.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,8 +398,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A5C1693245B8E8E00B315DD /* thumbs_up.png in Resources */,
-				6A5C1697245B8EA500B315DD /* thumbs_down.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,8 +405,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A5C1694245B8E8E00B315DD /* thumbs_up.png in Resources */,
-				6A5C1698245B8EA500B315DD /* thumbs_down.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

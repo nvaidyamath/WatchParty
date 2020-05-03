@@ -13,6 +13,8 @@ import FirebaseFirestore
 
 class RankingTableViewController: UITableViewController {
     
+    // MARK: - Properties
+    
     let db = Firestore.firestore()
     var partyID = String()
     var partySize = Int()
@@ -33,11 +35,15 @@ class RankingTableViewController: UITableViewController {
             }
         }
     }
+    
+    // MARK: - View Did Load
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.getUserDB()
     }
+    
+    // MARK: - Methods
     
     func getMovieStack(){
         db.collection("parties").document(self.partyID).getDocument { (document, error) in
@@ -74,7 +80,7 @@ class RankingTableViewController: UITableViewController {
         }
     }
 
-    // MARK: - Table view data source
+    // MARK: - Table View Data Source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.movieRanking.count

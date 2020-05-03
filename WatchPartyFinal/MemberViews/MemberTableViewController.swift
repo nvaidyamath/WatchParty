@@ -14,6 +14,8 @@ import FirebaseFirestore
 
 class MemberTableViewController: UITableViewController {
 
+    // MARK: - Properties
+    
     let db = Firestore.firestore()
     var partyID = String()
     var partyName = String()
@@ -33,10 +35,14 @@ class MemberTableViewController: UITableViewController {
         }
     }
 
+    // MARK: - View Did Load
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.getUserDB()
     }
+    
+    // MARK: - Firebase Data Retrieval
     
     func getPartyMembers(){
         db.collection("parties").document(self.partyID).getDocument { (document, error) in
@@ -65,7 +71,7 @@ class MemberTableViewController: UITableViewController {
     }
 
     
-    // MARK: - Table view data source
+    // MARK: - Table View Data Source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.partyMembers.count
