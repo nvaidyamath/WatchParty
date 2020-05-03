@@ -177,15 +177,24 @@ class SwipeMoviesViewController: UIViewController {
                 
         descView.layer.cornerRadius = 15.0
         descView.clipsToBounds = true
-        //Set gradient of view
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = movieCardView.bounds
-        gradientLayer.cornerRadius = 15.0
-        gradientLayer.colors = [#colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1).cgColor, UIColor(red: 255/255, green: 153/255, blue: 51/255, alpha: 1).cgColor]
-        gradientLayer.shouldRasterize = true
-    
+        
+//        //Set gradient of view
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = movieCardView.bounds
+//        gradientLayer.cornerRadius = 15.0
+//        gradientLayer.colors = [#colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1).cgColor, UIColor(red: 255/255, green: 153/255, blue: 51/255, alpha: 1).cgColor]
+//        gradientLayer.shouldRasterize = true
+//        descView.layer.insertSublayer(gradientLayer, at: 0)
+        
+        // Set background image
+        let descImgView = UIImageView()
+        descImgView.frame = self.movieCardView.bounds
+        descImgView.layer.cornerRadius = 15.0
+        descImgView.clipsToBounds = true
+        descImgView.image = UIImage(named: "orange")
+        descView.addSubview(descImgView)
+        
         //Setup Bounds of view and button
-        descView.layer.insertSublayer(gradientLayer, at: 0)
         descView.frame = movieCardView.bounds
         descButton.frame = descView.frame
         descButton.backgroundColor = .clear
