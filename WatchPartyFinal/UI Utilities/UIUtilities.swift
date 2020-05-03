@@ -86,4 +86,21 @@ class UIUtilities{
         button.layer.insertSublayer(gradientLayer, at: 0)
         //button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25) as! CGColor
     }
+    
+    static func circularIcon(_ button:UIButton) {
+        button.layer.cornerRadius = button.frame.size.width/2
+        button.clipsToBounds = true
+        button.backgroundColor = .orange
+        button.tintColor = UIColor.black
+        let gradientLayer = CAGradientLayer()
+        // Set the size of the layer to be equal to size of the display.
+        gradientLayer.frame = button.bounds
+        gradientLayer.cornerRadius = 13.0
+        gradientLayer.colors = [#colorLiteral(red: 1, green: 0.7287781835, blue: 0.6071054339, alpha: 1).cgColor, UIColor(red: 255/255, green: 153/255, blue: 51/255, alpha: 0.001).cgColor]
+        // Rasterize this static layer to improve app performance.
+        gradientLayer.shouldRasterize = true
+        button.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    
 }

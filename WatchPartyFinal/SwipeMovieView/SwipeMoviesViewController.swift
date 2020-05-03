@@ -21,6 +21,10 @@ class SwipeMoviesViewController: UIViewController {
     @IBOutlet var titleLabelPos: UILabel!
     @IBOutlet var descLabelPos: UILabel!
     @IBOutlet var votesLabelPos: UILabel!
+    @IBOutlet var returnButton: UIButton!
+    @IBOutlet var membersButton: UIButton!
+    @IBOutlet var bucketListButton: UIButton!
+    @IBOutlet var leavePartyButton: UIButton!
     
     let db = Firestore.firestore()
     let userID = Auth.auth().currentUser!.uid
@@ -83,6 +87,10 @@ class SwipeMoviesViewController: UIViewController {
     // MARK: - View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIUtilities.circularIcon(membersButton)
+        UIUtilities.circularIcon(bucketListButton)
+        UIUtilities.circularIcon(leavePartyButton)
+        UIUtilities.circularIcon(returnButton) 
         partyNameLabel.text = partyName;
         createDescriptionSide()
         createPosterSide()
@@ -141,7 +149,14 @@ class SwipeMoviesViewController: UIViewController {
         createSuperLikeButton()
         
         posterView.frame = movieCardView.bounds
-
+        //Add shadow to view
+        posterView.layer.shadowPath = UIBezierPath(roundedRect: posterView.bounds, cornerRadius: 15).cgPath
+        posterView.layer.shadowColor = UIColor.black.cgColor
+        posterView.layer.shadowOpacity = 0.5
+        posterView.layer.shadowOffset = CGSize(width: 10, height: 10)
+        posterView.layer.shadowRadius = 1
+        posterView.layer.masksToBounds = false
+        
         posterView.addSubview(flipButton)
         posterView.addSubview(poster)
         posterView.addSubview(thumbUpDownPoster)
@@ -157,10 +172,27 @@ class SwipeMoviesViewController: UIViewController {
                 
         descView.layer.cornerRadius = 15.0
         descView.clipsToBounds = true
-        descView.backgroundColor = UIColor.orange
+        //Set gradient of view
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = movieCardView.bounds
+        gradientLayer.cornerRadius = 15.0
+        gradientLayer.colors = [#colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1).cgColor, UIColor(red: 255/255, green: 153/255, blue: 51/255, alpha: 1).cgColor]
+        gradientLayer.shouldRasterize = true
+    
+        //Setup Bounds of view and button
+        descView.layer.insertSublayer(gradientLayer, at: 0)
         descView.frame = movieCardView.bounds
         descButton.frame = descView.frame
+        descButton.backgroundColor = .clear
         descButton.addTarget(self, action: #selector(timeToFlip), for: .touchUpInside)
+        
+        //Add shadow to view
+        descView.layer.shadowPath = UIBezierPath(roundedRect: descView.bounds, cornerRadius: descView.layer.cornerRadius).cgPath
+        descView.layer.shadowColor = UIColor.black.cgColor
+        descView.layer.shadowOpacity = 0.5
+        descView.layer.shadowOffset = CGSize(width: 10, height: 10)
+        descView.layer.shadowRadius = 1
+        descView.layer.masksToBounds = false
         
         descView.addSubview(descButton)
         

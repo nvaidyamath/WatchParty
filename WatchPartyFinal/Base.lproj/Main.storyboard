@@ -464,8 +464,13 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sKE-Cn-Tiy">
-                                <rect key="frame" x="188" y="726" width="33.5" height="48"/>
+                                <rect key="frame" x="188" y="726" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="94E-Cu-hCM"/>
+                                    <constraint firstAttribute="height" constant="50" id="nAO-kC-bc8"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="person.2.fill" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                 </state>
@@ -474,7 +479,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mKk-SY-XXs">
-                                <rect key="frame" x="342" y="726" width="25.5" height="48"/>
+                                <rect key="frame" x="317.5" y="726" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Exa-Zh-smi"/>
+                                    <constraint firstAttribute="width" constant="50" id="yOJ-fG-9Yh"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <state key="normal" image="list.number" catalog="system">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -485,7 +494,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y6g-fd-aRC">
-                                <rect key="frame" x="47" y="726" width="31.5" height="48"/>
+                                <rect key="frame" x="47" y="726" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="IVE-ZF-7kb"/>
+                                    <constraint firstAttribute="width" constant="50" id="ucG-Bm-71p"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <state key="normal" image="arrowshape.turn.up.left.2.fill" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
@@ -495,7 +508,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Party Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngC-HY-vdR">
-                                <rect key="frame" x="152" y="70" width="106" height="26"/>
+                                <rect key="frame" x="160" y="70" width="106" height="26"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -534,9 +547,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="rbM-V8-b4C"/>
                     <connections>
+                        <outlet property="bucketListButton" destination="mKk-SY-XXs" id="QDz-23-7NR"/>
                         <outlet property="descLabelPos" destination="Och-Yc-EnA" id="7aE-BG-eS6"/>
+                        <outlet property="leavePartyButton" destination="NYg-5C-Ne6" id="WGs-AG-aAw"/>
+                        <outlet property="membersButton" destination="sKE-Cn-Tiy" id="6dP-8K-RB9"/>
                         <outlet property="movieCardView" destination="Cup-Jy-D8Y" id="67N-qY-vSw"/>
                         <outlet property="partyNameLabel" destination="ngC-HY-vdR" id="Jj5-Cn-Ig8"/>
+                        <outlet property="returnButton" destination="y6g-fd-aRC" id="4dL-eu-9n9"/>
                         <outlet property="titleLabelPos" destination="F16-QV-dSN" id="FpQ-Vn-6F7"/>
                         <outlet property="votesLabelPos" destination="Hbs-gE-B7U" id="4go-ie-wIK"/>
                     </connections>
