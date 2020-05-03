@@ -40,9 +40,9 @@ class SwipeMoviesViewController: UIViewController {
     var superLikeButton = UIButton()
     var superLikeAlert = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
     var superLikes = [String:Double]();
-    var stopTimer = false;
+
     var timeRemaining = 0;
-    var timerSuperLike = Timer();
+    var timerSuperLike: Timer?
     
     var partyName = String();
     var partyID = String();
@@ -277,6 +277,19 @@ class SwipeMoviesViewController: UIViewController {
     func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
         return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
+    func startTimer(){
+        if timerSuperLike == nil {
+            timerSuperLike = Timer.scheduledTimer(timeInterval: 1, target: self,selector: #selector(updateLabel), userInfo: nil, repeats: true)
+        }
+    }
+    func resetTimer(){
+        if timerSuperLike != nil {
+            timerSuperLike!.invalidate()
+            timerSuperLike = nil
+            superLikeAlert = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
+            alertViewResponder = SCLAlertViewResponder(alertview: SCLAlertView());
+        }
+    }
     
     func sendNoSuperLikeAvailableAlert(){
         let currentTimeStamp = NSDate().timeIntervalSince1970
@@ -285,16 +298,13 @@ class SwipeMoviesViewController: UIViewController {
         let (h,m,s) = secondsToHoursMinutesSeconds(seconds: self.timeRemaining)
         let timeString = "Will be available in: "+String(h)+":"+String(m)+":"+String(s)
         superLikeAlert.addButton("Okay, I'll Wait!") {
-            self.stopTimer = true;
+             self.resetTimer()
         }
         alertViewResponder = superLikeAlert.showWarning("No more superlike available!", subTitle: timeString)
-        timerSuperLike = Timer.scheduledTimer(timeInterval: 1, target: self,selector: #selector(updateLabel), userInfo: nil, repeats: true)
+        startTimer()
     }
     
     @objc func updateLabel() {
-        if (self.stopTimer){
-            timerSuperLike.invalidate();
-        }
         self.timeRemaining = self.timeRemaining-1;
         let (h,m,s) = secondsToHoursMinutesSeconds(seconds:self.timeRemaining)
         let timeString = "Will be available in: "+String(h)+":"+String(m)+":"+String(s)
