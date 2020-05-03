@@ -15,6 +15,7 @@ class PartyCreationViewController: UIViewController {
 
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet var cancelButton: UIButton!
     
     var stack = [[String: String]]()
     
@@ -43,19 +44,25 @@ class PartyCreationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchMovies()
+        UIUtilities.styleFilledButtonLocked(submitButton)
+        UIUtilities.styleFilledButtonCancel(cancelButton)
+        UIUtilities.styleTextField(nameField)
         submitButton.isEnabled = false; //disabled untill user enters a name
 
     }
 
-    @IBAction func valueDidEndText(_ sender: Any) {
+    @IBAction func edittedField(_ sender: Any) {
         let partyName = nameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         if (partyName.count==0){
             submitButton.isEnabled = false;
+            UIUtilities.styleFilledButtonLocked(submitButton)
         }
         else {
             submitButton.isEnabled = true;
+            UIUtilities.styleFilledButtonParty(submitButton)
         }
     }
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
         super.touchesBegan(touches, with: event)
@@ -104,7 +111,7 @@ class PartyCreationViewController: UIViewController {
         self.view.window?.makeKeyAndVisible()
     }
     @IBAction func cancel(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     /*

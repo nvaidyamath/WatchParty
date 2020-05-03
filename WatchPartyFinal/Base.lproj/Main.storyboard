@@ -351,11 +351,11 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
-                                    <action selector="valueDidEndText:" destination="KLa-cI-YWt" eventType="editingDidEnd" id="DC2-R7-JKH"/>
+                                    <action selector="edittedField:" destination="KLa-cI-YWt" eventType="editingChanged" id="Rwm-uB-sw2"/>
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w81-Ax-CbP">
-                                <rect key="frame" x="109" y="314" width="49" height="30"/>
+                                <rect key="frame" x="106" y="301" width="203" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
@@ -363,10 +363,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F5h-l7-dDZ">
-                                <rect key="frame" x="264" y="314" width="48" height="30"/>
+                                <rect key="frame" x="106" y="339" width="203" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Cancel">
-                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="cancel:" destination="KLa-cI-YWt" eventType="touchUpInside" id="Kxo-A8-lu1"/>
@@ -377,14 +377,16 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="eHl-mn-fkp"/>
                     </view>
+                    <navigationItem key="navigationItem" id="h1m-U6-rEE"/>
                     <connections>
+                        <outlet property="cancelButton" destination="F5h-l7-dDZ" id="yV5-pg-1xJ"/>
                         <outlet property="nameField" destination="Mbf-tq-zTK" id="VRt-1Y-W1j"/>
                         <outlet property="submitButton" destination="w81-Ax-CbP" id="2eD-iO-eJ9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rGM-bb-2ys" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3167" y="-257"/>
+            <point key="canvasLocation" x="3166.666666666667" y="-257.14285714285711"/>
         </scene>
         <!--Party Selection Table View Controller-->
         <scene sceneID="kFB-Jd-9WE">
