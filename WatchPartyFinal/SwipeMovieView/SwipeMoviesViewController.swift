@@ -277,6 +277,21 @@ class SwipeMoviesViewController: UIViewController {
     func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
         return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
+    func convertTimeToString(s:Int,m:Int,h:Int) -> String {
+        var secString = String(s)
+        var minString = String(m)
+        var hourString = String(h)
+        if (secString.count==1){
+            secString = "0"+secString;
+        }
+        if (minString.count==1){
+            minString = "0"+minString;
+        }
+        if (hourString.count==1){
+            hourString = "0"+hourString;
+        }
+        return "Will be available in: "+hourString+":"+minString+":"+secString
+    }
     func startTimer(){
         if timerSuperLike == nil {
             timerSuperLike = Timer.scheduledTimer(timeInterval: 1, target: self,selector: #selector(updateLabel), userInfo: nil, repeats: true)
@@ -296,7 +311,7 @@ class SwipeMoviesViewController: UIViewController {
         let timeRemaining = 86400 - (currentTimeStamp - superLikes[userID]!);
         self.timeRemaining = Int(round(timeRemaining));
         let (h,m,s) = secondsToHoursMinutesSeconds(seconds: self.timeRemaining)
-        let timeString = "Will be available in: "+String(h)+":"+String(m)+":"+String(s)
+        let timeString = convertTimeToString(s: s,m: m,h: h);
         superLikeAlert.addButton("Okay, I'll Wait!") {
              self.resetTimer()
         }
@@ -307,7 +322,7 @@ class SwipeMoviesViewController: UIViewController {
     @objc func updateLabel() {
         self.timeRemaining = self.timeRemaining-1;
         let (h,m,s) = secondsToHoursMinutesSeconds(seconds:self.timeRemaining)
-        let timeString = "Will be available in: "+String(h)+":"+String(m)+":"+String(s)
+        let timeString = convertTimeToString(s: s,m: m,h: h);
         alertViewResponder.setSubTitle(timeString)
     }
 
