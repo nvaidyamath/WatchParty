@@ -12,7 +12,6 @@ import Firebase
 import FirebaseFirestore
 import SCLAlertView
 
-
 class SwipeMoviesViewController: UIViewController {
 
     // MARK: - Properties
@@ -95,9 +94,8 @@ class SwipeMoviesViewController: UIViewController {
         UIUtilities.circularIcon(membersButton)
         UIUtilities.circularIcon(bucketListButton)
         UIUtilities.circularIcon(returnButton)
-        
-        //UIUtilities.circularIcon(leavePartyButton)
-        //UIUtilities.circularIcon(shareIDButton)
+        UIUtilities.nakedIcon(leavePartyButton)
+        UIUtilities.nakedIcon(shareIDButton)
         
         partyNameLabel.text = partyName;
         createDescriptionSide()

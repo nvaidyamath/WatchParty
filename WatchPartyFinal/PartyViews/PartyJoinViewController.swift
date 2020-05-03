@@ -15,8 +15,14 @@ class PartyJoinViewController: UIViewController {
     
     @IBOutlet var partyIdField: UITextField!
     @IBOutlet var errorMessage: UILabel!
+    @IBOutlet var joinButton: UIButton!
+    @IBOutlet var exitButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIUtilities.styleTextField(partyIdField)
+        UIUtilities.styleFilledButtonParty(joinButton)
+        UIUtilities.styleFilledButtonCancel(exitButton)
         errorMessage.alpha = 0;
     }
 
@@ -50,5 +56,8 @@ class PartyJoinViewController: UIViewController {
                 }
             }
         }
+    }
+    @IBAction func cancel(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
 }

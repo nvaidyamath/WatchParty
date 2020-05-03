@@ -9,6 +9,21 @@
 import Foundation
 import UIKit
 
+extension UIButton {
+    func setBackgroundColor(color: UIColor, forState: UIControl.State) {
+        self.clipsToBounds = true  // add this to maintain corner radius
+        UIGraphicsBeginImageContext(CGSize(width: 1, height: 1))
+        if let context = UIGraphicsGetCurrentContext() {
+            context.setFillColor(color.cgColor)
+            context.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+            let colorImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            self.setBackgroundImage(colorImage, for: forState)
+        }
+    }
+}
+
+
 class UIUtilities{
     static func styleTextField(_ textfield:UITextField){
         let bottomLine = CALayer()
@@ -93,19 +108,16 @@ class UIUtilities{
         button.layer.borderWidth = 2.0
         button.layer.borderColor = UIColor.orange.cgColor
         button.showsTouchWhenHighlighted = true
-        //button.backgroundColor = .orange
-        //button.tintColor = UIColor.white
-//        let gradientLayer = CAGradientLayer()
-//        // Set the size of the layer to be equal to size of the display.
-//        gradientLayer.frame = button.bounds
-//        gradientLayer.cornerRadius = 13.0
-//        gradientLayer.colors = [#colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1).cgColor, UIColor(red: 255/255, green: 153/255, blue: 51/255, alpha: 1).cgColor]
-//        button.layer.borderColor = UIColor.orange.cgColor
-//        // Rasterize this static layer to improve app performance.
-//        gradientLayer.shouldRasterize = true
-//        button.layer.insertSublayer(gradientLayer, at: 0)
-        //button.bringSubviewToFront(button.imageView!)
+        button.setBackgroundColor(color: UIColor.lightGray, forState: UIControl.State.highlighted)
         
+        
+    }
+    
+    static func nakedIcon(_ button:UIButton) {
+        button.layer.cornerRadius = button.frame.size.width/2
+        button.clipsToBounds = true
+        button.showsTouchWhenHighlighted = true
+        button.setBackgroundColor(color: UIColor.lightGray, forState: UIControl.State.highlighted)
     }
     
     
