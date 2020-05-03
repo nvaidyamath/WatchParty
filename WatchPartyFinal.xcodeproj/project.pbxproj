@@ -12,7 +12,6 @@
 		403EE0DD2458EA440066A834 /* SwipeMoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403EE0DC2458EA440066A834 /* SwipeMoviesViewController.swift */; };
 		408525E72456318200D54AD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408525E62456318200D54AD4 /* AppDelegate.swift */; };
 		408525E92456318200D54AD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408525E82456318200D54AD4 /* SceneDelegate.swift */; };
-		408525EB2456318200D54AD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408525EA2456318200D54AD4 /* ViewController.swift */; };
 		408525EE2456318200D54AD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 408525EC2456318200D54AD4 /* Main.storyboard */; };
 		408525F02456318400D54AD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 408525EF2456318400D54AD4 /* Assets.xcassets */; };
 		408525F32456318400D54AD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 408525F12456318400D54AD4 /* LaunchScreen.storyboard */; };
@@ -25,6 +24,8 @@
 		6A0D2A04245B388700EAB3B4 /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0D2A03245B388700EAB3B4 /* Spinner.swift */; };
 		6A2D18FE245A2B2100690362 /* PartyJoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2D18FD245A2B2100690362 /* PartyJoinViewController.swift */; };
 		6A6F16B224589C3800601CC6 /* UIUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F16B124589C3800601CC6 /* UIUtilities.swift */; };
+		92D87F84245EB2FE0028DF7A /* production ID_3843425.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 92D87F81245EB2FD0028DF7A /* production ID_3843425.mp4 */; };
+		92D87F85245EB2FE0028DF7A /* production ID_3945492.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 92D87F82245EB2FE0028DF7A /* production ID_3945492.mp4 */; };
 		92FF58472457FB7300291CC6 /* PartyManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF58462457FB7300291CC6 /* PartyManagementViewController.swift */; };
 		92FF58492457FBDA00291CC6 /* PartySelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF58482457FBDA00291CC6 /* PartySelectionTableViewController.swift */; };
 		92FF584B2457FEB800291CC6 /* PartyCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FF584A2457FEB800291CC6 /* PartyCreationViewController.swift */; };
@@ -62,7 +63,6 @@
 		408525E32456318200D54AD4 /* WatchPartyFinal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchPartyFinal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		408525E62456318200D54AD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		408525E82456318200D54AD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		408525EA2456318200D54AD4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		408525ED2456318200D54AD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		408525EF2456318400D54AD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		408525F22456318400D54AD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -82,7 +82,8 @@
 		6A0D2A03245B388700EAB3B4 /* Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
 		6A2D18FD245A2B2100690362 /* PartyJoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyJoinViewController.swift; sourceTree = "<group>"; };
 		6A6F16B124589C3800601CC6 /* UIUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtilities.swift; sourceTree = "<group>"; };
-		92A7CC84245CD8D2002F0ABA /* logInVideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = logInVideo.mp4; path = ../../../../../../../Downloads/logInVideo.mp4; sourceTree = "<group>"; };
+		92D87F81245EB2FD0028DF7A /* production ID_3843425.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "production ID_3843425.mp4"; sourceTree = "<group>"; };
+		92D87F82245EB2FE0028DF7A /* production ID_3945492.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "production ID_3945492.mp4"; sourceTree = "<group>"; };
 		92FF58462457FB7300291CC6 /* PartyManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyManagementViewController.swift; sourceTree = "<group>"; };
 		92FF58482457FBDA00291CC6 /* PartySelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartySelectionTableViewController.swift; sourceTree = "<group>"; };
 		92FF584A2457FEB800291CC6 /* PartyCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartyCreationViewController.swift; sourceTree = "<group>"; };
@@ -190,7 +191,6 @@
 		6A6F16B024589BD400601CC6 /* UI Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				92A7CC84245CD8D2002F0ABA /* logInVideo.mp4 */,
 				6A6F16B124589C3800601CC6 /* UIUtilities.swift */,
 				6A0D2A03245B388700EAB3B4 /* Spinner.swift */,
 			);
@@ -218,7 +218,8 @@
 		92FF5864245A9F5400291CC6 /* AuthenticationViews */ = {
 			isa = PBXGroup;
 			children = (
-				408525EA2456318200D54AD4 /* ViewController.swift */,
+				92D87F81245EB2FD0028DF7A /* production ID_3843425.mp4 */,
+				92D87F82245EB2FE0028DF7A /* production ID_3945492.mp4 */,
 				6A0657D62457542A0006D2C2 /* LogInViewController.swift */,
 				6A0657D8245754460006D2C2 /* SignUpViewController.swift */,
 			);
@@ -388,9 +389,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				408525F32456318400D54AD4 /* LaunchScreen.storyboard in Resources */,
+				92D87F84245EB2FE0028DF7A /* production ID_3843425.mp4 in Resources */,
 				6A0657DE24578F680006D2C2 /* GoogleService-Info.plist in Resources */,
 				408525F02456318400D54AD4 /* Assets.xcassets in Resources */,
 				408525EE2456318200D54AD4 /* Main.storyboard in Resources */,
+				92D87F85245EB2FE0028DF7A /* production ID_3945492.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -519,7 +522,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				92FF584B2457FEB800291CC6 /* PartyCreationViewController.swift in Sources */,
-				408525EB2456318200D54AD4 /* ViewController.swift in Sources */,
 				92FF5859245982F500291CC6 /* RankingTableViewController.swift in Sources */,
 				92FF5863245A9EF900291CC6 /* MemberViewController.swift in Sources */,
 				92FF5861245A96D200291CC6 /* MemberTableViewController.swift in Sources */,

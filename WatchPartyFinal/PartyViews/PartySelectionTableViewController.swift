@@ -31,14 +31,14 @@ class PartySelectionTableViewController: UITableViewController {
     }
     
     func forceLogOut(){
-        // direct to initial sign-in/sign-up view
+        // try log-out
         do {
             try Auth.auth().signOut()
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)
         }
-        let initialVC = self.storyboard?.instantiateViewController(identifier: "InitialViewController") as? ViewController
-        self.view.window?.rootViewController = initialVC
+        let loginVC = self.storyboard?.instantiateViewController(identifier: "LoginViewController") as? LogInViewController
+        self.view.window?.rootViewController = loginVC
         self.view.window?.makeKeyAndVisible()
     }
 

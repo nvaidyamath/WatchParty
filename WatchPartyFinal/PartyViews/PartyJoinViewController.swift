@@ -22,7 +22,7 @@ class PartyJoinViewController: UIViewController {
 
     @IBAction func joinParty(_ sender: Any) {
         if partyIdField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""{
-            errorMessage.text = "Please enter a Party ID"
+            errorMessage.text = "Please enter the unique party ID"
             errorMessage.alpha = 1;
         }
         else{
@@ -45,7 +45,7 @@ class PartyJoinViewController: UIViewController {
                     self.view.window?.makeKeyAndVisible()
                 }
                 else{
-                    self.errorMessage.text = "This ID Does not Exist"
+                    self.errorMessage.text = "Invalid ID"
                     self.errorMessage.alpha = 1;
                 }
             }

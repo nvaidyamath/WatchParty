@@ -42,9 +42,8 @@ class PartyManagementViewController: UIViewController, SegueHandler {
     @IBAction func logoutPressed(_ sender: Any) {
         do {
             try Auth.auth().signOut()
-            // direct to initial sign-in/sign-up view
-            let initialVC = self.storyboard?.instantiateViewController(identifier: "InitialViewController") as? ViewController
-            self.view.window?.rootViewController = initialVC
+            let loginVC = self.storyboard?.instantiateViewController(identifier: "LoginViewController") as? LogInViewController
+            self.view.window?.rootViewController = loginVC
             self.view.window?.makeKeyAndVisible()
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)

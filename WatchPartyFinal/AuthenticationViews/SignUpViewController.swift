@@ -19,9 +19,19 @@ class SignUpViewController: UIViewController {
     @IBOutlet var signUpButton: UIButton!
     @IBOutlet var errorDisplay: UILabel!
     
+    var email = String()
+    var password = String()
+    var isUserCreated = false {
+        didSet{
+            DispatchQueue.main.async{
+                self.signIn()
+            }
+        }
+    }
+    
     override func viewDidLoad() {
-        initUI()
         super.viewDidLoad()
+        initUI()
         errorDisplay.alpha = 0;
     }
     
@@ -31,66 +41,77 @@ class SignUpViewController: UIViewController {
         UIUtilities.styleTextField(emailField)
         UIUtilities.styleTextField(passwordField)
         UIUtilities.styleFilledButton(signUpButton)
+        setupBackgroundImage()
+    }
+    
+    func setupBackgroundImage(){
+        let imageView = UIImageView(frame: view.bounds)
+        imageView.contentMode =  UIView.ContentMode.scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.image = UIImage(named: "popcorn")
+        imageView.center = view.center
+        self.view.addSubview(imageView)
+        self.view.sendSubviewToBack(imageView)
     }
     
     //Check the fields to see if the data is valid.
-    func validateFields() -> String? {
+    func validateFields() -> Bool {
         
         if firstNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || lastNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
             emailField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
             passwordField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
             
-            return "Please complete all fields."
+            errorDisplay.text = "Please complete all fields."
+            errorDisplay.alpha = 1
+            return false
         }
-        
-        // TODO: Check if password is secure
-        
-        return nil
+        return true
+    }
+    
+    
+    func signIn(){
+        Auth.auth().signIn(withEmail: self.email, password: self.password) { result, err in
+            if err != nil{
+                print("Error logging in. Please retry later.")
+            } else {
+                let partyManagementVC = self.storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
+                self.view.window?.rootViewController = partyManagementVC
+                self.view.window?.makeKeyAndVisible()
+            }
+        }
     }
 
     @IBAction func signUpPressed(_ sender: Any) {
-        let error = validateFields()
-        
-        if(error != nil){
-            errorDisplay.text = error!
-            errorDisplay.alpha = 1
+
+        if !(validateFields()){
+            return
         }
-        else{
-            
-            let firstName = firstNameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            let lastName = lastNameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            let email = emailField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            let password = passwordField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            let partyNames = [String]()
-            let partyIDs = [String]()
-            
-            //Register New User-=
-            Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
-                
-                if err != nil{
-                    self.errorDisplay.text = "Error Creating User, please try again later"
-                    self.errorDisplay.alpha = 1
-                }else{
-                    let db = Firestore.firestore()
-                    db.collection("users").document(result!.user.uid).setData([
-                        "first_name":firstName,
-                        "last_name":lastName,
-                        "email":email,
-                        "partyNames":partyNames,
-                        "userName": firstName + " " + lastName,
-                        "partyIDs":partyIDs]){
-                            (err) in
-                            if err != nil {
-                                self.errorDisplay.text = "User data was not able to be processed, please try again later"
-                                self.errorDisplay.alpha = 1
-                        }
+        
+        self.email = emailField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        self.password = passwordField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let firstName = firstNameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let lastName = lastNameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        // Register New User
+        Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
+            if err != nil{
+                self.errorDisplay.text = "Error creating user, please try again later."
+                self.errorDisplay.alpha = 1
+            } else {
+                let db = Firestore.firestore()
+                db.collection("users").document(result!.user.uid).setData([
+                    "first_name": firstName,
+                    "last_name": lastName,
+                    "email": self.email,
+                    "partyIDs": [String](),
+                    "partyNames": [String](),
+                    "userName": firstName + " " + lastName]){ (err) in
+                    if err != nil {
+                        self.errorDisplay.text = "User data was not able to be processed, please try again later"
+                        self.errorDisplay.alpha = 1
                     }
-                    
-                    //Go to Party Management Screen
-                    let partyManagementVC = self.storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
-                    self.view.window?.rootViewController = partyManagementVC
-                    self.view.window?.makeKeyAndVisible()
                 }
+                self.isUserCreated = true
             }
         }
     }
