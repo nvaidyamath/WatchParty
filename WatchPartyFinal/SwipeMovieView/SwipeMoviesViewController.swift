@@ -90,6 +90,7 @@ class SwipeMoviesViewController: UIViewController {
         UIUtilities.circularIcon(membersButton)
         UIUtilities.circularIcon(bucketListButton)
         UIUtilities.circularIcon(leavePartyButton)
+        
         UIUtilities.circularIcon(returnButton) 
         partyNameLabel.text = partyName;
         createDescriptionSide()
@@ -149,13 +150,13 @@ class SwipeMoviesViewController: UIViewController {
         createSuperLikeButton()
         
         posterView.frame = movieCardView.bounds
-        //Add shadow to view
-        posterView.layer.shadowPath = UIBezierPath(roundedRect: posterView.bounds, cornerRadius: 15).cgPath
-        posterView.layer.shadowColor = UIColor.black.cgColor
-        posterView.layer.shadowOpacity = 0.5
-        posterView.layer.shadowOffset = CGSize(width: 10, height: 10)
-        posterView.layer.shadowRadius = 1
-        posterView.layer.masksToBounds = false
+//        //Add shadow to view
+//        posterView.layer.shadowPath = UIBezierPath(roundedRect: posterView.bounds, cornerRadius: 15).cgPath
+//        posterView.layer.shadowColor = UIColor.black.cgColor
+//        posterView.layer.shadowOpacity = 0.5
+//        posterView.layer.shadowOffset = CGSize(width: 10, height: 10)
+//        posterView.layer.shadowRadius = 1
+//        posterView.layer.masksToBounds = false
         
         posterView.addSubview(flipButton)
         posterView.addSubview(poster)
@@ -186,13 +187,6 @@ class SwipeMoviesViewController: UIViewController {
         descButton.backgroundColor = .clear
         descButton.addTarget(self, action: #selector(timeToFlip), for: .touchUpInside)
         
-        //Add shadow to view
-        descView.layer.shadowPath = UIBezierPath(roundedRect: descView.bounds, cornerRadius: descView.layer.cornerRadius).cgPath
-        descView.layer.shadowColor = UIColor.black.cgColor
-        descView.layer.shadowOpacity = 0.5
-        descView.layer.shadowOffset = CGSize(width: 10, height: 10)
-        descView.layer.shadowRadius = 1
-        descView.layer.masksToBounds = false
         
         descView.addSubview(descButton)
         

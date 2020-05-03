@@ -36,7 +36,7 @@ class PartyManagementViewController: UIViewController, SegueHandler {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIUtilities.styleFilledButtonParty(createButton)
+        //UIUtilities.styleFilledButtonParty(createButton)
         UIUtilities.styleFilledButtonParty(joinButton)
         let gradientLayer = CAGradientLayer()
         // Set the size of the layer to be equal to size of the display.

@@ -463,14 +463,14 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sKE-Cn-Tiy">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sKE-Cn-Tiy">
                                 <rect key="frame" x="188" y="726" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="94E-Cu-hCM"/>
                                     <constraint firstAttribute="height" constant="50" id="nAO-kC-bc8"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="person.2.fill" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                 </state>
@@ -478,13 +478,14 @@
                                     <segue destination="vOh-lI-MJc" kind="show" identifier="SwipeToMemberList" id="9Du-9o-FGF"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mKk-SY-XXs">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mKk-SY-XXs">
                                 <rect key="frame" x="317.5" y="726" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Exa-Zh-smi"/>
                                     <constraint firstAttribute="width" constant="50" id="yOJ-fG-9Yh"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <color key="tintColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="list.number" catalog="system">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
@@ -493,13 +494,14 @@
                                     <segue destination="f2a-6n-LeH" kind="show" identifier="SwipeToBucketList" id="ule-dg-pxS"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y6g-fd-aRC">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y6g-fd-aRC">
                                 <rect key="frame" x="47" y="726" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="IVE-ZF-7kb"/>
                                     <constraint firstAttribute="width" constant="50" id="ucG-Bm-71p"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <color key="tintColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="arrowshape.turn.up.left.2.fill" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                 </state>
@@ -513,11 +515,18 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NYg-5C-Ne6">
-                                <rect key="frame" x="334" y="74" width="25" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NYg-5C-Ne6">
+                                <rect key="frame" x="317.5" y="59" width="50" height="50"/>
+                                <rect key="contentStretch" x="0.0" y="0.0" width="0.75" height="1"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="2NX-PZ-2NZ"/>
+                                    <constraint firstAttribute="width" constant="50" id="JhX-6y-CSE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="tintColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <size key="titleShadowOffset" width="13" height="0.0"/>
                                 <state key="normal" image="eject.fill" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
                                 </state>
                                 <connections>
                                     <action selector="leavePartyBtnPressed:" destination="NP1-h1-KWY" eventType="touchUpInside" id="JYc-F9-TDS"/>
@@ -530,7 +539,9 @@
                             <constraint firstItem="y6g-fd-aRC" firstAttribute="leading" secondItem="zGO-yk-750" secondAttribute="leading" constant="47" id="9kI-4Y-OG9"/>
                             <constraint firstItem="Cup-Jy-D8Y" firstAttribute="leading" secondItem="KuB-5a-jub" secondAttribute="leadingMargin" id="C9T-Un-IPP"/>
                             <constraint firstItem="sKE-Cn-Tiy" firstAttribute="centerX" secondItem="ngC-HY-vdR" secondAttribute="centerX" id="EdM-2h-gn9"/>
+                            <constraint firstItem="NYg-5C-Ne6" firstAttribute="top" secondItem="zGO-yk-750" secondAttribute="top" constant="59" id="FaS-fN-c2I"/>
                             <constraint firstItem="sKE-Cn-Tiy" firstAttribute="top" secondItem="y6g-fd-aRC" secondAttribute="top" id="JbT-C3-5KD"/>
+                            <constraint firstItem="NYg-5C-Ne6" firstAttribute="centerX" secondItem="mKk-SY-XXs" secondAttribute="centerX" id="M2K-Tn-Oy1"/>
                             <constraint firstItem="sKE-Cn-Tiy" firstAttribute="leading" secondItem="KuB-5a-jub" secondAttribute="leading" constant="188" id="NkM-DI-ggF"/>
                             <constraint firstItem="Cup-Jy-D8Y" firstAttribute="trailing" secondItem="KuB-5a-jub" secondAttribute="trailingMargin" id="O0h-Pu-67B"/>
                             <constraint firstItem="sKE-Cn-Tiy" firstAttribute="top" secondItem="mKk-SY-XXs" secondAttribute="top" id="OOQ-mY-Yri"/>
