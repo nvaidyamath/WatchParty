@@ -20,13 +20,12 @@ class LogInViewController: UIViewController {
     var avPlayer: AVPlayer!
     var avPlayerLayer: AVPlayerLayer!
 
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         avPlayer.play()
-        if (Auth.auth().currentUser != nil) { // User is already signed in.
-            let partyManagementVC = storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
-            view.window?.rootViewController = partyManagementVC
-            view.window?.makeKeyAndVisible()
+        if (Auth.auth().currentUser != nil) { // User is already signed in
+            self.directToHomeScreen()
         }
     }
     
@@ -37,18 +36,18 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initUI()
-        playVid()
+        setupBackgroundVid()
+        
+        // Set up UI buttons
+        UIUtilities.styleTextField(emailField)
+        UIUtilities.styleTextField(passwordField)
+        UIUtilities.styleHollowButton(loginButton)
         loginButton.isEnabled = false
         loginButton.layer.borderColor = UIColor.gray.cgColor;
     }
     
-    func initUI(){
-        UIUtilities.styleTextField(emailField)
-        UIUtilities.styleTextField(passwordField)
-        UIUtilities.styleHollowButton(loginButton)
-    }
     
+    // MARK: - Log-In Actions
     @IBAction func emailFieldChanged(_ sender: Any) {
         self.shouldEnableLogin()
     }
@@ -69,36 +68,44 @@ class LogInViewController: UIViewController {
         }
     }
     
-    
     @IBAction func loginPressed(_ sender: Any) {
         let email = emailField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let password = passwordField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        // Attempt user sign in
         Auth.auth().signIn(withEmail: email, password: password) { result, err in
             if err != nil{
-                self.shakeTextField(textField: self.passwordField, numberOfShakes:0, direction :1, maxShakes : 10)
+                // Wrong password or account does not exist
+                self.shakePasswordField()
             } else {
-                let partyManagementVC = self.storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
-                self.view.window?.rootViewController = partyManagementVC
-                self.view.window?.makeKeyAndVisible()
+                // Sign in success
+                self.directToHomeScreen()
             }
         }
     }
     
-    func shakeTextField (textField : UITextField, numberOfShakes : Int, direction: CGFloat, maxShakes : Int) {
-        let interval : TimeInterval = 0.03
-        UIView.animate(withDuration: interval, animations: { () -> Void in
-            textField.transform = CGAffineTransform(translationX: 5 * direction, y: 0)
+    func shakePasswordField(currNumShakes: Int = 0, direction: CGFloat = 1) {
+        UIView.animate(withDuration: 0.03, animations: { () -> Void in
+            self.passwordField.transform = CGAffineTransform(translationX: 6 * direction, y: 0)
             }, completion: { (aBool :Bool) -> Void in
-                if (numberOfShakes >= maxShakes) {
-                    textField.transform = CGAffineTransform.identity
-                    textField.becomeFirstResponder()
-                    return
+                if (currNumShakes < 10) {
+                    self.shakePasswordField(currNumShakes: currNumShakes + 1, direction: direction * -1)
+                } else {
+                    self.passwordField.transform = CGAffineTransform.identity
+                    self.passwordField.becomeFirstResponder()
                 }
-                self.shakeTextField(textField: textField, numberOfShakes: numberOfShakes + 1, direction: direction * -1, maxShakes: maxShakes)
         })
     }
     
-    func playVid(){
+    func directToHomeScreen(){
+        let partyManagementVC = self.storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
+        self.view.window?.rootViewController = partyManagementVC
+        self.view.window?.makeKeyAndVisible()
+    }
+    
+    
+    // MARK: - Background Video
+    func setupBackgroundVid(){
         let theURL = Bundle.main.url(forResource:"production ID_3843425", withExtension: "mp4")
 
         avPlayer = AVPlayer(url: theURL!)
@@ -121,5 +128,6 @@ class LogInViewController: UIViewController {
         let p: AVPlayerItem = notification.object as! AVPlayerItem
         p.seek(to: .zero, completionHandler: nil)
     }
+    
 }
 

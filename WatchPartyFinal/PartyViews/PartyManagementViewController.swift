@@ -36,16 +36,22 @@ class PartyManagementViewController: UIViewController, SegueHandler {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setUpGradientBackground()
         UIUtilities.styleFilledButtonParty(createButton)
         UIUtilities.styleFilledButtonParty(joinButton)
-        let gradientLayer = CAGradientLayer()
+    }
+    
+    func setUpGradientBackground(){
         // Set the size of the layer to be equal to size of the display.
+        let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
         gradientLayer.colors = [#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1).cgColor, UIColor(red: 255/255, green: 204/255, blue: 153/255, alpha: 1).cgColor]
+        
         // Rasterize this static layer to improve app performance.
         gradientLayer.shouldRasterize = true
+        
         // Apply the gradient to the backgroundGradientView.
-        pageView.layer.insertSublayer(gradientLayer, at: 0)
+        self.pageView.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     @IBAction func logoutPressed(_ sender: Any) {
@@ -69,4 +75,5 @@ class PartyManagementViewController: UIViewController, SegueHandler {
             dvc.partyID = self.selectedPartyID
         }
     }
-}
+    
+} // END PartyManagementViewController

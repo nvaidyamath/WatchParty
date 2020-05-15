@@ -12,6 +12,7 @@ import FirebaseFirestore
 import Firebase
 
 class SignUpViewController: UIViewController {
+    
     @IBOutlet var firstNameField: UITextField!
     @IBOutlet var lastNameField: UITextField!
     @IBOutlet var emailField: UITextField!
@@ -31,17 +32,13 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initUI()
-        errorDisplay.alpha = 0;
-    }
-    
-    func initUI(){
         UIUtilities.styleTextField(firstNameField)
         UIUtilities.styleTextField(lastNameField)
         UIUtilities.styleTextField(emailField)
         UIUtilities.styleTextField(passwordField)
         UIUtilities.styleFilledButtonParty(signUpButton)
         setupBackgroundImage()
+        errorDisplay.alpha = 0;
     }
     
     func setupBackgroundImage(){
@@ -54,12 +51,11 @@ class SignUpViewController: UIViewController {
         self.view.sendSubviewToBack(imageView)
     }
     
-    //Check the fields to see if the data is valid.
     func validateFields() -> Bool {
-        
-        if firstNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || lastNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
+        if (firstNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
+            lastNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
             emailField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
-            passwordField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+            passwordField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "") {
             
             errorDisplay.text = "Please complete all fields."
             errorDisplay.alpha = 1
@@ -67,22 +63,8 @@ class SignUpViewController: UIViewController {
         }
         return true
     }
-    
-    
-    func signIn(){
-        Auth.auth().signIn(withEmail: self.email, password: self.password) { result, err in
-            if err != nil{
-                print("Error logging in. Please retry later.")
-            } else {
-                let partyManagementVC = self.storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
-                self.view.window?.rootViewController = partyManagementVC
-                self.view.window?.makeKeyAndVisible()
-            }
-        }
-    }
 
     @IBAction func signUpPressed(_ sender: Any) {
-
         if !(validateFields()){
             return
         }
@@ -93,9 +75,9 @@ class SignUpViewController: UIViewController {
         let lastName = lastNameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         
         // Register New User
-        Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
+        Auth.auth().createUser(withEmail: self.email, password: self.password) { (result, err) in
             if err != nil{
-                self.errorDisplay.text = "Error creating user, please try again later."
+                self.errorDisplay.text = err!.localizedDescription
                 self.errorDisplay.alpha = 1
             } else {
                 let db = Firestore.firestore()
@@ -107,7 +89,7 @@ class SignUpViewController: UIViewController {
                     "partyNames": [String](),
                     "userName": firstName + " " + lastName]){ (err) in
                     if err != nil {
-                        self.errorDisplay.text = "User data was not able to be processed, please try again later"
+                        self.errorDisplay.text = err!.localizedDescription
                         self.errorDisplay.alpha = 1
                     }
                 }
@@ -115,4 +97,19 @@ class SignUpViewController: UIViewController {
             }
         }
     }
-}
+    
+    func signIn(){
+        Auth.auth().signIn(withEmail: self.email, password: self.password) { result, err in
+            if err != nil{
+                self.errorDisplay.text = err!.localizedDescription
+                self.errorDisplay.alpha = 1
+            } else {
+                // Direct to home screen
+                let partyManagementVC = self.storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
+                self.view.window?.rootViewController = partyManagementVC
+                self.view.window?.makeKeyAndVisible()
+            }
+        }
+    }
+    
+} // END SignUpViewController

@@ -105,8 +105,8 @@ class SwipeMoviesViewController: UIViewController {
     
     @IBAction func partiesButtonPressed(_ sender: Any) {
         let partyManagementVC = storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
-        view.window?.rootViewController = partyManagementVC
-        view.window?.makeKeyAndVisible()
+        self.view.window?.rootViewController = partyManagementVC
+        self.view.window?.makeKeyAndVisible()
     }
     
     // MARK: - API and Firestore Calls
@@ -140,8 +140,16 @@ class SwipeMoviesViewController: UIViewController {
     }
     
     // MARK: - Create Movie Card
+    func createSuperLikeButton(){
+        superLikeButton = UIButton(frame: CGRect(x: 290, y: 470, width: 75, height: 75))
+        superLikeButton.backgroundColor = UIColor(red: 68.0/255.0, green:64.0/255.0, blue: 74.0/255.0, alpha: 1.0)
+        superLikeButton.layer.cornerRadius = superLikeButton.frame.width/2
+        let heartIcon = UIImage(named: "superlikeheart.png") as UIImage?
+        superLikeButton.setImage(heartIcon, for: .normal)
+        superLikeButton.addTarget(self, action: #selector(superLikeRequested), for: .touchUpInside)
+    }
+    
     func createPosterSide(){
-        
         poster.frame = movieCardView.bounds
         poster.layer.cornerRadius = 15.0
         poster.clipsToBounds = true
@@ -152,17 +160,9 @@ class SwipeMoviesViewController: UIViewController {
         flipButton.frame = poster.frame
         flipButton.addTarget(self, action: #selector(timeToFlip), for: .touchUpInside)
         
-        createSuperLikeButton()
-        
+        self.createSuperLikeButton()
+
         posterView.frame = movieCardView.bounds
-        //        //Add shadow to view
-        //        posterView.layer.shadowPath = UIBezierPath(roundedRect: posterView.bounds, cornerRadius: 15).cgPath
-        //        posterView.layer.shadowColor = UIColor.black.cgColor
-        //        posterView.layer.shadowOpacity = 0.5
-        //        posterView.layer.shadowOffset = CGSize(width: 10, height: 10)
-        //        posterView.layer.shadowRadius = 1
-        //        posterView.layer.masksToBounds = false
-        
         posterView.addSubview(flipButton)
         posterView.addSubview(poster)
         posterView.addSubview(thumbUpDownPoster)
@@ -175,17 +175,8 @@ class SwipeMoviesViewController: UIViewController {
     }
     
     func createDescriptionSide(){
-                
         descView.layer.cornerRadius = 15.0
         descView.clipsToBounds = true
-        
-//        //Set gradient of view
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.frame = movieCardView.bounds
-//        gradientLayer.cornerRadius = 15.0
-//        gradientLayer.colors = [#colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1).cgColor, UIColor(red: 255/255, green: 153/255, blue: 51/255, alpha: 1).cgColor]
-//        gradientLayer.shouldRasterize = true
-//        descView.layer.insertSublayer(gradientLayer, at: 0)
         
         // Set background image
         let descImgView = UIImageView()
@@ -195,30 +186,27 @@ class SwipeMoviesViewController: UIViewController {
         descImgView.image = UIImage(named: "orange")
         descView.addSubview(descImgView)
         
-        //Setup Bounds of view and button
+        // Set up Bounds of view and button
         descView.frame = movieCardView.bounds
         descButton.frame = descView.frame
         descButton.backgroundColor = .clear
         descButton.addTarget(self, action: #selector(timeToFlip), for: .touchUpInside)
-        
-        
         descView.addSubview(descButton)
         
         let gestureBack = UIPanGestureRecognizer(target: self, action: #selector(wasDraggedBack(gestureRecognizer:)))
         descView.addGestureRecognizer(gestureBack)
         
-        self.descView.isHidden = true;
+        self.descView.isHidden = true
         self.movieCardView.addSubview(descView)
     }
     
     func updateDescriptionCard(){
-        
         thumbUpDownDesc.frame = movieCardView.bounds
         thumbUpDownDesc.image = UIImage(named: "thumb_up.png")
         
         let movie = self.movieStack[self.currMovieIndx]
         
-        //Create Movie Title
+        // Create Movie Title
         let titleVal = movie["title"]
         titleLabel.frame = titleLabelPos.bounds
         titleLabel.frame.origin.x = titleLabelPos.frame.origin.x
@@ -229,7 +217,7 @@ class SwipeMoviesViewController: UIViewController {
         titleLabel.text = titleVal
         titleLabel.sizeToFit()
 
-        //Create Description
+        // Create Description
         let descVal = movie["overview"]
         descLabel.frame = descLabelPos.bounds
         descLabel.frame.origin.x = descLabelPos.frame.origin.x
@@ -240,7 +228,7 @@ class SwipeMoviesViewController: UIViewController {
         descLabel.text = descVal
         descLabel.sizeToFit()
         
-        //Create Movie Votes
+        // Create Movie Votes
         let votesVal = "Number of Votes: " + movie["num_votes"]!
         votesLabel.frame = votesLabelPos.bounds
         votesLabel.frame.origin.x = votesLabelPos.frame.origin.x
@@ -250,7 +238,7 @@ class SwipeMoviesViewController: UIViewController {
         votesLabel.lineBreakMode = votesLabelPos.lineBreakMode
         votesLabel.text = votesVal  
         
-        //Set All
+        // Set All
         descView.addSubview(titleLabel)
         descView.addSubview(descLabel)
         descView.addSubview(votesLabel)
@@ -292,15 +280,6 @@ class SwipeMoviesViewController: UIViewController {
     }
 
     // MARK: - Super Like
-    func createSuperLikeButton(){
-        superLikeButton = UIButton(frame: CGRect(x: 290, y: 470, width: 75, height: 75))
-        superLikeButton.backgroundColor = UIColor(red: 68.0/255.0, green:64.0/255.0, blue: 74.0/255.0, alpha: 1.0)
-        superLikeButton.layer.cornerRadius = superLikeButton.frame.width/2
-        let heartIcon = UIImage(named: "superlikeheart.png") as UIImage?
-        superLikeButton.setImage(heartIcon, for: .normal)
-        superLikeButton.addTarget(self, action: #selector(superLikeRequested), for: .touchUpInside)
-    }
-    
     func checkIfSuperLiked()-> Bool{
         return (self.movieStack[currMovieIndx]["superLikedBy"] != "")
     }
@@ -311,34 +290,37 @@ class SwipeMoviesViewController: UIViewController {
         }
         let currentTimeStamp = NSDate().timeIntervalSince1970
         let timePassed = currentTimeStamp - superLikes[userID]!;
-        return timePassed >= 86400 //user has waited 24 hours, now can superlike
+        return timePassed >= 86400 // User has waited 24 hours, now can superlike
     }
     
     func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
         return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
+    
     func convertTimeToString(s:Int,m:Int,h:Int) -> String {
         var secString = String(s)
         var minString = String(m)
         var hourString = String(h)
-        if (secString.count==1){
-            secString = "0"+secString;
+        if (secString.count == 1){
+            secString = "0" + secString;
         }
-        if (minString.count==1){
-            minString = "0"+minString;
+        if (minString.count == 1){
+            minString = "0" + minString;
         }
-        if (hourString.count==1){
-            hourString = "0"+hourString;
+        if (hourString.count == 1){
+            hourString = "0" + hourString;
         }
-        return "Will be available in: "+hourString+":"+minString+":"+secString
+        return "Will be available in: " + hourString + ":" + minString + ":" + secString
     }
+    
     func startTimer(){
         if timerSuperLike == nil {
             timerSuperLike = Timer.scheduledTimer(timeInterval: 1, target: self,selector: #selector(updateLabel), userInfo: nil, repeats: true)
         }
     }
+    
     func resetTimer(){
-        if timerSuperLike != nil {
+        if (timerSuperLike != nil) {
             timerSuperLike!.invalidate()
             timerSuperLike = nil
             superLikeAlert = SCLAlertView(appearance: SCLAlertView.SCLAppearance(showCloseButton: false))
@@ -383,7 +365,6 @@ class SwipeMoviesViewController: UIViewController {
     }
 
     // MARK: - Card Flipper
-    
     @IBAction func timeToFlip(_ sender: Any) {
         if self.descView.isHidden == false{
             UIView.transition(from: descView, to: posterView, duration: 0.4, options: .transitionFlipFromLeft, completion: nil)
@@ -396,7 +377,6 @@ class SwipeMoviesViewController: UIViewController {
     }
     
     // MARK: - Swipe Handler and Gesture Recognizer
-    
     @objc func wasDraggedBack(gestureRecognizer: UIPanGestureRecognizer) {
         
         // Calculuate rotation and scaling
@@ -426,14 +406,13 @@ class SwipeMoviesViewController: UIViewController {
             var swiped = 0;
             if descView.center.x > (view.bounds.width * 0.75){ // right swipe
                 swiped = 1
-            }else if descView.center.x < (view.bounds.width * 0.25){ // left swipe
+            } else if descView.center.x < (view.bounds.width * 0.25){ // left swipe
                 swiped = -1
             }
             
             // Update card if fully swiped
-            handleSwipe(swiped: swiped, superLiked: false);
-            
             if(swiped != 0){
+                handleSwipe(swiped: swiped, superLiked: false);
                 UIView.transition(from: descView, to: posterView, duration: 0.4, completion: nil)
                 self.descView.isHidden = true;
             }
@@ -481,7 +460,9 @@ class SwipeMoviesViewController: UIViewController {
             }
             
             // Update card if fully swiped
-            handleSwipe(swiped: swiped, superLiked: false);
+            if(swiped != 0){
+                handleSwipe(swiped: swiped, superLiked: false);
+            }
             
             // Return card to original position
             rotation = CGAffineTransform(rotationAngle: 0)
@@ -493,12 +474,8 @@ class SwipeMoviesViewController: UIViewController {
     
     
     func handleSwipe(swiped:Int, superLiked: Bool){
-        if(swiped == 0){
-            return
-        }
         self.addSeenMember()
-        // If it is a right swipe
-        if (swiped == 1){
+        if (swiped == 1){ // right swipe
             let num_votes = Int(self.movieStack[currMovieIndx]["num_votes"]!)! + 1
             self.movieStack[currMovieIndx]["num_votes"] = String(num_votes)
             self.movieStack[currMovieIndx]["votedBy"] = self.movieStack[currMovieIndx]["votedBy"]! + "," + userID
@@ -541,7 +518,6 @@ class SwipeMoviesViewController: UIViewController {
     }
     
     // MARK: - Leave Party
-    
     @IBAction func leavePartyBtnPressed(_ sender: Any) {
         let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
         let alert = SCLAlertView(appearance: appearance)
@@ -652,5 +628,6 @@ class SwipeMoviesViewController: UIViewController {
         }
         self.updateMovieStack()
     }
-}
+    
+} // END SwipeMoviesViewController
 

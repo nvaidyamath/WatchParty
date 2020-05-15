@@ -15,7 +15,6 @@ class PartyCreationViewController: UIViewController {
 
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
-    @IBOutlet var cancelButton: UIButton!
     
     var stack = [[String: String]]()
     
@@ -45,7 +44,6 @@ class PartyCreationViewController: UIViewController {
         super.viewDidLoad()
         fetchMovies()
         UIUtilities.styleFilledButtonLocked(submitButton)
-        UIUtilities.styleFilledButtonCancel(cancelButton)
         UIUtilities.styleTextField(nameField)
         submitButton.isEnabled = false
         setupBackgroundImage()
@@ -63,20 +61,16 @@ class PartyCreationViewController: UIViewController {
     
     @IBAction func partyNameFieldUpdated(_ sender: Any) {
         let partyName = nameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        if (partyName.count==0){
+        if (partyName.count == 0){
             submitButton.isEnabled = false;
             UIUtilities.styleFilledButtonLocked(submitButton)
-        }
-        else {
+        } else {
             submitButton.isEnabled = true;
             UIUtilities.styleFilledButtonParty(submitButton)
         }
     }
 
     @IBAction func submitButtonPressed(_ sender: Any) {
-        
-        // TODO: Validate Party Name
-        
         // Get party name and current userID
         let partyName = nameField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let userID = Auth.auth().currentUser!.uid
@@ -108,24 +102,10 @@ class PartyCreationViewController: UIViewController {
             "partyIDs": FieldValue.arrayUnion([partyID])
         ])
         
-        // Direct back to party management
+        // Direct to party management screen
         let partyManagementVC = self.storyboard?.instantiateViewController(identifier: "PartyManagement") as? PartyManagementViewController
         self.view.window?.rootViewController = partyManagementVC
         self.view.window?.makeKeyAndVisible()
     }
-    
-    @IBAction func cancel(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
+} // END PartyCreationViewController

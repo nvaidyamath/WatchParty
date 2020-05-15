@@ -15,7 +15,6 @@ import FirebaseFirestore
 class PartySelectionTableViewController: UITableViewController {
     
     weak var delegate: SegueHandler?
-    var vSpinner : UIView?
     var partyIDs = [String]()
     var partyNames = [String](){
         didSet{
@@ -28,11 +27,10 @@ class PartySelectionTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.retrievePartyList()
-        view.backgroundColor = UIColor.clear
+        self.view.backgroundColor = UIColor.clear
     }
     
     func forceLogOut(){
-        // try log-out
         do {
             try Auth.auth().signOut()
         } catch let signOutError as NSError {
@@ -43,27 +41,24 @@ class PartySelectionTableViewController: UITableViewController {
         self.view.window?.makeKeyAndVisible()
     }
 
-    
     func retrievePartyList(){
         let db = Firestore.firestore()
         let userID = Auth.auth().currentUser!.uid
         db.collection("users").document(userID).getDocument { (document, error) in
             if let document = document {
                 if (document.get("partyNames") == nil || document.get("partyIDs") == nil){
-                    print("Database Cache Error - Forced Log out")
                     self.forceLogOut();  //helps deal with cache error (when database is deleted, and user is still logged in)
                     return
                 }
                 self.partyNames = document.get("partyNames")! as! [String]
                 self.partyIDs = document.get("partyIDs")! as! [String]
             } else {
-                print("[FIREBASE FAIL] Retrieve party list")
+                print("[FIREBASE ERROR] Retrieve party list")
             }
         }
     }
 
     // MARK: - Table view data source
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.partyNames.count
     }
@@ -79,4 +74,5 @@ class PartySelectionTableViewController: UITableViewController {
         delegate?.getPartyInfo(name: self.partyNames[indexPath.row], ID: self.partyIDs[indexPath.row])
         delegate?.segueToNext(identifier: "SwipeSegue")
     }
-}
+    
+} // END PartySelectionTableViewController

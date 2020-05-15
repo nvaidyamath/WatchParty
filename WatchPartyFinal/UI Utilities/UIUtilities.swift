@@ -34,16 +34,12 @@ class UIUtilities{
     }
         
     static func styleFilledButton(_ button:UIButton) {
-        
-        // Filled rounded corner style
         button.backgroundColor = UIColor.init(red: 255/255, green: 165/255, blue: 0/255, alpha: 1)
         button.layer.cornerRadius = 25.0
         button.tintColor = UIColor.white
     }
     
     static func styleHollowButton(_ button:UIButton) {
-        
-        // Hollow rounded corner style
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.black.cgColor
         button.layer.cornerRadius = 15.0
@@ -52,54 +48,59 @@ class UIUtilities{
     
     static func styleFilledButtonParty(_ button:UIButton) {
         button.layer.sublayers?[0].removeFromSuperlayer()
+        
         // Filled rounded corner style
         button.layer.cornerRadius = 13.0
         button.tintColor = UIColor.white
-        let gradientLayer = CAGradientLayer()
+        
         // Set the size of the layer to be equal to size of the display.
+        let gradientLayer = CAGradientLayer()
         gradientLayer.frame = button.bounds
         gradientLayer.cornerRadius = 13.0
         gradientLayer.colors = [#colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1).cgColor, UIColor(red: 255/255, green: 153/255, blue: 51/255, alpha: 1).cgColor]
+        
         // Rasterize this static layer to improve app performance.
         gradientLayer.shouldRasterize = true
         gradientLayer.name = "unlocked"
         
         button.layer.insertSublayer(gradientLayer, at: 0)
-        //button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25) as! CGColor
     }
     
     static func styleFilledButtonCancel(_ button:UIButton) {
-        //button.layer.sublayers?[0].removeFromSuperlayer()
         // Filled rounded corner style
         button.layer.cornerRadius = 13.0
         button.tintColor = UIColor.white
         button.setTitleColor(.white, for: .normal)
-        let gradientLayer = CAGradientLayer()
+
         // Set the size of the layer to be equal to size of the display.
+        let gradientLayer = CAGradientLayer()
         gradientLayer.frame = button.bounds
         gradientLayer.cornerRadius = 13.0
         gradientLayer.colors = [#colorLiteral(red: 1, green: 0.4539142847, blue: 0.4067196846, alpha: 1).cgColor, UIColor(red: 255/255, green: 51/255, blue: 51/255, alpha: 1).cgColor]
+        
         // Rasterize this static layer to improve app performance.
         gradientLayer.shouldRasterize = true
         
         button.layer.insertSublayer(gradientLayer, at: 0)
-        //button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25) as! CGColor
     }
     
     static func styleFilledButtonLocked(_ button:UIButton) {
         button.layer.sublayers?[0].removeFromSuperlayer()
+        
         // Filled rounded corner style
         button.layer.cornerRadius = 13.0
         button.tintColor = UIColor.white
-        let gradientLayer = CAGradientLayer()
+
         // Set the size of the layer to be equal to size of the display.
+        let gradientLayer = CAGradientLayer()
         gradientLayer.frame = button.bounds
         gradientLayer.cornerRadius = 13.0
         gradientLayer.colors = [#colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1).cgColor, UIColor(red: 160/255, green: 160/255, blue: 160/255, alpha: 1).cgColor]
+        
         // Rasterize this static layer to improve app performance.
         gradientLayer.shouldRasterize = true
+        
         button.layer.insertSublayer(gradientLayer, at: 0)
-        //button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25) as! CGColor
     }
     
     static func circularIcon(_ button:UIButton) {
@@ -109,8 +110,6 @@ class UIUtilities{
         button.layer.borderColor = UIColor.orange.cgColor
         button.showsTouchWhenHighlighted = true
         button.setBackgroundColor(color: UIColor.lightGray, forState: UIControl.State.highlighted)
-        
-        
     }
     
     static func nakedIcon(_ button:UIButton) {
