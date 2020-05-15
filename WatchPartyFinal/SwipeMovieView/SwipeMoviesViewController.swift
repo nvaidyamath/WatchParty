@@ -501,20 +501,23 @@ class SwipeMoviesViewController: UIViewController {
     
     // MARK: - Share Party Access Code
     @IBAction func shareBtnPressed(_ sender: Any) {
-        let activityViewController : UIActivityViewController = UIActivityViewController(
-            activityItems: [self.partyID], applicationActivities: nil)
+        let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
+        let alert = SCLAlertView(appearance: appearance)
+        
+        alert.addButton("Confirm") {
+            let activityViewController : UIActivityViewController = UIActivityViewController(
+                activityItems: [self.partyID], applicationActivities: nil)
 
-        activityViewController.excludedActivityTypes = [
-            UIActivity.ActivityType.postToWeibo,
-            UIActivity.ActivityType.print,
-            UIActivity.ActivityType.assignToContact,
-            UIActivity.ActivityType.saveToCameraRoll,
-            UIActivity.ActivityType.addToReadingList,
-            UIActivity.ActivityType.postToFlickr,
-            UIActivity.ActivityType.postToVimeo,
-            UIActivity.ActivityType.postToTencentWeibo
-        ]
-        self.present(activityViewController, animated: true, completion: nil)
+            activityViewController.excludedActivityTypes = [
+                UIActivity.ActivityType.print,
+                UIActivity.ActivityType.assignToContact,
+                UIActivity.ActivityType.saveToCameraRoll,
+                UIActivity.ActivityType.addToReadingList,
+            ]
+            self.present(activityViewController, animated: true, completion: nil)
+        }
+        alert.addButton("Cancel"){}
+        alert.showWarning("Share Passcode", subTitle: "Send someone the unique passcode to join the party!")
     }
     
     // MARK: - Leave Party

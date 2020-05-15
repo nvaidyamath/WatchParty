@@ -21,6 +21,7 @@ class PartyManagementViewController: UIViewController, SegueHandler {
     @IBOutlet var pageView: UIView!
     @IBOutlet var createButton: UIButton!
     @IBOutlet var joinButton: UIButton!
+    @IBOutlet var logoutButton: UIButton!
     
     var selectedPartyName = String()
     var selectedPartyID = String()
@@ -39,6 +40,7 @@ class PartyManagementViewController: UIViewController, SegueHandler {
         self.setUpGradientBackground()
         UIUtilities.styleFilledButtonParty(createButton)
         UIUtilities.styleFilledButtonParty(joinButton)
+        UIUtilities.styleHollowButton(logoutButton)
     }
     
     func setUpGradientBackground(){
