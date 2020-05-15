@@ -556,9 +556,12 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cup-Jy-D8Y">
                                 <rect key="frame" x="20" y="105.5" width="374" height="591.5"/>
                                 <subviews>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F16-QV-dSN">
-                                        <rect key="frame" x="29" y="36" width="337" height="79"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F16-QV-dSN">
+                                        <rect key="frame" x="22" y="40" width="330" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="80" id="9FU-Pg-k8U"/>
+                                            <constraint firstAttribute="width" constant="330" id="soA-JK-lZ4"/>
+                                        </constraints>
                                         <attributedString key="attributedText">
                                             <fragment content="Title">
                                                 <attributes>
@@ -568,9 +571,22 @@
                                         </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Och-Yc-EnA">
-                                        <rect key="frame" x="29" y="175" width="316" height="284"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current number of Votes" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hbs-gE-B7U">
+                                        <rect key="frame" x="22" y="140" width="330" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="3l2-cm-ib6"/>
+                                            <constraint firstAttribute="width" constant="330" id="nDu-7J-UNd"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Och-Yc-EnA">
+                                        <rect key="frame" x="22" y="205" width="330" height="300"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="330" id="ISd-HP-8W8"/>
+                                            <constraint firstAttribute="height" constant="300" id="j9L-aY-48o"/>
+                                        </constraints>
                                         <attributedString key="attributedText">
                                             <fragment content="Description">
                                                 <attributes>
@@ -581,15 +597,16 @@
                                         </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current number of Votes" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hbs-gE-B7U">
-                                        <rect key="frame" x="29" y="123" width="337" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="20"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="Och-Yc-EnA" firstAttribute="top" secondItem="Hbs-gE-B7U" secondAttribute="bottom" constant="30" id="5EV-u7-zie"/>
+                                    <constraint firstItem="Hbs-gE-B7U" firstAttribute="top" secondItem="F16-QV-dSN" secondAttribute="bottom" constant="20" id="7Dt-W1-E9a"/>
+                                    <constraint firstItem="Och-Yc-EnA" firstAttribute="centerX" secondItem="Cup-Jy-D8Y" secondAttribute="centerX" id="ECl-kG-Aj0"/>
+                                    <constraint firstItem="F16-QV-dSN" firstAttribute="top" secondItem="Cup-Jy-D8Y" secondAttribute="top" constant="40" id="gJe-32-UTw"/>
+                                    <constraint firstItem="Hbs-gE-B7U" firstAttribute="centerX" secondItem="Cup-Jy-D8Y" secondAttribute="centerX" id="p7m-AF-agB"/>
+                                    <constraint firstItem="F16-QV-dSN" firstAttribute="centerX" secondItem="Cup-Jy-D8Y" secondAttribute="centerX" id="paE-np-D32"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
