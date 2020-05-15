@@ -802,7 +802,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dr3-Bq-LlO">
-                                            <rect key="frame" x="114" y="55" width="68" height="17"/>
+                                            <rect key="frame" x="112" y="52" width="134" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <nil key="textColor"/>
@@ -829,7 +829,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="br3-oR-oIm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5388" y="540"/>
+            <point key="canvasLocation" x="5386.9565217391309" y="539.73214285714278"/>
         </scene>
         <!--Member Table View Controller-->
         <scene sceneID="SiZ-Qn-2WW">
