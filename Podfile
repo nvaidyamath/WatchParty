@@ -23,6 +23,9 @@ target 'WatchPartyFinal' do
   pod 'Firebase/Auth'
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
-  pod 'SCLAlertView' 
+  pod 'SCLAlertView'
+  pod 'FacebookCore'
+  pod 'FacebookLogin'
+  pod 'FacebookShare'
 
 end

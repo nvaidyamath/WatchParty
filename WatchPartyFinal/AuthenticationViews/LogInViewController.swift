@@ -9,17 +9,21 @@
 import UIKit
 import FirebaseAuth
 import Firebase
+import FirebaseFirestore
 import AVFoundation
+import FBSDKLoginKit
 
-class LogInViewController: UIViewController {
+class LogInViewController: UIViewController, LoginButtonDelegate {
+    
     
     @IBOutlet var emailField: UITextField!
     @IBOutlet var passwordField: UITextField!
     @IBOutlet var loginButton: UIButton!
+    @IBOutlet var fbFrame: UILabel!
     
     var avPlayer: AVPlayer!
     var avPlayerLayer: AVPlayerLayer!
-
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -37,16 +41,83 @@ class LogInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBackgroundVid()
-        
         // Set up UI buttons
         UIUtilities.styleTextField(emailField)
         UIUtilities.styleTextField(passwordField)
         UIUtilities.styleHollowButton(loginButton)
         loginButton.isEnabled = false
         loginButton.layer.borderColor = UIColor.gray.cgColor;
+        
+        let FBLogIn = FBLoginButton()
+        FBLogIn.delegate = self
+        FBLogIn.permissions = ["email"]
+        FBLogIn.frame = CGRect(x: fbFrame.frame.origin.x , y: fbFrame.frame.origin.y, width: fbFrame.frame.width, height: fbFrame.frame.height)
+        //FBLogIn.layer.cornerRadius = 100
+        view.addSubview(FBLogIn)
     }
     
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        if error != nil {
+            print(error!)
+        }
+        print("FB Login Successful")
+        fbLogin()
+    }
     
+    func fbLogin() {
+        let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
+        Auth.auth().signIn(with: credential) { (authResult, error) in
+            if let error = error {
+                print(error)
+            }
+            else{
+                print("success")
+                //let uid = authResult?.user.uid
+                
+            }
+        }
+    }
+    
+//    func createUserIfNeeded() {
+//        guard let accessToken = FBSDKLoginKit.AccessToken.current else { return }
+//        let graphRequest = GraphRequest(graphPath: "/me",
+//                     parameters: ["fields": "email, name"],
+//                     tokenString: accessToken.tokenString ,
+//                     version: nil,
+//                     httpMethod: .get)
+//        graphRequest.start { (connection, result, error) -> Void in
+//            if error != nil{
+//                print(error!)
+//            }
+//            else{
+//                print(result)
+//            }
+//        }
+//        Auth.auth().createUser(withEmail: email, password: self.password) { (result, err) in
+//            if err != nil{
+//                self.errorDisplay.text = err!.localizedDescription
+//                self.errorDisplay.alpha = 1
+//            } else {
+//                let db = Firestore.firestore()
+//                db.collection("users").document(result!.user.uid).setData([
+//                    "first_name": firstName,
+//                    "last_name": lastName,
+//                    "email": self.email,
+//                    "partyIDs": [String](),
+//                    "partyNames": [String](),
+//                    "userName": firstName + " " + lastName]){ (err) in
+//                    if err != nil {
+//                        self.errorDisplay.text = err!.localizedDescription
+//                        self.errorDisplay.alpha = 1
+//                    }
+//                }
+//                self.isUserCreated = true
+//            }
+//        }
+//    }
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+        print("logged out of FB")
+    }
     // MARK: - Log-In Actions
     @IBAction func emailFieldChanged(_ sender: Any) {
         self.shouldEnableLogin()

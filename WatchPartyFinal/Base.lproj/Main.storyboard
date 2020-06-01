@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="36C-TT-1WO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="36C-TT-1WO">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -74,28 +74,39 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AKT-ag-FgN">
+                                <rect key="frame" x="57" y="477" width="300" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Rwv-PY-Dd5" firstAttribute="top" secondItem="PL0-1r-WOR" secondAttribute="top" constant="130" id="8AG-DQ-I1f"/>
                             <constraint firstItem="3Px-65-t9V" firstAttribute="centerX" secondItem="PL0-1r-WOR" secondAttribute="centerX" id="IGD-dx-Nze"/>
                             <constraint firstItem="Rwv-PY-Dd5" firstAttribute="centerX" secondItem="PL0-1r-WOR" secondAttribute="centerX" id="Jpp-Hp-pGL"/>
+                            <constraint firstItem="AKT-ag-FgN" firstAttribute="trailing" secondItem="Rwv-PY-Dd5" secondAttribute="trailing" id="UCG-2k-V2e"/>
                             <constraint firstItem="ped-WG-jwV" firstAttribute="centerX" secondItem="PL0-1r-WOR" secondAttribute="centerX" id="UFm-n6-RnC"/>
+                            <constraint firstItem="AKT-ag-FgN" firstAttribute="top" secondItem="ped-WG-jwV" secondAttribute="bottom" constant="89" id="VNP-ls-tFc"/>
                             <constraint firstItem="ped-WG-jwV" firstAttribute="top" secondItem="3Px-65-t9V" secondAttribute="bottom" constant="30" id="bjv-h9-32K"/>
                             <constraint firstItem="3Px-65-t9V" firstAttribute="top" secondItem="Rwv-PY-Dd5" secondAttribute="bottom" constant="25" id="hdq-d3-kma"/>
+                            <constraint firstItem="PL0-1r-WOR" firstAttribute="bottom" secondItem="AKT-ag-FgN" secondAttribute="bottom" constant="345" id="sGg-De-sRK"/>
+                            <constraint firstItem="AKT-ag-FgN" firstAttribute="leading" secondItem="Rwv-PY-Dd5" secondAttribute="leading" id="tIU-kX-Uk5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PL0-1r-WOR"/>
                     </view>
                     <navigationItem key="navigationItem" id="RZl-Sb-gAs"/>
                     <connections>
                         <outlet property="emailField" destination="NMt-L9-lnF" id="iAQ-6d-iHl"/>
+                        <outlet property="fbFrame" destination="AKT-ag-FgN" id="siM-wP-OsP"/>
                         <outlet property="loginButton" destination="3Px-65-t9V" id="z8N-9J-6ZW"/>
                         <outlet property="passwordField" destination="hmS-Zc-X9s" id="x3B-Uu-Hmq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aVL-mx-xe7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="384" y="69"/>
+            <point key="canvasLocation" x="382.60869565217394" y="68.973214285714278"/>
         </scene>
         <!--Party Management View Controller-->
         <scene sceneID="PzY-NQ-5wa">
@@ -861,12 +872,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="1.circle" catalog="system" width="128" height="121"/>
-        <image name="arrowshape.turn.up.left.2.fill" catalog="system" width="128" height="87"/>
-        <image name="eject.fill" catalog="system" width="128" height="112"/>
-        <image name="list.number" catalog="system" width="128" height="97"/>
-        <image name="paperplane.fill" catalog="system" width="128" height="121"/>
-        <image name="person.2.fill" catalog="system" width="128" height="80"/>
+        <image name="1.circle" catalog="system" width="64" height="60"/>
+        <image name="arrowshape.turn.up.left.2.fill" catalog="system" width="64" height="42"/>
+        <image name="eject.fill" catalog="system" width="64" height="56"/>
+        <image name="list.number" catalog="system" width="64" height="48"/>
+        <image name="paperplane.fill" catalog="system" width="64" height="60"/>
+        <image name="person.2.fill" catalog="system" width="64" height="40"/>
         <image name="superlikeheart.png" width="256" height="256"/>
     </resources>
 </document>
